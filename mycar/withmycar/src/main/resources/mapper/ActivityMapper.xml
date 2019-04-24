@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.withmycar.mapper.ActivityMapper" >
+  <resultMap id="BaseResultMap" type="com.qf.withmycar.pojo.Activity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="TINYINT" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="link" property="link" jdbcType="VARCHAR" />
+    <result column="begin_time" property="beginTime" jdbcType="INTEGER" />
+    <result column="end_time" property="endTime" jdbcType="INTEGER" />
+    <result column="channel_top" property="channelTop" jdbcType="TINYINT" />
+    <result column="home_top" property="homeTop" jdbcType="TINYINT" />
+    <result column="pv_count" property="pvCount" jdbcType="INTEGER" />
+    <result column="uv_count" property="uvCount" jdbcType="INTEGER" />
+    <result column="up_count" property="upCount" jdbcType="INTEGER" />
+    <result column="fav_count" property="favCount" jdbcType="INTEGER" />
+    <result column="publish_state" property="publishState" jdbcType="TINYINT" />
+    <result column="create_uid" property="createUid" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="INTEGER" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="unpublish_uname" property="unpublishUname" jdbcType="VARCHAR" />
+    <result column="unpublish_time" property="unpublishTime" jdbcType="VARCHAR" />
+    <result column="seo_keywords" property="seoKeywords" jdbcType="VARCHAR" />
+    <result column="sdk_path" property="sdkPath" jdbcType="VARCHAR" />
+    <result column="like_count" property="likeCount" jdbcType="INTEGER" />
+    <result column="share_count" property="shareCount" jdbcType="INTEGER" />
+    <result column="view_count" property="viewCount" jdbcType="INTEGER" />
+    <result column="tags" property="tags" jdbcType="VARCHAR" />
+    <result column="cover_pic" property="coverPic" jdbcType="VARCHAR" />
+    <result column="cars" property="cars" jdbcType="VARCHAR" />
+    <result column="sdk_id" property="sdkId" jdbcType="INTEGER" />
+    <result column="sdk_title" property="sdkTitle" jdbcType="VARCHAR" />
+    <result column="dealer" property="dealer" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+<!--mf.fav_type=1 代表收藏的时资讯-->
+  <select id="getUserActivity" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT a.* from member_fav mf,activity a
+        where mf.content_id=a.id and mf.fav_type=1 and mf.member_id=#{userId}
+  </select>
+<!--maxing 查询所有活动-->
+  <select id="selectActivitys" resultMap="BaseResultMap">
+    select * from activity
+  </select>
+</mapper>

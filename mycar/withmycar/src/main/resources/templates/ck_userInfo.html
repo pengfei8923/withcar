@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<title></title>
+
+
+	<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css">
+	<!--<link rel="stylesheet" href="moumou/css/jquery.page.css">-->
+	<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+
+	<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+	<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+	<style>
+		.left{float: left;width: 50%;}
+		p{margin-bottom:0px; border-bottom: 1px solid #333; border-left: 1px solid #333; border-right: 1px solid #333;}
+		span{margin-left: 5px;}
+		.left2{float: left;}
+		ul{margin-bottom:0px;}
+		ul li{list-style: none; margin-left: -40px;}
+		tr{border-bottom: 2px solid black;}
+		td{margin-left: 2%;border-bottom: 2px solid black}
+		.tag{margin-left: 2px;}
+	</style>
+<body  >
+<div style="margin-left: 30px; margin-top: 5px; ">
+	<a href="javascript:history.go(-1)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-back'" style="margin-left: 0px;">返回上一层</a>
+</div>
+<hr style="height:2px;background-color:#000;margin-top: 0px; margin-bottom: 0px;" />
+
+<div style="font-size: 20px; width: 100%;">
+	<div style="width: 60%;" class="left2">
+		<ul>
+			<li><p>账号:<span th:text="${userInfo.userName}">某某</span></p></li>
+			<li>
+				<p class="left">昵称:<span th:text="${userInfo.nickname}">某某</span></p>
+				<p class="left">姓名:<span th:text="${userInfo.name}">某某</span></p>
+			</li>
+			<li>
+				<p class="left">性别:<span th:text="${userInfo.sex}">某某</span></p>
+				<p class="left">邮箱:<span th:text="${userInfo.email}">某某</span></p>
+			</li>
+			<li><p>积分:<span th:text="${allPoint}">某某</span></p></li>
+			<li><p>标签:<span th:each="tag:${userTag}"><span class="tag" th:text="${tag.name}" style="font-size: 16px;">某某</span>|</span></p></li>
+			<li><p>地址:<span style="font-size: 15px;" th:text="${userInfo.address}">某某</span></p></li>
+			<li><p>注册时间:<span th:text="${userInfo.register_time}">某某</span></p></li>
+		</ul>
+	</div>
+	<div style="width: 40%;" class="left2">
+		<img src="jquery-easyui-1.7.0/themes/black/images/123.png" th:src="${userInfo.avatar_url}" class="img-circle" style="margin-top: 3%; margin-left: 3%; width: 22%;"/>
+	</div>
+</div>
+<!--<hr style="height:2px;background-color:#000;margin-top: 0px; margin-bottom: 0px;" />-->
+<div class="easyui-layout" style=" height: 700px; width: 100%;">
+	<div id="content" region="center" style="padding:0px;">
+		<div id="tt" class="easyui-tabs" data-options="fit:true">
+			<!--<div title="欢迎页" style="padding:20px;display:none;">
+                Welcome  to   1000phone's  Shiro World!
+            </div>-->
+			<div title="我的座驾"  style="padding:20px;display:none;">
+				<div>
+					<div style="width: 100%;height: 25px;font-size: 20px;">已有座驾</div>
+					<table style="width: 100%;">
+						<tr style="font-size: 20px; width: 100%; margin-top: 3px;" th:each="mycar:${userCars}">
+							<td style="width: 8%;"><img src="jquery-easyui-1.7.0/themes/black/images/123.png" th:src="${mycar.picurl}"  class="img-circle" style="margin-top: 2%; margin-left: 1%; width: 100%;"/>
+							</td>
+							<td style="width: 25%"><div style="text-indent: 10px;" ><span>车款:</span><span th:text="${mycar.cmname}"></span></div></td>
+							<td style="width: 14%"><div style="text-indent: 10px;" ><span>购买时间:</span><span th:text="${mycar.buy_year}"></span></div></td>
+							<td style="width: 20%"><div style="text-indent: 10px;" ><span>备注:</span><span th:text="${mycar.remark}"></span></div></td>
+							<td style="width: 14%"><div style="text-indent: 10px;" ><span>类型:</span><span th:text="${mycar.tyname}"></span></div></td>
+						</tr>
+
+					</table>
+				</div>
+				<div>
+					<div style="width: 100%;height: 25px;font-size: 20px;">期待座驾</div>
+					<table style="width: 100%;">
+						<tr style="font-size: 30px; width: 100%; margin-top: 3px;">
+							<td style="width: 100px;"><img src="jquery-easyui-1.7.0/themes/black/images/123.png" class="img-circle" style="margin-top: 2%; margin-left: 1%; width: 100%;"/>
+							</td>
+							<td><div style="text-indent: 20px;">logo</div></td>
+							<td><div style="text-indent: 20px;">logo</div></td>
+						</tr>
+						<tr style="font-size: 30px; width: 100%;height: 40px; margin-top: 3px;">
+							<td style="width: 100px;"><img src="jquery-easyui-1.7.0/themes/black/images/123.png" class="img-circle" style="margin-top: 2%; margin-left: 1%; width: 100%;"/>
+							</td>
+							<td><div style="text-indent: 20px;">logo</div></td>
+							<td><div style="text-indent: 20px;">logo</div></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div title="我的活动" style="padding:20px;display:none;">
+				<div>
+					<div style="width: 100%;height: 25px;font-size: 20px;">参加活动</div>
+					<table style="width: 100%;">
+						<tr style="font-size: 30px; width: 100%; margin-top: 3px;" th:each="huoDong:${myHuoDong}">
+							<td style="width: 100px;"><img src="jquery-easyui-1.7.0/themes/black/images/123.png" th:src="${huoDong.cover_pic}" class="img-circle" style="margin-top: 2%; margin-left: 1%; width: 100%;"/>
+							</td>
+							<td><div style="text-indent: 20px;" ><span th:text="${huoDong.title}"></span></div></td>
+						</tr>
+					</table>
+				</div>
+				<div>
+					<div style="width: 100%;height: 25px;font-size: 20px;">关注活动</div>
+					<table style="width: 100%;">
+						<tr style="font-size: 30px; width: 100%; margin-top: 3px;">
+							<td style="width: 100px;"><img src="jquery-easyui-1.7.0/themes/black/images/123.png" class="img-circle" style="margin-top: 2%; margin-left: 1%; width: 100%;"/>
+							</td>
+							<td><div style="text-indent: 20px;">logo</div></td>
+							<td><div style="text-indent: 20px;">logo</div></td>
+						</tr>
+						<tr style="font-size: 30px; width: 100%;height: 40px; margin-top: 3px;">
+							<td style="width: 100px;"><img src="jquery-easyui-1.7.0/themes/black/images/123.png" class="img-circle" style="margin-top: 2%; margin-left: 1%; width: 100%;"/>
+							</td>
+							<td><div style="text-indent: 20px;">logo</div></td>
+							<td><div style="text-indent: 20px;">logo</div></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div title="我的积分" style="padding:20px;display:none;">
+				<table style="width: 100%;">
+					<tr style="font-size: 15px; width: 100%; margin-top: 3px;">
+						<td style="width: 85px; margin-left: 5px" >总积分:</td>
+						<td colspan="8"><div th:text="${allPoint}">0</div></td>
+					</tr>
+					<tr style="font-size: 15px; width: 100%; margin-top: 15px;" th:each="points:${userPoints}">
+						<td ><div style="text-indent: 5px;margin-top: 15px; width: 150px;" th:text="${points.createTime}">日期</div></td>
+						<td colspan="8" style="vertical-align: bottom; "><div th:text="${points.description}+${points.point}">获得积分</div></td>
+						<!--<td colspan="8"></td>-->
+					</tr>
+				</table>
+			</div>
+			<div title="咨询收藏" style="padding:20px;display:none;">
+				<div>
+					<table style="width: 100%;">
+						<tr style="font-size: 30px; width: 100%; margin-top: 3px;" th:each="activitys:${userActivitys}">
+							<td style="width: 100px;"><img src="jquery-easyui-1.7.0/themes/black/images/123.png" th:src="${activitys.thumb_pic}" class="img-circle" style="margin-top: 2%; margin-left: 1%; width: 100%;"/>
+							</td>
+							<td colspan="9"><div style="text-indent: 20px;" th:text="${activitys.title}">logo</div></td>
+						</tr>
+						<!--<tr style="font-size: 30px; width: 100%;height: 40px; margin-top: 3px;">-->
+						<!--<td style="width: 100px;"><img src="jquery-easyui-1.7.0/themes/black/images/123.png" class="img-circle" style="margin-top: 2%; margin-left: 1%; width: 100%;"/>-->
+						<!--</td>-->
+						<!--<td><div style="text-indent: 20px;">logo</div></td>-->
+						<!--<td><div style="text-indent: 20px;">logo</div></td>-->
+						<!--</tr>-->
+					</table>
+				</div>
+			</div>
+			<div title="车型关注" style="padding:20px;display:none;">
+				<div>
+					<table style="width: 100%;">
+						<tr style="font-size: 30px; width: 100%; margin-top: 3px;">
+							<td style="width: 100px;"><img src="jquery-easyui-1.7.0/themes/black/images/123.png" class="img-circle" style="margin-top: 2%; margin-left: 1%; width: 100%;"/>
+							</td>
+							<td><div style="text-indent: 20px;">logo</div></td>
+							<td><div style="text-indent: 20px;">logo</div></td>
+						</tr>
+						<tr style="font-size: 30px; width: 100%;height: 40px; margin-top: 3px;">
+							<td style="width: 100px;"><img src="jquery-easyui-1.7.0/themes/black/images/123.png" class="img-circle" style="margin-top: 2%; margin-left: 1%; width: 100%;"/>
+							</td>
+							<td><div style="text-indent: 20px;">logo</div></td>
+							<td><div style="text-indent: 20px;">logo</div></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<script>
+	$(function(){
+		$('#tt').tabs({
+			border: false,
+			onSelect: function (title) {
+//                  alert(title)
+			}
+		});
+
+		//获取点击事件的对象
+//			$(".nav li").click(function(){
+//				//获取要显示或隐藏的对象
+//				var divShow = $(".content").children('.list');
+//				//判断当前对象是否被选中，如果没选中的话进入if循环
+//				if (!$(this).hasClass('selected')) {
+//					//获取当前对象的索引
+//					var index = $(this).index();
+//					//当前对象添加选中样式并且其同胞移除选中样式；
+//					$(this).addClass('selected').siblings('li').removeClass('selected');
+//					//索引对应的div块显示
+//					$(divShow[index]).show();
+//					//索引对应的div块的同胞隐藏
+//					$(divShow[index]).siblings('.list').hide();
+//				}
+//			});
+	});
+
+</script>
+</body>
+</html>

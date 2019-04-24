@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>个人资料</title>
+		<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+		<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js" ></script>
+		<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+	</head>
+	<style>
+		p{
+			margin: 0;
+		}
+	</style>
+	<body  class="easyui-layout">
+		<div class="row" style="background-color: #FF6F29; margin: auto;height: 50px; line-height: 46px; " align="center" >
+			<div class="col-xs-3"><a href="javaScript:history.go(-1)"><img src="img/fanhui.png" style="width:50%;"></a></div>
+			<div class="col-xs-6">
+				<span style="font-size: 25px; color: #FFFFFF;">个人资料</span>
+			</div>
+			<div class="col-xs-3">
+				<div class="btn-group">
+					  <button type="button" class="btn dropdown-toggle" style="background-color: #FF6F29; border-color: #FF6F29;"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<img src="img/shezhi.png">
+					  </button>
+					  <ul class="dropdown-menu" >
+						<li><a href="/">首页</a></li>
+						<li><a href="#">我的</a></li>
+						<li><a href="#">消息</a></li>
+						<li><a href="/cardiscounts">新车优惠</a></li>
+						<li><a href="/selectbrand">伴我选车</a></li>
+					  </ul>
+				</div>
+			</div>
+		</div>
+		<hr style="margin: 0; border:6px solid #eee;" />
+		<div class="row" style="height: 50px; line-height: 50px;">
+		  <div class="col-xs-6">
+		  	<button type="button" class="btn btn-default btn-lg" style="width: 100%; border: 0px; text-align: left;">头像</button>
+		  </div>
+		   <div class="col-xs-6">
+		  		<a href="/userHead"><img src="img/index101.png" th:src="${user.avatarUrl !=null}?${user.avatarUrl}:'img/index101.png'"  style="width: 40px;"/></a>
+		  </div>
+		</div>
+		<hr style="margin: 0;border:1px solid #eee;"/>
+		<div class="row" style="height: 50px; line-height: 50px;">
+		 <div class="col-xs-6">
+		  	<button type="button" class="btn btn-default btn-lg" style="width: 100%; border: 0px; text-align: left;">昵称</button>
+		  </div>
+		   <div class="col-xs-6">
+		  		<a href="nickname" th:text="${user.nickname!=null}?${user.nickname}:'空'">zhangsan</a>
+		  </div>
+		</div>
+		<hr style="margin: 0; border:6px solid #eee;" />
+		<div class="row" style="height: 50px; line-height: 50px;">
+		  <div class="col-xs-6">
+		  	<button type="button" class="btn btn-default btn-lg" style="width: 100%; border: 0px; text-align: left;">手机</button>
+		  </div>
+		   <div class="col-xs-6">
+		  		<a href="#" th:text="${user.mobile !=null}?${user.mobile}:'空'">18829292929</a>
+		  </div>
+		</div>
+		<hr style="margin: 0;border:1px solid #eee;"/>
+		<div class="row" style="height: 50px; line-height: 50px;">
+		 <div class="col-xs-6">
+		  	<button type="button" class="btn btn-default btn-lg" style="width: 100%; border: 0px; text-align: left;">姓名</button>
+		  </div>
+		   <div class="col-xs-6">
+		  		<a href="name" th:text="${user.name != null}?${user.name}:'空'">zhangsan</a>
+		  </div>
+		</div>
+		<hr style="margin: 0;border:1px solid #eee;"/>
+		<div class="row" style="height: 50px; line-height: 50px;">
+		 <div class="col-xs-6">
+		  	<button type="button" class="btn btn-default btn-lg" style="width: 100%; border: 0px; text-align: left;">性别</button>
+		  </div>
+		   <div class="col-xs-6">
+		  		<a href="gender" th:text="${user.gender == 1}?'男':'女'" > 男</a>
+		  </div>
+		</div>
+		<hr style="margin: 0; border:6px solid #eee;" />
+		<div class="row" style="height: 50px; line-height: 50px;">
+		  <div class="col-xs-6">
+		  	<button type="button" class="btn btn-default btn-lg" style="width: 100%; border: 0px; text-align: left;">地址</button>
+		  </div>
+		   <div class="col-xs-6">
+		  		<a href="/address" th:text="${user.address != null}?${user.address}:'空'">中国西安</a>
+		  </div>
+		</div>
+		<hr style="margin: 0;border:1px solid #eee;"/>
+		<div class="row" style="height: 50px; line-height: 50px;">
+		 <div class="col-xs-6">
+		  	<button type="button" class="btn btn-default btn-lg" style="width: 100%; border: 0px; text-align: left;">邮箱</button>
+		  </div>
+		   <div class="col-xs-6">
+		  		<a href="email" th:text="${user.email}">128310@163.com</a>
+		  </div>
+		</div>
+		<hr style="margin: 0; border:6px solid #eee;" />
+		<div class="row" style="height: 50px; line-height: 50px;">
+		  <div class="col-xs-6">
+		  	<button type="button" class="btn btn-default btn-lg" style="width: 100%; border: 0px; text-align: left;">标签</button>
+		  </div>
+		   <div class="col-xs-6">
+		  		<a>SUV</a>&nbsp;&nbsp;<a>大排量</a>
+		  </div>
+		</div>
+	</body>
+</html>

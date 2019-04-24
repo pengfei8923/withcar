@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>品牌选择</title>
+	<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/demo.css">
+		<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js" ></script>
+		<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+			
+	<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+	</head>
+	<style>
+		p{
+			margin: 0;
+		}
+		.lpfbtn{
+			text-align: left;
+			width: 100%;
+			background-color: #FFFFFF;
+			border-radius: 0px;
+		}
+		.lpfh3{
+			width:100%;padding-left: 20px;
+		}
+	</style>
+	<body  class="easyui-layout"  style="background-color:#F0F0F0">
+		<div class="row" style="background-color: #FF6F29; margin: auto;height: 50px; line-height: 46px; " align="center" >
+			<div class="col-xs-3"><a href="javaScript:history.go(-1)"><img src="img/fanhui.png" style="width:50%;"></a></div>
+			<div class="col-xs-6">
+				<span style="font-size: 25px; color: #FFFFFF;">品牌选择</span>
+			</div>
+			<div class="col-xs-3">
+				<div class="btn-group">
+					  <button type="button" class="btn dropdown-toggle" style="background-color: #FF6F29; border-color: #FF6F29;"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<img src="img/shezhi.png">
+					  </button>
+					  <ul class="dropdown-menu" >
+						<li><a href="/">首页</a></li>
+						<li><a href="#">我的</a></li>
+						<li><a href="#">消息</a></li>
+						<li><a href="/cardiscounts">新车优惠</a></li>
+						<li><a href="/selectbrand">伴我选车</a></li>
+					  </ul>
+				</div>
+			</div>
+		</div>
+		<div class="row" >
+		  <div class="col-xs-12" id="cb">
+            	<h4 class="lpfh3">A</h4>
+               <button type="button" class="btn btn-default lpfbtn">
+					<h4>奥迪</h4>
+               </button>
+
+				<h4 class="lpfh3">B</h4>
+               <button type="button" class="btn btn-default lpfbtn">
+					<h4>本田</h4>
+               </button>
+               <button type="button" onclick="selectBrand()" class="btn btn-default lpfbtn">
+					<h4>奔驰</h4>
+               </button>
+				<button type="button" class="btn btn-default lpfbtn">
+					<h4>宝马</h4>
+               </button>
+               
+               	<h4 class="lpfh3">C</h4>
+               <button type="button" class="btn btn-default lpfbtn">
+					<h4>本田</h4>
+               </button>
+               <button type="button" class="btn btn-default lpfbtn">
+					<h4>奔驰</h4>
+               </button>
+				<button type="button" class="btn btn-default lpfbtn">
+					<h4>宝马</h4>
+               </button>
+		  </div>
+		</div>
+	</body>
+<script>
+	$.ajax({
+		type:"post",
+		url:"selectBrandFirstChar",
+		async:false,
+		contentType:"application/json;charset=utf-8",
+		success:function (data) {
+			$("#cb").empty();
+			$.each(data,function (index,element) {
+				console.log(element)
+				var h4="<h4 class=\"lpfh3\">"+element+"</h4>"
+				//$("#cb").append(h4);
+				$.ajax({
+					type:"get",
+					url:"selectCbByFirstChar?element="+element,
+					async:false,
+					contentType:"application/json;charset=utf-8",
+					success:function (data1) {
+						console.log(data1);
+						$.each(data1,function (index,element1) {
+							var b="<button type=\"button\" onclick=\"xiangqing("+element1.id+")\" class=\"btn btn-default lpfbtn\">\n" +
+									"\t\t\t\t\t<h4>"+element1.namea+"</h4>\n" +
+									"               </button>";
+							h4+=b;
+						});
+
+					}
+				});
+				$("#cb").append(h4);
+			})
+		}
+	});
+	function xiangqing(id) {
+		window.location.href="selectcars?cbid="+id;
+	}
+</script>
+</html>

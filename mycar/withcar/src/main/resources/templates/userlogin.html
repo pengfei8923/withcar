@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>登录</title>
+		<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+		<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js" ></script>
+		<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+	</head>
+	<style>
+		p{
+			margin: 0;
+		}
+	</style>
+	<body  class="easyui-layout" style="background-color:#F0F0F0">
+		<div class="row" style="background-color: #FF6F29; margin: auto;height: 50px; line-height: 46px; " align="center" >
+			<div class="col-xs-3"><a href="javaScript:history.go(-1)"><img src="img/fanhui.png" style="width:50%;"></a></div>
+			<div class="col-xs-6">
+				<span style="font-size: 25px; color: #FFFFFF;">登录</span>
+			</div>
+			
+		</div>
+		<div>
+			<br /><br />
+			<div class="row" style="height: 120px; text-align: center; ">
+			  <div class="col-xs-12">
+				<img src="img/index103.png" />
+			  </div>
+			</div>
+			
+			<br />
+			<div class="row" style="height: 50px; background-color: #FFFFFF; line-height: 48px;">
+			  <div class="col-xs-3" style="text-align: right;">
+				<p>邮箱</p>
+			  </div>
+			  <div class="col-xs-8">
+				<input type="text" placeholder="请输入邮箱账号" style="margin-top: 10px;" name="useremail" class="form-control">
+			  </div>
+			  <span id="emailspan"></span>
+			</div>
+			
+			<br />
+			<div class="row" style="height: 50px; background-color: #FFFFFF; line-height: 48px;">
+			  <div class="col-xs-3" style="text-align: right;">
+				<p>密码</p>
+			  </div>
+			  <div class="col-xs-8">
+				<input type="text" placeholder="请输入密码,不少于6位" name="userpass" style="margin-top: 10px;" class="form-control">
+			  </div>
+				<span id="passspan"></span>
+			</div>
+			
+			<br /><br />
+			
+			<div class="row" style="height: 50px; line-height: 48px;">
+			  <div class="col-xs-6" style="text-align: right;">
+				<button type="button" class="btn btn-default"  onclick="window.location.href = '/userregister'"  style="width: 100%; height:50px">点击注册</button>
+			  </div>
+			  <div class="col-xs-6" style="text-align: right;">
+				<button type="button" class="btn btn-success"  style="width: 100%; height:50px" onclick="return tijiao()">登录</button>
+			  </div>
+			</div>
+			
+		</div>
+		
+		
+	</body>
+<script>
+	var regemail =/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+	$("input[name='useremail']").blur(function(){
+		var email = $("input[name='useremail']").val();
+		if (!regemail.test(email)){
+			$("#emailspan").html("×").attr("style","color:red")
+		}if(regemail.test(email)){
+			$("#emailspan").html("√").attr("style","color:green")
+		}
+	});
+	var regpass = /^[a-z0-9A-Z]{6,}$/;
+	$("input[name='userpass']").blur(function(){
+		var userpass = $("input[name='userpass']").val();
+		if (!regpass.test(userpass)){
+			$("#passspan").html("×").attr("style","color:red")
+		}if(regpass.test(userpass)){
+			$("#passspan").html("√").attr("style","color:green")
+		}
+	});
+	function tijiao() {
+		if ($("#emailspan").html()=="×") {
+			alert("邮箱格式不正确");
+			return false;
+		}
+		if ($("#passspan").html()=="×") {
+			alert("密码格式不正确");
+			return false;
+		}
+		var email = $("input[name='useremail']").val();
+		var pass = $("input[name='userpass']").val();
+		var paramObj={};
+		paramObj.useremail=email;
+		paramObj.password=pass;
+		$.ajax({
+			type:"post",
+			url:"checkLogin",
+			data:JSON.stringify(paramObj),
+			contentType:"application/json;charset=utf-8",
+			success:function (data) {
+				if (data==0){
+					alert("用户名不存在")
+				} else if (data==-1) {
+					alert("密码错误")
+				}else if (data==1){
+					window.location.href="/index";
+				}
+			},error:function () {
+				alert("Request Bad")
+			}
+		});
+	}
+</script>
+</html>

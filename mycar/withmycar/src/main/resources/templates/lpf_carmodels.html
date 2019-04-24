@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>车款管理</title>
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css">
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css">
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/demo/demo.css" />
+			<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+			<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+			<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+			<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+	</head>
+	<style>
+		th {
+			text-align: center;
+		}
+		td {
+			text-align: center;
+		}
+		.file {
+			position: relative;
+			display: inline-block;
+			background: #D0EEFF;
+			border: 1px solid #99D3F5;
+			border-radius: 4px;
+			padding: 4px 12px;
+			overflow: hidden;
+			color: #1E88C7;
+			text-decoration: none;
+			text-indent: 0;
+			line-height: 20px;
+		}
+		.file input {
+			position: absolute;
+			font-size: 100px;
+			right: 0;
+			top: 0;
+			opacity: 0;
+		}
+		.file:hover {
+			background: #AADFFD;
+			border-color: #78C3F3;
+			color: #004974;
+			text-decoration: none;
+		}
+	</style>
+	<body class="easyui-layout" >
+		<div data-options="region:'center',title:'车款管理'" style="padding: 0px">
+			<div style="margin: auto; width: 90%;">
+				<div class="form-inline" style="height: 50px; padding-top: 10px">
+				  <div class="form-group">
+					<label for="exampleInputName2">品牌</label>
+					<select class="form-control" style="width: 200px;" id="b1">
+						<option>奥迪</option>
+					</select>
+				  </div>
+				  <div class="form-group">
+					<label for="exampleInputEmail2">类型</label>
+					<select class="form-control" style="width: 200px;" id="t1">
+						<option>SUV</option>
+					</select>
+				  </div>
+				  <div class="form-group">
+					<label for="exampleInputEmail2">车系</label>
+					<select class="form-control" style="width: 200px;" id="s1">
+						<option>奔驰E系</option>
+					</select>
+				</div>
+					<div class="form-group">
+						<form class="form-inline">
+							<div class="form-group">
+								<label class="sr-only" for="exampleInputEmail3">Email address</label>
+								<input type="email" class="form-control" id="exampleInputEmail3" placeholder="名称模糊匹配">
+							</div>
+							<button type="button"  class="btn btn-info" onclick="sousuo3()">搜索</button>
+						</form>
+					</div>
+					<div class="form-group">
+						<div>
+							<button type="button" class="btn btn-success" style="float: right;" data-toggle="modal" data-target="#myModal">新增</button>
+						</div>
+					</div>
+				</div>
+
+				<div>
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>序号</th>
+								<th>车款名称</th>
+								<th>车款图片</th>
+								<th>所属品牌</th>
+								<th>所属年款</th>
+								<th>所属车系</th>
+								<th>类型</th>
+								<th>功能</th>
+							</tr>
+						</thead>
+						<tbody id="carModelsList">
+
+						</tbody>
+					</table>
+				</div>				
+			</div>
+			
+		</div>
+		<!-- 新增Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel3">新增车款</h4>
+		      </div>
+		      <div class="modal-body">
+					<form class="form-horizontal">
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">车款名称</label>
+					    <div class="col-sm-10">
+					      <input type="email" class="form-control" id="inputEmail3" placeholder="宝马X6">
+					    </div>
+					  </div>
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">所属年款</label>
+							<div class="col-sm-3">
+								<input type="email" style="width: 135px" class="form-control" id="inputEmail32" placeholder="请输入年份"/>
+							</div>
+							<div class="col-sm-2">
+								<span style="line-height: 34px">款</span>
+							</div>
+						</div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">所属品牌</label>
+					    <div class="col-sm-10">
+							<select class="form-control" id="b2">
+							</select>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">所属厂商</label>
+					    <div class="col-sm-10">
+							<select class="form-control" id="c2">
+							</select>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">所属车系</label>
+					    <div class="col-sm-10">
+							<select class="form-control" id="s2">
+							</select>
+					    </div>
+					  </div>
+
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">主类型</label>
+					    <div class="col-sm-10">
+							<select class="form-control" id="t2">
+							</select>
+					    </div>
+					  </div>
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">二级类型</label>
+							<div class="col-sm-10">
+								<select class="form-control" id="st2">
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<form role="form" style="" id="file" enctype="multipart/form-data">
+								<label for="inputEmail3" class="col-sm-2 control-label">车款图片</label>
+								<div class="col-sm-3">
+									<a href="javascript:;" class="file">选择文件
+										<input type="file" name="file" id="uploadImgBtn"></a>
+								</div>
+								<div class="col-sm-3">
+									<img id="tihuan" src="/htstatic/images/yanzhengma.png" class="img-thumbnail" style="height: 70px; width: 100px;" accept="image/gif, image/jpeg, image/png, image/jpg"/>
+								</div>
+							</form>
+						</div>
+
+					</form>	         
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		        <button type="button" class="btn btn-primary" onclick="return tijiao6()">保存</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- 编辑Modal -->
+		<div class="modal fade" id="myModalbj" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel1">编辑车款</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal">
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">车款名称</label>
+								<div class="col-sm-10">
+									<input type="email" class="form-control" id="inputEmail33" placeholder="宝马X6">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">所属年款</label>
+								<div class="col-sm-3">
+									<input type="email" style="width: 135px" class="form-control" id="inputEmail331" placeholder="请输入年份"/>
+								</div>
+								<div class="col-sm-2">
+									<span style="line-height: 34px">款</span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">所属品牌</label>
+								<div class="col-sm-10">
+									<select class="form-control" id="b3">
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">所属厂商</label>
+								<div class="col-sm-10">
+									<select class="form-control" id="c3">
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">所属车系</label>
+								<div class="col-sm-10">
+									<select class="form-control" id="s3">
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">主类型</label>
+								<div class="col-sm-10">
+									<select class="form-control" id="t3">
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">二级类型</label>
+								<div class="col-sm-10">
+									<select class="form-control" id="st3">
+									</select>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						<button type="button" class="btn btn-primary" onclick="return tijiao7()">保存</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 删除Modal -->
+		<div class="modal fade" id="myModaldel" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">删除</h4>
+		      </div>
+		      <div class="modal-body">
+					<h3>确定删除？</h3>      
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		        <button type="button" class="btn btn-primary" onclick="shanchu5()">确定</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<script type="text/javascript">
+			/*新增模态框*/
+			$('#myModal').on('shown.bs.modal', function () {
+			  $('#myInput').focus();
+				var b2 = $("#b2").find("option:selected").val();
+				var c2;
+				var s2;
+				var t2;
+				/*厂商随品牌的变化而变化*/
+				$.ajax({
+					type:"get",
+					async:false,
+					url:"selectFactoryBybrandId?brandId="+b2,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#c2").empty();
+						$.each(data,function (index,element) {
+							var opts="<option value=\""+element.facId+"\">"+element.facName+"</option>";
+							$("#c2").append(opts);
+						})
+						c2 = $("#c2").find("option:selected").val();
+					}
+				});
+				/*车系随厂商的变化而变化*/
+				$.ajax({
+					type:"get",
+					async:false,
+					url:"selectCarSeriesByFacId?facId="+c2,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#s2").empty();
+						$.each(data,function (index,element) {
+							var opts="<option value=\""+element.id+"\">"+element.seriesName+"</option>";
+							$("#s2").append(opts);
+						})
+						s2= $("#s2").find("option:selected").val();
+					}
+				});
+
+				/*主类型随车系的变化而变化*/
+				$.ajax({
+					type:"get",
+					async:false,
+					url:"selectTypeBySeries?id="+s2,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#t2").empty();
+						var opts="<option value=\""+data.tyid+"\">"+data.tyname+"</option>";
+						$("#t2").append(opts);
+						t2= $("#t2").find("option:selected").val();
+					}
+				});
+				/*子类型随主类型的变化而变化*/
+				$.ajax({
+					type:"get",
+					async:false,
+					url:"selectChildren?tyid="+t2,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#st2").empty();
+						$.each(data,function (index,element) {
+							var opts="<option value=\""+element.tyid+"\">"+element.tyname+"</option>";
+							$("#st2").append(opts);
+						})
+					}
+				});
+			});
+
+			var bianjiId;
+			$('#myModalbj').on('shown.bs.modal', function (event) {
+			  $('#myInput').focus();
+				var button = $(event.relatedTarget);
+				var id = button.data('id');
+				bianjiId=id;
+				$.ajax({
+					type:"get",
+					url:"selectCarModelsById?cmid="+bianjiId,
+					async:false,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#inputEmail33").val(data.cmname);
+						$("#inputEmail331").val(data.cmyear);
+						$("#b3 option[value=\""+data.brandid+"\"]").prop("selected",true);
+						$("#c3 option[value=\""+data.facid+"\"]").prop("selected",true);
+						$("#s3 option[value=\""+data.seriesid+"\"]").prop("selected",true);
+						$("#t3 option[value=\""+data.tyid+"\"]").prop("selected",true);
+						$("#st3 option[value=\""+data.styid+"\"]").prop("selected",true);
+					}
+				});
+			})
+			var shanchuId;
+			$('#myModaldel').on('shown.bs.modal', function (event) {
+			  $('#myInput').focus();
+				var button = $(event.relatedTarget);
+				var id = button.data('id');
+				shanchuId=id;
+			})
+			function carlpfmodelsconfig(id) {
+				window.location.href="carlpfmodelsconfig?id="+id;
+			}
+			/*类型不可选*/
+			$("#t2").attr("disabled","disabled").css("background-color","#EEEEEE;");
+			$("#t3").attr("disabled","disabled").css("background-color","#EEEEEE;");
+			/*新增时替换图片位置*/
+			$('#uploadImgBtn').on('change', function () {
+				var filePath = $(this).val();
+				fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();//取后缀“.”以后的，并转大写
+				src = window.URL.createObjectURL(this.files[0]);//转换成本地格式。读本地图片的方法
+				if (!fileFormat.match(/.png|.jpg|.jpeg/)) {
+					alert(文件传输格式错误);
+					$(this).val("");
+				}
+				$("#tihuan").attr('src', src);//替换图片位置
+			});
+			/*查询所有品牌并放入下拉框*/
+			$.ajax({
+				type:"post",
+				url:"selectAllBrands",
+				async:false,
+				contentType:"application/json;charset=utf-8",
+				success:function (data) {
+					$("#b1").empty();
+					$("#b2").empty();
+					$("#b3").empty();
+					var allbrand="<option value=\"\">全部</option>";
+					$("#b1").append(allbrand);
+					$.each(data,function (index,element) {
+						var opts="<option value="+element.id+">"+element.namea+"</option>";
+						$("#b1").append(opts);
+						$("#b2").append(opts);
+						$("#b3").append(opts);
+					})
+				}
+			});
+			/*查询所有类型并放入下拉框*/
+			$.ajax({
+				type:"post",
+				url:"selectAllCarTypes",
+				async:false,
+				contentType:"application/json;charset=utf-8",
+				success:function (data) {
+					$("#t1").empty();
+					$("#t2").empty();
+					$("#t3").empty();
+					var alltypes="<option value=\"\">全部</option>";
+					var alltypes1="<option value=\"\"></option>";
+					$("#t1").append(alltypes);
+					$("#t2").append(alltypes1);
+					$("#t3").append(alltypes1);
+					$.each(data,function (index,element) {
+						var opts="<option value="+element.tyid+">"+element.tyname+"</option>";
+						$("#t1").append(opts);
+						$("#t2").append(opts);
+						$("#t3").append(opts);
+					})
+				}
+			});
+			/*查询出所有的厂商并放入下拉框*/
+			$.ajax({
+				type:"post",
+				url:"selectAllFactory",
+				async:false,
+				contentType:"application/json;charset=utf-8",
+				success:function (data) {
+					$("#c3").empty();
+					$.each(data,function (index,element) {
+						var opts="<option value="+element.facId+">"+element.facName+"</option>";
+						$("#c3").append(opts);
+					})
+				}
+			})
+			/* 查询出所有的二级类型放入下拉框*/
+			$.ajax({
+				type:"post",
+				url:"selectAllChildrenTypes",
+				async:false,
+				contentType:"application/json;charset=utf-8",
+				success:function (data) {
+					$("#st3").empty();
+					$.each(data,function (index,element) {
+						var opts="<option value="+element.tyid+">"+element.tyname+"</option>";
+						$("#st3").append(opts);
+					})
+				}
+			})
+
+			/*查询所有车系并放入下拉框*/
+			$.ajax({
+				type:"post",
+				url:"selectAllCarSeriesDto",
+				async:false,
+				contentType:"application/json;charset=utf-8",
+				success:function (data) {
+					$("#s1").empty();
+					$("#s3").empty();
+					var allSeries="<option value=\"\">全部</option>";
+					$("#s1").append(allSeries);
+					$.each(data,function (index,element) {
+						var opts="<option value="+element.id+">"+element.seriesName+"</option>";
+						$("#s1").append(opts);
+						$("#s3").append(opts);
+					})
+				}
+			});
+
+
+			/*新建框打开时  品牌的变化  ----------------------------------------------------------------------------------其他变化*/
+			$("#b2").change(function(){
+					var b2 = $("#b2").find("option:selected").val();
+					var c2;
+					var s2;
+					var t2;
+					/*厂商随品牌的变化而变化*/
+					$.ajax({
+						type:"get",
+						async:false,
+						url:"selectFactoryBybrandId?brandId="+b2,
+						contentType:"application/json;charset=utf-8",
+						success:function (data) {
+							$("#c2").empty();
+							$.each(data,function (index,element) {
+								var opts="<option value=\""+element.facId+"\">"+element.facName+"</option>";
+								$("#c2").append(opts);
+							})
+							 c2 = $("#c2").find("option:selected").val();
+						}
+					});
+					/*车系随厂商的变化而变化*/
+					$.ajax({
+						type:"get",
+						async:false,
+						url:"selectCarSeriesByFacId?facId="+c2,
+						contentType:"application/json;charset=utf-8",
+						success:function (data) {
+							$("#s2").empty();
+							$.each(data,function (index,element) {
+								var opts="<option value=\""+element.id+"\">"+element.seriesName+"</option>";
+								$("#s2").append(opts);
+							})
+							s2= $("#s2").find("option:selected").val();
+						}
+					});
+
+					/*主类型随车系的变化而变化*/
+					$.ajax({
+						type:"get",
+						async:false,
+						url:"selectTypeBySeries?id="+s2,
+						contentType:"application/json;charset=utf-8",
+						success:function (data) {
+							$("#t2").empty();
+								var opts="<option value=\""+data.tyid+"\">"+data.tyname+"</option>";
+								$("#t2").append(opts);
+							t2= $("#t2").find("option:selected").val();
+						}
+					});
+					/*子类型随主类型的变化而变化*/
+					$.ajax({
+						type:"get",
+						async:false,
+						url:"selectChildren?tyid="+t2,
+						contentType:"application/json;charset=utf-8",
+						success:function (data) {
+							$("#st2").empty();
+							$.each(data,function (index,element) {
+								var opts="<option value=\""+element.tyid+"\">"+element.tyname+"</option>";
+								$("#st2").append(opts);
+							})
+						}
+					});
+				});
+				/*厂商变化，-----------------------------------------------------------------------------------------其他变化*/
+			$("#c2").change(function(){
+				var c2 = $("#c2").find("option:selected").val();
+				var s2;
+				var t2;
+				/*车系随厂商的变化而变化*/
+				$.ajax({
+					type:"get",
+					async:false,
+					url:"selectCarSeriesByFacId?facId="+c2,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#s2").empty();
+						$.each(data,function (index,element) {
+							var opts="<option value=\""+element.id+"\">"+element.seriesName+"</option>";
+							$("#s2").append(opts);
+						})
+						s2 = $("#s2").find("option:selected").val();
+					}
+				});
+
+				/*主类型随车系的变化而变化*/
+				$.ajax({
+					type:"get",
+					async:false,
+					url:"selectTypeBySeries?id="+s2,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#t2").empty();
+						var opts="<option value=\""+data.tyid+"\">"+data.tyname+"</option>";
+						$("#t2").append(opts);
+						t2= $("#t2").find("option:selected").val();
+					}
+				});
+				/*子类型随主类型的变化而变化*/
+				$.ajax({
+					type:"get",
+					async:false,
+					url:"selectChildren?tyid="+t2,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#st2").empty();
+						$.each(data,function (index,element) {
+							var opts="<option value=\""+element.tyid+"\">"+element.tyname+"</option>";
+							$("#st2").append(opts);
+						})
+					}
+				});
+			});
+
+			/*车系变化，------------------------------------------------------------------------------------------------其他变化*/
+			$("#s2").change(function(){
+				var s2= $("#s2").find("option:selected").val();
+				var t2;
+				/*主类型随车系的变化而变化*/
+				$.ajax({
+					type:"get",
+					async:false,
+					url:"selectTypeBySeries?id="+s2,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#t2").empty();
+						var opts="<option value=\""+data.tyid+"\">"+data.tyname+"</option>";
+						$("#t2").append(opts);
+						t2= $("#t2").find("option:selected").val();
+					}
+				});
+				/*子类型随主类型的变化而变化*/
+				$.ajax({
+					type:"get",
+					async:false,
+					url:"selectChildren?tyid="+t2,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#st2").empty();
+						$.each(data,function (index,element) {
+							var opts="<option value=\""+element.tyid+"\">"+element.tyname+"</option>";
+							$("#st2").append(opts);
+						})
+					}
+				});
+			});
+			/*主类型变化 ------------------------------------------------------------------------------------------------ 其他变化*/
+			$("#t2").change(function(){
+				var t2= $("#t2").find("option:selected").val();
+				/*子类型随主类型的变化而变化*/
+				$.ajax({
+					type:"get",
+					async:false,
+					url:"selectChildren?tyid="+t2,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#st2").empty();
+						$.each(data,function (index,element) {
+							var opts="<option value=\""+element.tyid+"\">"+element.tyname+"</option>";
+							$("#st2").append(opts);
+						})
+					}
+				});
+			});
+			/*编辑--------------------------------------------------------------------------------------*/
+			/*新建框打开时  品牌的变化  ----------------------------------------------------------------------------------其他变化*/
+			$("#b3").change(function(){
+				var b3 = $("#b3").find("option:selected").val();
+				var c3;
+				var s3;
+				var t3;
+				/*厂商随品牌的变化而变化*/
+				$.ajax({
+					type:"get",
+					async:false,
+					url:"selectFactoryBybrandId?brandId="+b3,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#c3").empty();
+						$.each(data,function (index,element) {
+							var opts="<option value=\""+element.facId+"\">"+element.facName+"</option>";
+							$("#c3").append(opts);
+						})
+						c3 = $("#c3").find("option:selected").val();
+					}
+				});
+				/*车系随厂商的变化而变化*/
+				$.ajax({
+					type:"get",
+					async:false,
+					url:"selectCarSeriesByFacId?facId="+c3,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#s3").empty();
+						$.each(data,function (index,element) {
+							var opts="<option value=\""+element.id+"\">"+element.seriesName+"</option>";
+							$("#s3").append(opts);
+						})
+						s3= $("#s3").find("option:selected").val();
+					}
+				});
+
+				/*主类型随车系的变化而变化*/
+				$.ajax({
+					type:"get",
+					async:false,
+					url:"selectTypeBySeries?id="+s3,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#t3").empty();
+						var opts="<option value=\""+data.tyid+"\">"+data.tyname+"</option>";
+						$("#t3").append(opts);
+						t3= $("#t3").find("option:selected").val();
+					}
+				});
+				/*子类型随主类型的变化而变化*/
+				$.ajax({
+					type:"get",
+					async:false,
+					url:"selectChildren?tyid="+t3,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#st3").empty();
+						$.each(data,function (index,element) {
+							var opts="<option value=\""+element.tyid+"\">"+element.tyname+"</option>";
+							$("#st3").append(opts);
+						})
+					}
+				});
+			});
+			/*厂商变化，-----------------------------------------------------------------------------------------其他变化*/
+			$("#c3").change(function(){
+				var c3 = $("#c3").find("option:selected").val();
+				var s3;
+				var t3;
+				/*车系随厂商的变化而变化*/
+				$.ajax({
+					type:"get",
+					async:false,
+					url:"selectCarSeriesByFacId?facId="+c3,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#s3").empty();
+						$.each(data,function (index,element) {
+							var opts="<option value=\""+element.id+"\">"+element.seriesName+"</option>";
+							$("#s3").append(opts);
+						})
+						s3= $("#s3").find("option:selected").val();
+					}
+				});
+
+				/*主类型随车系的变化而变化*/
+				$.ajax({
+					type:"get",
+					async:false,
+					url:"selectTypeBySeries?id="+s3,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#t3").empty();
+						var opts="<option value=\""+data.tyid+"\">"+data.tyname+"</option>";
+						$("#t3").append(opts);
+						t3= $("#t3").find("option:selected").val();
+					}
+				});
+				/*子类型随主类型的变化而变化*/
+				$.ajax({
+					type:"get",
+					async:false,
+					url:"selectChildren?tyid="+t3,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#st3").empty();
+						$.each(data,function (index,element) {
+							var opts="<option value=\""+element.tyid+"\">"+element.tyname+"</option>";
+							$("#st3").append(opts);
+						})
+					}
+				});
+			});
+
+			/*车系变化，------------------------------------------------------------------------------------------------其他变化*/
+			$("#s3").change(function(){
+				var s3= $("#s3").find("option:selected").val();
+				var t3;
+				/*主类型随车系的变化而变化*/
+				$.ajax({
+					type:"get",
+					async:false,
+					url:"selectTypeBySeries?id="+s3,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#t3").empty();
+						var opts="<option value=\""+data.tyid+"\">"+data.tyname+"</option>";
+						$("#t3").append(opts);
+						t3= $("#t3").find("option:selected").val();
+					}
+				});
+				/*子类型随主类型的变化而变化*/
+				$.ajax({
+					type:"get",
+					async:false,
+					url:"selectChildren?tyid="+t3,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#st3").empty();
+						$.each(data,function (index,element) {
+							var opts="<option value=\""+element.tyid+"\">"+element.tyname+"</option>";
+							$("#st3").append(opts);
+						})
+					}
+				});
+			});
+			/*主类型变化 ------------------------------------------------------------------------------------------------ 其他变化*/
+			$("#t3").change(function(){
+				var t3= $("#t3").find("option:selected").val();
+				/*子类型随主类型的变化而变化*/
+				$.ajax({
+					type:"get",
+					async:false,
+					url:"selectChildren?tyid="+t3,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#st3").empty();
+						$.each(data,function (index,element) {
+							var opts="<option value=\""+element.tyid+"\">"+element.tyname+"</option>";
+							$("#st3").append(opts);
+						})
+					}
+				});
+			});
+			function tijiao6() {
+				var cmname = $("#inputEmail3").val();
+				if (cmname==null||cmname==''){
+					alert("车款名称为不能为空");
+					return false;
+				}
+				var cmyear=$("#inputEmail32").val();
+				if (cmyear==null||cmyear==''){
+					alert("年款为不能为空");
+					return false;
+				}
+				var brandid= $("#b2").find("option:selected").val();
+				if (brandid==null||brandid==''){
+					alert("品牌不能为空");
+					return false;
+				}
+				var facid= $("#c2").find("option:selected").val();
+				if (facid==null||facid==''){
+					alert("厂商不能为空");
+					return false;
+				}
+				var seriesid= $("#s2").find("option:selected").val();
+				if (seriesid==null||seriesid==''){
+					alert("车系不能为空");
+					return false;
+				}
+				var tyid= $("#t2").find("option:selected").val();
+				if (tyid==null||tyid==''){
+					alert("主类型不能为空");
+					return false;
+				}
+				var styid= $("#st2").find("option:selected").val();
+				if (styid==null||styid==''){
+					alert("子类型不能为空");
+					return false;
+				}
+				var realImg = $('#uploadImgBtn')[0].files[0];
+				var formData = new FormData();
+				formData.append("cmname",cmname);
+				formData.append("cmyear",cmyear);
+				formData.append("brandid",brandid);
+				formData.append("facid",facid);
+				formData.append("seriesid",seriesid);
+				formData.append("tyid",tyid);
+				formData.append("styid",styid);
+				formData.append("realImg",realImg);
+				$.ajax({
+					type: 'post',
+					async: false,
+					cache: false,
+					contentType: false, //不设置内容类型
+					processData: false, //不处理数据
+					url:"insertCarModels",
+					data:formData,
+					success:function (data) {
+						window.location.reload();
+					}
+				});
+				return true;
+			}
+			/*模糊查询*/
+			function sousuo3() {
+				var cmname = $("#exampleInputEmail3").val();
+				var brandid= $("#b1").find("option:selected").val();
+				var tyid= $("#t1").find("option:selected").val();
+				var seriesid= $("#s1").find("option:selected").val();
+				var paramObj={};
+				paramObj.cmname=cmname;
+				paramObj.brandid=brandid;
+				paramObj.tyid=tyid;
+				paramObj.seriesid=seriesid;
+				$.ajax({
+					type:"post",
+					url:"selectCarModelsMohu",
+					async:false,
+					data:JSON.stringify(paramObj),
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						console.log(data);
+						var count=0;
+						$("#carModelsList").empty();
+						$.each(data,function (index,element) {
+							count++;
+							var trStr="<tr>\n" +
+									"<td style='line-height: 70px'>"+count+"</td>\n" +
+									"<td style='line-height: 70px'>"+element.cmname+"</td>\n" +
+									"<td style='line-height: 70px'><img style=\"width: 100px; height: 70px;\" class=\"img-thumbnail\" src=\""+element.picurl+"\"/></td>\n" +
+									"<td style='line-height: 70px'>"+element.namea+"</td>\n" +
+									"<td style='line-height: 70px'>"+element.cmyear+"</td>\n" +
+									"<td style='line-height: 70px'>"+element.seriesname+"</td>\n" +
+									"<td style='line-height: 70px'>"+element.tyname+":"+element.styname+"</td>\n" +
+									"<td style='line-height: 70px'>\n" +
+									"<button type=\"button\" class=\"btn btn-warning\" data-toggle=\"modal\" data-target=\"#myModalpeizhi\" onclick=\"carlpfmodelsconfig("+element.cmid+")\">配置表</button>\n" +
+									"<button type=\"button\" data-id=\""+element.cmid+"\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#myModalbj\">编辑</button>\n" +
+									"<button type=\"button\" data-id=\""+element.cmid+"\" class=\"btn btn-danger\" data-toggle=\"modal\" data-target=\"#myModaldel\">删除</button>\n" +
+									"</td>\n" +
+									"</tr>";
+							$("#carModelsList").append(trStr);
+						})
+					},error:function () {
+						alert("请求失败");
+					}
+				});
+			}
+
+			/*查询所有车款*/
+			$.ajax({
+				type:"post",
+				url:"selectAllCarModelsDto",
+				async:false,
+				contentType:"application/json;charset=utf-8",
+				success:function (data) {
+					console.log(data);
+					var count=0;
+					$("#carModelsList").empty();
+					$.each(data,function (index,element) {
+						count++;
+						var trStr="<tr>\n" +
+								"<td style='line-height: 70px'>"+count+"</td>\n" +
+								"<td style='line-height: 70px'>"+element.cmname+"</td>\n" +
+								"<td style='line-height: 70px'><img style=\"width: 100px; height: 70px;\" class=\"img-thumbnail\" src=\""+element.picurl+"\"/></td>\n" +
+								"<td style='line-height: 70px'>"+element.namea+"</td>\n" +
+								"<td style='line-height: 70px'>"+element.cmyear+"</td>\n" +
+								"<td style='line-height: 70px'>"+element.seriesname+"</td>\n" +
+								"<td style='line-height: 70px'>"+element.tyname+":"+element.styname+"</td>\n" +
+								"<td style='line-height: 70px'>\n" +
+								"<button type=\"button\" class=\"btn btn-warning\" data-toggle=\"modal\" data-target=\"#myModalpeizhi\" onclick=\"carlpfmodelsconfig("+element.cmid+")\">配置表</button>\n" +
+								"<button type=\"button\" data-id=\""+element.cmid+"\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#myModalbj\">编辑</button>\n" +
+								"<button type=\"button\" data-id=\""+element.cmid+"\" class=\"btn btn-danger\" data-toggle=\"modal\" data-target=\"#myModaldel\">删除</button>\n" +
+								"</td>\n" +
+								"</tr>";
+						$("#carModelsList").append(trStr);
+					})
+				}
+			});
+			function tijiao7() {
+				var cmname = $("#inputEmail33").val();
+				if (cmname==null||cmname==''){
+					alert("车款不能为空");
+					return false;
+				}
+				var cmyear = $("#inputEmail331").val();
+				if (cmyear==null||cmyear==''){
+					alert("年份不能为空");
+					return false;
+				}
+				var brandid= $("#b3").find("option:selected").val();
+				if (brandid==null||brandid==''){
+					alert("品牌不能为空");
+					return false;
+				}
+				var facid= $("#c3").find("option:selected").val();
+				if (facid==null||facid==''){
+					alert("厂商不能为空");
+					return false;
+				}
+				var seriesid= $("#s3").find("option:selected").val();
+				if (seriesid==null||seriesid==''){
+					alert("车系不能为空");
+					return false;
+				}
+				var tyid= $("#t3").find("option:selected").val();
+				if (tyid==null||tyid==''){
+					alert("主类型不能为空");
+					return false;
+				}
+				var styid= $("#st3").find("option:selected").val();
+				if (styid==null||styid==''){
+					alert("子类型不能为空");
+					return false;
+				}
+				var cmid=bianjiId;
+				var paramObj={};
+				paramObj.cmname=cmname;
+				paramObj.cmyear=cmyear;
+				paramObj.brandid=brandid;
+				paramObj.facid=facid;
+				paramObj.seriesid=seriesid;
+				paramObj.tyid=tyid;
+				paramObj.styid=styid;
+				paramObj.cmid=cmid;
+				$.ajax({
+					type:"post",
+					url:"updateCarModels",
+					data:JSON.stringify(paramObj),
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						window.location.reload();
+					}
+				});
+				return true;
+			};
+			/*删除车款信息*/
+			function shanchu5() {
+				$.ajax({
+					type:"get",
+					url:"deleteCarModels?cmid="+shanchuId,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						window.location.reload();
+					},error:function () {
+						alert("请求失败");
+					}
+				});
+			}
+
+		</script>
+	</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>自有商品列表</title>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css" />
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/demo/demo.css" />
+    <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+</head>
+<body style="padding:0px;margin:0px">
+<div id="p" class="easyui-panel" title="自有商品列表:" style="width:auto;height:auto;padding:20px;border-bottom:0px">
+
+    <div style="margin-bottom:40px;margin-top:40px">
+        <input class="easyui-textbox" data-options="buttonText:'搜索',prompt:'标题'" style="width:250px;height:32px;">
+        <!--<input style="border-radius:5px;border:1px solid #95B8E7;background:#E0ECFF;float:right;margin-right:2px;width:50px;height:32px;line-height:28px;font-size:14px;" type="button" value="新增">-->
+        <button class="easyui-linkbutton" style="width:80px;float:right" onClick="$('#newselfproduct').window('open')">新增</button>
+    </div>
+    <table class="easyui-datagrid" id="dg" style="width:100%;height:auto"
+           data-options="singleSelect:true,collapsible:true,url:'datagrid_data1.json',method:'get'">
+        <thead>
+        <tr>
+            <th data-options="field:'itemid',align:'center',resizable:false" width="7%">序号</th>
+            <th data-options="field:'productid',align:'center',resizable:false" width="25%">标题</th>
+            <th data-options="field:'listprice',align:'center',resizable:false" width="20%">关联活动</th>
+            <th data-options="field:'attr1',align:'center',resizable:false" width="15%">关联车型</th>
+            <th data-options="field:'unitcost',align:'center',resizable:false" width="15%">
+                <select style="width:188px;height:30px;border:1px #eaf2ff;background:#eaf2ff">
+                    <option>状体</option>
+                    <option>已发布</option>
+                    <option>未发布</option>
+                </select>
+            </th>
+            <th data-options="field:'status',align:'center',resizable:false" width="19.58%">操作</th>
+        </tr>
+        </thead>
+        <tr>
+            <td>1</td>
+            <td>xxxxxx</td>
+            <td><b onClick="$('#selfproductshow').window('open')">标题活动</b></td>
+            <td>奔驰</td>
+            <td>已发布</td>
+            <td>
+                <button class="easyui-linkbutton" style="width:50px;margin-right:20px">发布</button>
+                <button class="easyui-linkbutton" style="width:50px" onClick="$('#editselfproduct').window('open')">编辑</button>
+            </td>
+        </tr>
+
+    </table>
+    <div class="easyui-pagination" data-options="
+					total: 50,
+                    pagesize: 10,
+					showPageList: false,
+					showRefresh: false,
+					displayMsg: ''
+				">
+    </div>
+</div>
+<!--新增自有商品-->
+<div id="newselfproduct" class="easyui-window" title="新增自有商品" data-options="modal:true,closed:true,iconCls:'icon-add',collapsible:false,minimizable:false,maximizable:false,draggable:false,resizable:false" style="width:850px;height:500px;padding:10px;">
+    <div style="border-bottom:1px solid #80FFFF;padding:20px 80px 20px;">
+        <b style="font-size:18px; ">*标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题：</b>
+        <input class="easyui-textbox" data-options="prompt:'Enter something here...'" style="width:35%;height:32px">
+    </div>
+    <div style="border-bottom:1px solid #80FFFF;padding:20px 80px 20px;">
+        <div style="float:left">
+            <b style="font-size:18px; ">*车型说明：</b>
+        </div>
+        <div class="easyui-texteditor" style="width:40%;height:200px;padding:20px">
+        </div>
+        <!--<input class="easyui-textbox" name="message" data-options="multiline:true" style="height:150px;width:500px"></input>-->
+    </div>
+    <div style="border-bottom:1px solid #80FFFF;padding:20px 80px 20px">
+        <div style="float:left">
+            <b style="font-size:18px">*售后服务：</b>
+        </div>
+        <div class="easyui-texteditor" style="width:40%;height:250px;padding:20px">
+        </div>
+        <!--<input class="easyui-textbox" name="message" data-options="multiline:true" style="height:200px;width:500px"></input>-->
+    </div>
+    <div style="border-bottom:1px solid #80FFFF;padding:20px 80px 20px">
+        <div style="background:#ccc; float:left">
+            <b style="font-size:18px">*关联车型：</b>
+        </div>
+        <div style="width:40%;height:auto;margin-left:110px">
+            <img src="../static/images/b.jpg" style="width:150px; height:100px"/>
+            <button class="easyui-linkbutton" style="float:right;margin-top:40px;width:80px">删除</button>
+        </div>
+        <div style="margin-left:110px;width:100px">
+            <p style="font-size:14px">关联活动：</p>
+        </div>
+        <div style="margin-left:110px">
+            <table id="dg" class="easyui-datagrid" style="width:600px;height:auto"
+                   data-options="singleSelect:true,collapsible:true,url:'datagrid_data1.json',method:'get'">
+                <thead>
+                <tr>
+                    <th data-options="field:'itemid',align:'center',resizable:false" width="199px">是否展示</th>
+                    <th data-options="field:'productid',align:'center',resizable:false" width="199px">图片</th>
+                    <th data-options="field:'listprice',align:'center',resizable:false" width="199px">标题</th>
+                </tr>
+                </thead>
+                <tr>
+                    <td>
+                        <input type="checkbox" value=""/>
+                    </td>
+                    <td>
+                        <img src="../static/images/b.jpg" style="width:150px; height:100px"/>
+                    </td>
+                    <td>
+                        活动标题
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" value=""/>
+                    </td>
+                    <td>
+                        <img src="../static/images/b.jpg" style="width:150px; height:100px"/>
+                    </td>
+                    <td>
+                        活动标题
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div style="border-bottom:1px solid #80FFFF;padding:20px 190px 20px">
+        <button class="easyui-linkbutton" style="width:100px" >新增</button>
+    </div>
+    <div style="border-bottom:1px solid #80FFFF;padding:20px 400px 20px">
+        <!--<button class="easyui-linkbutton" style="width:100px;margin-right:80px" onclick="$('#selfproductshow').window('open ')">预览</button>-->
+        <button class="easyui-linkbutton" style="width:100px" onclick="window.location='wk_selfproducts.html'">保存</button>
+    </div>
+</div>
+<!--预览商品-->
+<div id="selfproductshow" class="easyui-window" title="预览商品" data-options="modal:true,closed:true,collapsible:false,minimizable:false,maximizable:false,draggable:false,resizable:false" style="width:850px;height:500px;padding:10px;">
+    <div style="border-bottom:1px solid #80FFFF;padding:20px 80px 20px;">
+        <b style="font-size:18px; ">*标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题：</b>
+        <p style="font-size:18px;display:inline">这里是标题哈哈哈！</p>
+    </div>
+    <div style="border-bottom:1px solid #80FFFF;padding:20px 80px 20px;">
+        <div style="float:left">
+            <b style="font-size:18px; ">*车型说明：</b>
+        </div>
+        <!--<div class="easyui-texteditor" style="width:40%;height:200px;padding:20px">
+      	</div>-->
+        <input class="easyui-textbox" name="message" data-options="multiline:true" style="height:150px;width:500px"></input>
+    </div>
+    <div style="border-bottom:1px solid #80FFFF;padding:20px 80px 20px">
+        <div style="float:left">
+            <b style="font-size:18px">*售后服务：</b>
+        </div>
+        <!--<div class="easyui-texteditor" style="width:40%;height:250px;padding:20px">
+           </div>-->
+        <input class="easyui-textbox" name="message" data-options="multiline:true" style="height:200px;width:500px"></input>
+    </div>
+    <div style="border-bottom:1px solid #80FFFF;padding:20px 80px 100px">
+        <div style="background:#ccc; float:left">
+            <b style="font-size:18px">*关联车型：</b>
+        </div>
+        <div style="width:40%;height:auto;margin-left:110px">
+            <img src="img/b.jpg" style="width:150px; height:100px"/>
+        </div>
+        <div style="margin-left:110px;width:100px">
+            <p style="font-size:14px">关联活动：</p>
+        </div>
+        <div style="margin-left:110px">
+            <table id="dg" class="easyui-datagrid" style="width:600px;height:auto"
+                   data-options="singleSelect:true,collapsible:true,url:'datagrid_data1.json',method:'get'">
+                <thead>
+                <tr>
+                    <th data-options="field:'itemid',align:'center',resizable:false" width="199px">是否展示</th>
+                    <th data-options="field:'productid',align:'center',resizable:false" width="199px">图片</th>
+                    <th data-options="field:'listprice',align:'center',resizable:false" width="199px">标题</th>
+                </tr>
+                </thead>
+                <tr>
+                    <td>
+                        <input type="checkbox" value=""/>
+                    </td>
+                    <td>
+                        <img src="img/b.jpg" style="width:150px; height:100px"/>
+                    </td>
+                    <td>
+                        活动标题
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" value=""/>
+                    </td>
+                    <td>
+                        <img src="img/b.jpg" style="width:150px; height:100px"/>
+                    </td>
+                    <td>
+                        活动标题
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<!--编辑商品-->
+<div id="editselfproduct" class="easyui-window" title="编辑自有商品" data-options="modal:true,closed:true,iconCls:'icon-edit',collapsible:false,minimizable:false,maximizable:false,draggable:false,resizable:false" style="width:850px;height:500px;padding:10px;">
+    <div style="border-bottom:1px solid #80FFFF;padding:20px 80px 20px;">
+        <b style="font-size:18px; ">*标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题：</b>
+        <input class="easyui-textbox" data-options="prompt:'Enter something here...'" style="width:35%;height:32px">
+    </div>
+    <div style="border-bottom:1px solid #80FFFF;padding:20px 80px 20px;">
+        <div style="float:left">
+            <b style="font-size:18px; ">*车型说明：</b>
+        </div>
+        <div class="easyui-texteditor" style="width:40%;height:200px;padding:20px">
+        </div>
+        <!--<input class="easyui-textbox" name="message" data-options="multiline:true" style="height:150px;width:500px"></input>-->
+    </div>
+    <div style="border-bottom:1px solid #80FFFF;padding:20px 80px 20px">
+        <div style="float:left">
+            <b style="font-size:18px">*售后服务：</b>
+        </div>
+        <div class="easyui-texteditor" style="width:40%;height:250px;padding:20px">
+        </div>
+        <!--<input class="easyui-textbox" name="message" data-options="multiline:true" style="height:200px;width:500px"></input>-->
+    </div>
+    <div style="border-bottom:1px solid #80FFFF;padding:20px 80px 20px">
+        <div style="background:#ccc; float:left">
+            <b style="font-size:18px">*关联车型：</b>
+        </div>
+        <div style="width:40%;height:auto;margin-left:110px">
+            <img src="../static/images/b.jpg" style="width:150px; height:100px"/>
+        </div>
+        <div style="margin-left:110px;width:100px">
+            <p style="font-size:14px">关联活动：</p>
+        </div>
+        <div style="margin-left:110px">
+            <table id="dg" class="easyui-datagrid" style="width:600px;height:auto"
+                   data-options="singleSelect:true,collapsible:true,url:'datagrid_data1.json',method:'get'">
+                <thead>
+                <tr>
+                    <th data-options="field:'itemid',align:'center',resizable:false" width="199px">是否展示</th>
+                    <th data-options="field:'productid',align:'center',resizable:false" width="199px">图片</th>
+                    <th data-options="field:'listprice',align:'center',resizable:false" width="199px">标题</th>
+                </tr>
+                </thead>
+                <tr>
+                    <td>
+                        <input type="checkbox" value=""/>
+                    </td>
+                    <td>
+                        <img src="../static/images/b.jpg" style="width:150px; height:100px"/>
+                    </td>
+                    <td>
+                        活动标题
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" value=""/>
+                    </td>
+                    <td>
+                        <img src="../static/images/b.jpg" style="width:150px; height:100px"/>
+                    </td>
+                    <td>
+                        活动标题
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div style="border-bottom:1px solid #80FFFF;padding:20px 190px 20px">
+        <button class="easyui-linkbutton" style="width:100px" >新增</button>
+    </div>
+    <div style="border-bottom:1px solid #80FFFF;padding:20px 400px 20px">
+        <button class="easyui-linkbutton" style="width:100px" onclick="window.location='wk_selfproducts.html'">保存</button>
+    </div>
+</div>
+</body>
+</html>

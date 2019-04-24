@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>选择车系</title>
+		<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+		<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js" ></script>
+		<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+	</head>
+	<style>
+		p{
+			margin: 0;
+		}
+	</style>
+	<body  class="easyui-layout"  style="background-color:#F0F0F0">
+		<div class="row" style="background-color: #FF6F29; margin: auto;height: 50px; line-height: 46px; " align="center" >
+			<div class="col-xs-3"><a href="javaScript:history.go(-1)"><img src="img/fanhui.png" style="width:50%;"></a></div>
+			<div class="col-xs-6">
+				<span style="font-size: 25px; color: #FFFFFF;">选择车系</span>
+			</div>
+			<div class="col-xs-3">
+				<div class="btn-group">
+					  <button type="button" class="btn dropdown-toggle" style="background-color: #FF6F29; border-color: #FF6F29;"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<img src="img/shezhi.png">
+					  </button>
+					  <ul class="dropdown-menu" >
+						<li><a href="/">首页</a></li>
+						<li><a href="#">我的</a></li>
+						<li><a href="#">消息</a></li>
+						<li><a href="/cardiscounts">新车优惠</a></li>
+						<li><a href="/selectbrand">伴我选车</a></li>
+					  </ul>
+				</div>
+			</div>
+		</div>
+		<br />
+		<div id="cs">
+			<div class="row" style="background-color: #FFFFFF;">
+			  <div class="col-xs-12">
+				<h5>一汽大众奥迪</h5>
+			  </div>
+			</div>
+			<br />
+			<div class="row" style="background-color: #FFFFFF;">
+				<a href="cardetails">
+				  <button class="col-xs-12"  style="padding-left: 30px; padding-top: 10px;background-color: #FFFFFF" >
+					 <span style="font-size: 25px">奥迪</span>
+						<span>&nbsp;&nbsp;&nbsp;&nbsp;厂商指导价:</span>
+						<span style="color: red; font-size: 20px;">18.33-20.43万</span>
+				  </button>
+				</a>
+			</div>
+			<hr style="margin: 0px;"/>
+		</div>
+	</body>
+<script>
+	(function ($) {
+		$.getUrlParam = function (name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null) return unescape(r[2]); return null;
+		}
+	})(jQuery);
+	var cbid = $.getUrlParam('cbid');
+	$.ajax({
+		type:"get",
+		url:"selectFactorysBybrandId?cbid="+cbid,
+		async:false,
+		contentType:"application/json;charset=utf-8",
+		success:function (data) {
+			console.log(data);
+			$("#cs").empty();
+
+			$.each(data,function (index,element) {
+				var tr1="<div class=\"row\" style=\"background-color: #FFFFFF;\">"+
+						"\t\t\t<div class=\"col-xs-12\">\n" +
+						"\t\t\t<h5>"+element.facName+"</h5>\n" +
+						"\t\t\t</div>\n" +
+						"\t\t\t</div>\n"
+				$.ajax({
+					type:"get",
+					url:"selectAllsByFacId?facId="+element.facId,
+					async:false,
+					contentType:"application/json;charset=utf-8",
+					success:function (data1) {
+						$.each(data1,function (index1,element1) {
+							tr1+="\n" +
+									"<div class=\"row\" style=\"background-color: #FFFFFF;\">\n" +
+									"<button class=\"col-xs-12\" onclick=\"chekuan("+element1.id+")\" style=\"padding-left: 30px; padding-top: 10px;background-color: #FFFFFF\" >\n" +
+									"<span style=\"font-size: 25px\">"+element1.seriesName+"</span>\n" +
+									"<span>&nbsp;&nbsp;&nbsp;&nbsp;厂商指导价:</span>\n" +
+									"<span style=\"color: red; font-size: 20px;\">"+element1.lowPrice+"-"+element1.highPrice+"万</span>\n" +
+									"</button>\n" +
+									"</div>\n" +
+									"<hr style=\"margin: 0px;\"/>";
+						});
+					}
+				});
+				$("#cs").append(tr1);
+			});
+		}
+	});
+	function chekuan(id) {
+        window.location.href="selectcarmodel?id="+id;
+    }
+
+
+
+</script>
+</html>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.withmycar.mapper.MemberCarMapper" >
+  <resultMap id="BaseResultMap" type="com.qf.withmycar.pojo.MemberCar" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="member_id" property="memberId" jdbcType="BIGINT" />
+    <result column="brand_id" property="brandId" jdbcType="INTEGER" />
+    <result column="make_id" property="makeId" jdbcType="INTEGER" />
+    <result column="model_id" property="modelId" jdbcType="INTEGER" />
+    <result column="car_id" property="carId" jdbcType="INTEGER" />
+    <result column="buy_year" property="buyYear" jdbcType="INTEGER" />
+    <result column="current_mileage" property="currentMileage" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, member_id, brand_id, make_id, model_id, car_id, buy_year, current_mileage, remark, 
+    type, create_time, last_update_time
+  </sql>
+  <!--根据会员id查询用户的座驾-->
+  <select id="selectByMemberId" resultType="com.qf.withmycar.dto.Ck_UserCar" parameterType="java.lang.Long" >
+    select mc.id,mc.remark,mc.buy_year,cb.namea,f.facname,cs.seriesname,cm.cmname,cm.picurl,ct.tyname from
+		car_brand cb,
+		factory f,
+		car_series cs,
+		car_models cm,
+        car_type ct,
+		member_car mc
+        where
+        mc.member_id=#{id,jdbcType=BIGINT} and mc.brand_id=cb.id and mc.make_id=f.facid and mc.car_id=cm.cmid
+        and mc.model_id=cs.id and mc.type=ct.tyid
+  </select>
+
+  <insert id="insertMycar" parameterType="com.qf.withmycar.pojo.MemberCar">
+      insert into member_car (id, member_id, brand_id, make_id,
+      model_id, car_id, buy_year, current_mileage, remark,
+    type, create_time, last_update_time)
+    values (#{id,jdbcType=BIGINT}, #{memberId,jdbcType=BIGINT}, #{brandId,jdbcType=INTEGER},
+      #{makeId,jdbcType=TINYINT}, #{modelId,jdbcType=INTEGER}, #{carId,jdbcType=INTEGER},
+      #{buyYear,jdbcType=TINYINT}, #{currentMileage,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR},
+      #{type,jdbcType=TINYINT},  #{createTime,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=VARCHAR})
+  </insert>
+
+  <delete id="deleteMycar" parameterType="java.lang.Long">
+    delete from member_car
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+</mapper>

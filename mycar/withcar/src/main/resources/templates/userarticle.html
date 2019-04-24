@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>资讯收藏</title>
+		<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+		<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js" ></script>
+		<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+	</head>
+	<style>
+		p{
+			margin: 0;
+		}
+	</style>
+	<body  class="easyui-layout">
+		<div class="row" style="background-color: #FF6F29; margin: auto;height: 50px; line-height: 46px; " align="center" >
+			<div class="col-xs-3"><a href="javaScript:history.go(-1)"><img src="img/fanhui.png" style="width:50%;"></a></div>
+			<div class="col-xs-6">
+				<span style="font-size: 25px; color: #FFFFFF;">资讯收藏</span>
+			</div>
+			<div class="col-xs-3">
+				<div class="btn-group">
+					  <button type="button" class="btn dropdown-toggle" style="background-color: #FF6F29; border-color: #FF6F29;"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<img src="img/shezhi.png">
+					  </button>
+					  <ul class="dropdown-menu" >
+						<li><a href="/">首页</a></li>
+						<li><a href="#">我的</a></li>
+						<li><a href="#">消息</a></li>
+						<li><a href="/cardiscounts">新车优惠</a></li>
+						<li><a href="/selectbrand">伴我选车</a></li>
+					  </ul>
+				</div>
+			</div>
+		</div>
+		
+		
+		<hr style="margin: 2px;" />
+		<div class="row" th:each="zixun:${ziXun}">
+			<div class="col-xs-4">
+				<img src="img/Peng_2019-04-08_202540.png" th:src="${zixun.thumb_pic}" style="width: 90%; margin: 10px;"/>
+			</div>
+			<div class="col-xs-6" style="padding-right: 20px; padding-top: 10px;font-size: 14px " >
+			  	<a href="#">
+				  <p th:text="${zixun.title}">现代IONIQ将3月上市 引入纯电动/混动车型</p>
+				  <p th:text="${zixun.author}">今年1月CES展上大放异彩的FF91获取现……</p>
+			  	</a>
+			</div>
+			<div class="col-xs-2" style="padding-top: 40px; ">
+				<button type="button" id="dels" name="dels"  th:value="${zixun.id}" style="border: 1px solid red; color: black;margin-left: -20px">删除</button>
+			</div>
+			<hr style="margin: 0px;"/>
+		</div>
+			<!--<hr style="margin: 0px;"/>-->
+		<!--<div class="row">-->
+			  <!--<div class="col-xs-5">-->
+			  	<!--<img src="img/Peng_2019-04-08_202540.png" style="width: 90%; margin: 10px;"/>-->
+			  <!--</div>-->
+			  <!--<div class="col-xs-7" style="padding-right: 20px; padding-top: 10px;">-->
+			  	<!--<a>-->
+				  <!--<p>现代IONIQ将3月上市 引入纯电动/混动车型</p>-->
+				  <!--<p>今年1月CES展上大放异彩的FF91获取现……</p>-->
+			  	<!--</a>-->
+			  <!--</div>-->
+		<!--</div>-->
+			<!--<hr style="margin: 0px;"/>-->
+		<!--<div class="row">-->
+			  <!--<div class="col-xs-5">-->
+			  	<!--<img src="img/Peng_2019-04-08_202540.png" style="width: 90%; margin: 10px;"/>-->
+			  <!--</div>-->
+			  <!--<div class="col-xs-7" style="padding-right: 20px; padding-top: 10px;">-->
+			  	<!--<a>-->
+				  <!--<p>现代IONIQ将3月上市 引入纯电动/混动车型</p>-->
+				  <!--<p>今年1月CES展上大放异彩的FF91获取现……</p>-->
+			  	<!--</a>-->
+			  <!--</div>-->
+		<!--</div>-->
+		<!--<hr style="margin: 0px;"/>-->
+		<!--<div class="row">-->
+			  <!--<div class="col-xs-5">-->
+			  	<!--<img src="img/Peng_2019-04-08_202540.png" style="width: 90%; margin: 10px;"/>-->
+			  <!--</div>-->
+			  <!--<div class="col-xs-7" style="padding-right: 20px; padding-top: 10px;">-->
+			  	<!--<a>-->
+				  <!--<p>现代IONIQ将3月上市 引入纯电动/混动车型</p>-->
+				  <!--<p>今年1月CES展上大放异彩的FF91获取现……</p>-->
+			  	<!--</a>-->
+			  <!--</div>-->
+		<!--</div>-->
+		<!--<hr style="margin: 0px;"/>-->
+		<!--<div class="row">-->
+			  <!--<div class="col-xs-5">-->
+			  	<!--<img src="img/Peng_2019-04-08_202540.png" style="width: 90%; margin: 10px;"/>-->
+			  <!--</div>-->
+			  <!--<div class="col-xs-7" style="padding-right: 20px; padding-top: 10px;">-->
+			  	<!--<a>-->
+				  <!--<p>现代IONIQ将3月上市 引入纯电动/混动车型</p>-->
+				  <!--<p>今年1月CES展上大放异彩的FF91获取现……</p>-->
+			  	<!--</a>-->
+			  <!--</div>-->
+		<!--</div>-->
+		<!--<hr style="margin: 0px;"/>-->
+		<!--<div class="row">-->
+			  <!--<div class="col-xs-5">-->
+			  	<!--<img src="img/Peng_2019-04-08_202540.png" style="width: 90%; margin: 10px;"/>-->
+			  <!--</div>-->
+			  <!--<div class="col-xs-7" style="padding-right: 20px; padding-top: 10px;">-->
+			  	<!--<a>-->
+				  <!--<p>现代IONIQ将3月上市 引入纯电动/混动车型</p>-->
+				  <!--<p>今年1月CES展上大放异彩的FF91获取现……</p>-->
+			  	<!--</a>-->
+			  <!--</div>-->
+		<!--</div>-->
+<script>
+	sosotrue = false ;
+	function soso(){
+		sosotrue=!sosotrue;
+		if(sosotrue){
+			$("#sobtn").html("取消");
+			$("#soso").html("<div class=\"col-xs-12\"><input type='text' class=\"form-control\"/></div>")
+		}else{
+			window.location.reload();
+		}
+	}
+	//删除
+	$("button[name='dels']").click(function () {
+		// alert($(this).val());
+		var id=$(this).val();
+		$.ajax({
+			type:"POST",
+			url: "removeMyCollect?id="+id,
+			async:false,
+			// data:info,
+			// contentType: "application/json; charset=utf-8",
+			success:function (data) {
+				window.location.href = "goUserArticle";
+			},
+			error:function () {
+				alert("错误");
+			}
+		});
+	})
+</script>
+	</body>
+</html>

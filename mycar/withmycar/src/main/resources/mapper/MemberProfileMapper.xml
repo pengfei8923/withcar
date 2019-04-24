@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.withmycar.mapper.MemberProfileMapper" >
+  <resultMap id="BaseResultMap" type="com.qf.withmycar.pojo.MemberProfile" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="TINYINT" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="avatar_url" property="avatarUrl" jdbcType="VARCHAR" />
+    <result column="mobile_code" property="mobileCode" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="country" property="country" jdbcType="INTEGER" />
+    <result column="province" property="province" jdbcType="INTEGER" />
+    <result column="city" property="city" jdbcType="INTEGER" />
+    <result column="district" property="district" jdbcType="INTEGER" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="register_time" property="registerTime" jdbcType="INTEGER" />
+    <result column="point" property="point" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+
+    id, nickname, name, gender, level, avatar_url, mobile_code, mobile, email, description, 
+    country, province, city, district, address, register_time, point
+  </sql>
+  <!--根据id 查询用户信息-->
+  <select id="selectByPrimaryKey" resultType="com.qf.withmycar.dto.CK_UserInfo" parameterType="java.lang.Long" >
+    select mp.*,m.username from member m , member_profile mp where m.id=mp.id and mp.id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from member_profile
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qf.withmycar.pojo.MemberProfile" >
+     insert into member_profile (id, nickname, name,
+      gender, level, avatar_url, 
+      mobile_code, mobile, email, 
+      description, country, province, 
+      city, district, address, 
+      register_time, point)
+    values (#{id,jdbcType=BIGINT}, #{nickname,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=TINYINT}, #{level,jdbcType=INTEGER}, #{avatarUrl,jdbcType=VARCHAR}, 
+      #{mobileCode,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{country,jdbcType=INTEGER}, #{province,jdbcType=INTEGER}, 
+      #{city,jdbcType=INTEGER}, #{district,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, 
+      #{registerTime,jdbcType=INTEGER}, #{point,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.withmycar.pojo.MemberProfile" >
+    insert into member_profile
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="nickname != null" >
+        nickname,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="avatarUrl != null" >
+        avatar_url,
+      </if>
+      <if test="mobileCode != null" >
+        mobile_code,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="district != null" >
+        district,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="registerTime != null" >
+        register_time,
+      </if>
+      <if test="point != null" >
+        point,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="avatarUrl != null" >
+        #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileCode != null" >
+        #{mobileCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=INTEGER},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=INTEGER},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=INTEGER},
+      </if>
+      <if test="district != null" >
+        #{district,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTime != null" >
+        #{registerTime,jdbcType=INTEGER},
+      </if>
+      <if test="point != null" >
+        #{point,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.qf.withmycar.pojo.MemberProfile" >
+    update member_profile
+    set nickname = #{nickname,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=TINYINT},
+      level = #{level,jdbcType=INTEGER},
+      avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      mobile_code = #{mobileCode,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      country = #{country,jdbcType=INTEGER},
+      province = #{province,jdbcType=INTEGER},
+      city = #{city,jdbcType=INTEGER},
+      district = #{district,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      register_time = #{registerTime,jdbcType=INTEGER},
+      point = #{point,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!--分页查询所有会员信息-->
+  <select id="getUserAll" parameterType="int" resultType="com.qf.withmycar.dto.CK_UserInfo">
+    select mp.*,m.username from member m , member_profile mp
+     where m.id=mp.id limit #{page},20
+  </select>
+  <!--获取总共有多少条会员信息-->
+  <select id="getUserCount" resultType="int">
+    select count(id) from member_profile
+  </select>
+  <!--搜索框查询 ？分页-->
+  <select id="queryUserByInfo" parameterType="com.qf.withmycar.vo.Ck_info" resultType="com.qf.withmycar.dto.CK_UserInfo">
+    select mp.*,m.username from member m ,member_profile mp
+    <where>
+      <if test="time1 !=null and time1 !='' and time2 != null and time2 !='' ">
+        and (mp.register_time between #{time1,jdbcType=VARCHAR} and #{time2,jdbcType=VARCHAR})
+      </if>
+      <if test="sex !=null and sex !='' and sex != 'null'">
+        and mp.gender=#{gender}
+      </if>
+      <if test="info !=null and info !='' and info != 'null'">
+        and (m.username like '%'||#{info}||'%' or mp.nickname like '%'||#{info}||'%' or mp.name like '%'||#{info}||'%')
+      </if>
+        and m.id=mp.id
+    </where>
+    limit #{page}, 20
+  </select>
+
+  <select id="getSeekUserCount" parameterType="com.qf.withmycar.vo.Ck_info" resultType="java.lang.Integer">
+    select count(mp.id) from member m , member_profile mp
+    <where>
+      <if test="time1 !=null and time1 !='' and time2 != null and time2 !='' ">
+        and (mp.register_time between #{time1,jdbcType=VARCHAR} and #{time2,jdbcType=VARCHAR})
+      </if>
+      <if test="sex !=null and sex !='' and sex != 'null'">
+        and mp.gender=#{gender}
+      </if>
+      <if test="info !=null and info !='' and info != 'null'">
+        and (m.username like '%'||#{info}||'%' or mp.nickname like '%'||#{info}||'%' or mp.name like '%'||#{info}||'%')
+      </if>
+      and m.id=mp.id
+    </where>
+  </select>
+
+  <select id="selectMemberById" resultType="java.lang.Long" resultMap="BaseResultMap">
+  select * from member_profile where id=#{id}
+</select>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.withmycar.pojo.MemberProfile" >
+    update member_profile
+    <set >
+      <if test="nickname != null and nickname !=''" >
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null and name !=''" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null and gender !=''" >
+        gender = #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="level != null and level !=''" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="avatarUrl != null and avatarUrl !=''" >
+        avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileCode != null and mobileCode !=''" >
+        mobile_code = #{mobileCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null and mobile !=''" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null and email !=''" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null and country !=''" >
+        country = #{country,jdbcType=INTEGER},
+      </if>
+      <if test="province != null and province !=''" >
+        province = #{province,jdbcType=INTEGER},
+      </if>
+      <if test="city != null and city !=''" >
+        city = #{city,jdbcType=INTEGER},
+      </if>
+      <if test="district != null and district !=''" >
+        district = #{district,jdbcType=INTEGER},
+      </if>
+      <if test="address != null and address !=''" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTime != null and registerTime !=''" >
+        register_time = #{registerTime,jdbcType=INTEGER},
+      </if>
+      <if test="point != null and point !=''" >
+        point = #{point,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!--在加入member时查询出id同时加入memberProfile-->
+  <insert id="insertMemberProfileWhenInsertMember" parameterType="com.qf.withmycar.pojo.MemberProfile">
+    insert into member_profile(id,email) values(#{id},#{email})
+  </insert>
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

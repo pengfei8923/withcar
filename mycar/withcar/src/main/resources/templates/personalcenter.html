@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8" />
+	<title>我的主页</title>
+	<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+	<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js" ></script>
+	<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+</head>
+<style>
+	p{
+		margin: 0;
+	}
+</style>
+<body  class="easyui-layout">
+<div style="background-color: #FF6F29; margin: auto;height: 200px;" align="center" >
+	<div class="row" style="height: 50px; line-height: 46px; " >
+		<div class="col-xs-3"><img src="img/fanhui.png" style="width:50%;"></div>
+		<div class="col-xs-6">
+			<span style="font-size: 25px; color: #FFFFFF;">我的主页</span>
+		</div>
+		<div class="col-xs-3">
+			<div class="btn-group">
+				<button type="button" class="btn dropdown-toggle" style="background-color: #FF6F29; border-color: #FF6F29;"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<img src="img/shezhi.png">
+				</button>
+				<ul class="dropdown-menu" >
+					<li><a href="index">首页</a></li>
+					<li><a href="goCenter">我的</a></li>
+					<li><a href="goInformation">消息</a></li>
+					<li><a href="cardiscounts">新车优惠</a></li>
+					<li><a href="selectbrand">伴我选车</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!--图像-->
+	<div class="row" style="height: 150px; line-height: 148px; ">
+		<div class="col-xs-4" style="padding-right: 0px;">
+			<!--用户头像-->
+			<img class="img-circle" th:src="${member.avatarUrl != null}?${member.avatarUrl}:'img/index101.png'"   style="width: 90%;"/>
+		</div>
+		<div class="col-xs-5" >
+			<div style="height: 70px; line-height: 70px;">
+				<a th:href="${member.nickname != null}?'/getUserInfo':'/index'">
+				<p th:text="${member.nickname != null}?${member.nickname}:'未登录'">未登录</p>
+				</a>
+				<!--<a href="getUserInfo"></a> 如果登录，显示用户昵称。并添加去往用户详情页的连接-->
+				<p > 积分:<span th:text="${member.point}"></span></p>
+			</div>
+		</div>
+		<div class="col-xs-3"><a href="/getUserInfo"><img src="img/qianjin.png" style="width:50%;"></a></div>
+	</div>
+</div>
+<hr style="margin: 0; border:6px solid #eee;" />
+<div class="row" style="height: 50px; line-height: 50px;">
+	<div class="col-xs-12">
+		<a  href="goUserCar"><button type="button" class="btn btn-default btn-lg" style="width: 100%; border: 0px; text-align: left;">我的座驾</button></a>
+	</div>
+</div>
+<hr style="margin: 0; border:6px solid #eee;" />
+<div class="row" style="height: 50px; line-height: 50px;">
+	<div class="col-xs-12">
+		<a  href="goUserActi"><button type="button"  class="btn btn-default btn-lg" style="width: 100%; border: 0px; text-align: left;">我的活动</button></a>
+	</div>
+	<div class="col-xs-12">
+		<a  href="goUserArticle"><button type="button"  class="btn btn-default btn-lg" style="width: 100%; border: 0px; text-align: left;">资讯收藏</button></a>
+	</div>
+</div>
+<hr style="margin: 0; border:6px solid #eee;" />
+<div class="row" style="height: 50px; line-height: 50px;">
+	<div class="col-xs-12">
+		<a  href="goUserAttention"><button type="button"  class="btn btn-default btn-lg" style="width: 100%; border: 0px; text-align: left;">关注车型</button></a>
+	</div>
+	<div class="col-xs-12">
+		<a  href="#"><button type="button"  class="btn btn-default btn-lg" style="width: 100%; border: 0px; text-align: left;">车型大全</button></a>
+	</div>
+</div>
+<hr style="margin: 0; border:6px solid #eee;" />
+<div class="row" style="height: 50px; line-height: 50px;">
+	<div class="col-xs-12">
+		<a  href="goInformation"><button type="button" class="btn btn-default btn-lg" style="width: 100%; border: 0px; text-align: left;">消息</button></a>
+	</div>
+	<div class="col-xs-12">
+		<a  href="goSetLogout"><button type="button" class="btn btn-default btn-lg" style="width: 100%; border: 0px; text-align: left;">设置</button></a>
+	</div>
+</div>
+</body>
+</html>

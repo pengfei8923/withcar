@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>车系管理</title>
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css">
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css">
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/demo/demo.css" />
+			<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+			<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+			<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+			<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+	</head>
+	<style>
+		th {
+			text-align: center;
+		}
+		td {
+			text-align: center;
+			
+		}
+	.file {
+    position: relative;
+    display: inline-block;
+    background: #D0EEFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.file:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}
+	</style>
+	<body class="easyui-layout" >
+		<div data-options="region:'center',title:'车系管理'">
+			<div style="margin: auto; width: 90%; height: 50px;">
+			 <div class="row">
+			 	<div class="col-md-1" style="margin-top: 8px;text-align: right;">品牌：</div>
+				  <div class="col-md-1">
+				  	<select class="form-control brands" style="width: 100px;" id="f1">
+				  		<option value="">全部</option>
+						<option value="宝马">宝马</option>
+						<option value="奔驰">奔驰</option>
+					</select>
+				  </div>
+				  <div class="col-md-1" style="margin-top: 8px;text-align: right;">类型：</div>
+				  <div class="col-md-1">
+				  	<select class="form-control types" style="width: 80px;" id="f2">
+				  		<option value="">全部</option>
+						<option value="轿车">轿车</option>
+						<option value="suv">suv</option>
+					</select>
+				  </div>
+				  <div class="col-md-3">
+				  	 <div class="form-group">
+    <label class="sr-only" for="exampleInputEmail3">Email address</label>
+    <input type="email" class="form-control" id="exampleInputEmail3" placeholder="车系名称">
+  </div>
+				  </div>
+				  <div class="col-md-2">
+				  	<button type="button" class="btn btn-success" onclick="sousuo2()">搜索</button>
+				  </div>
+				  <div class="col-md-3"><button type="button" class="btn btn-success" style="float: right;" data-toggle="modal" data-target="#myModal">新增</button>	
+			</div>
+		</div>
+			
+				</div>
+			
+			<div style="margin: auto; width: 90%;" >
+				<table class="table table-bordered"  >
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>车系名称</th>
+							<th>品牌名称</th>
+							<th>所属厂商</th>
+							<th>类型</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody id="carSeriesList">
+						<tr >
+							<td style="line-height: 30px;">1</td>
+							<td style="line-height: 30px;">奥迪A4L</td>
+							<td style="line-height: 30px;">奥迪</td>
+							<td style="line-height: 30px;">上海第一分公司</td>
+							<td style="line-height: 30px;">轿车</td>
+							<td style="width: 200px;line-height: 30px;">
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalbj">编辑</button>
+								<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModaldel">删除</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!-- 新增Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel1">新增车系信息</h4>
+		      </div>
+		      <div class="modal-body">
+					<form class="form-horizontal">
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">车系名称</label>
+					    <div class="col-sm-10">
+					      <input type="email" class="form-control" id="inputEmail31" placeholder="车系名称">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型</label>
+					    <div class="col-sm-10">
+						<select class="form-control types1" id="t2">
+							</select>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">所属品牌</label>
+					    <div class="col-sm-10">
+						<select class="form-control brands1" id="b2">
+							</select>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">所属厂商</label>
+					    <div class="col-sm-10">
+						<select class="form-control" id="c2">
+							</select>
+					    </div>
+					  </div>
+					</form>	         
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		        <button type="button" class="btn btn-primary" onclick="tijiao4()">保存</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- 编辑Modal -->
+		<div class="modal fade" id="myModalbj" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel2">编辑车系信息</h4>
+		      </div>
+		      <div class="modal-body">
+					<form class="form-horizontal">
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">车系名称</label>
+					    <div class="col-sm-10">
+					      <input type="email" class="form-control" id="inputEmail3" placeholder="车系名称">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型</label>
+					    <div class="col-sm-10">
+						<select class="form-control types1" id="t1">
+							</select>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">所属品牌</label>
+					    <div class="col-sm-10">
+						<select class="form-control brands1" id="b1">
+							</select>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">所属厂商</label>
+					    <div class="col-sm-10">
+						<select class="form-control" id="c1">
+							</select>
+					    </div>
+					  </div>
+					</form>	         
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		        <button type="button" class="btn btn-primary" onclick="tijiao5()">保存</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- 删除Modal -->
+		<div class="modal fade" id="myModaldel" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">删除</h4>
+		      </div>
+		      <div class="modal-body">
+					<h3>确定删除？</h3>      
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		        <button type="button" class="btn btn-primary" onclick="shanchu2()">确定</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<script type="text/javascript">
+			$('#myModal').on('shown.bs.modal', function () {
+			var brandId1 =	$("#b2").find("option:selected").val();
+				$.ajax({
+					type:"get",
+					url:"selectFactoryBybrandId?brandId="+brandId1,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#c2").empty();
+						$.each(data,function (index,element) {
+							var opts="<option value=\""+element.facId+"\">"+element.facName+"</option>";
+							$("#c2").append(opts);
+						})
+					}
+				});
+			  $('#myInput').focus()
+			})
+			var bianjiId;
+			$('#myModalbj').on('shown.bs.modal', function (event) {
+			  $('#myInput').focus();
+				var button = $(event.relatedTarget);
+				var id = button.data('id');
+				bianjiId=id;
+				/*编辑框打开后填入车系信息*/
+				$.ajax({
+					type:"get",
+					url:"selectCarSeriesById?id="+bianjiId,
+					contentType:"application/json;charset=utf-8",
+					async:false,
+					success:function (data) {
+						$("#inputEmail3").val(data.seriesName);
+						$("#b1 option[value=\""+data.brandId+"\"]").prop("selected",true);
+						$("#c1 option[value=\""+data.facId+"\"]").prop("selected",true);
+						$("#t1 option[value=\""+data.typeId+"\"]").prop("selected",true);
+					},error:function () {
+						alert("请求错误");
+					}
+				});
+
+				/*编辑框打开后根据品牌下拉框的值改变厂商下拉框的值*/
+				var brandId11 =	$("#b1").find("option:selected").val();
+				$.ajax({
+					type:"get",
+					url:"selectFactoryBybrandId?brandId="+brandId11,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#c1").empty();
+						$.each(data,function (index,element) {
+							var opts="<option value=\""+element.facId+"\">"+element.facName+"</option>";
+							$("#c1").append(opts);
+						})
+					}
+				});
+			})
+			var shanchuId;
+			$('#myModaldel').on('shown.bs.modal', function (event) {
+				var button = $(event.relatedTarget);
+				var id = button.data('id');
+				shanchuId=id;
+			  $('#myInput').focus()
+			})
+			/*查询所有品牌并放入下拉框*/
+			$.ajax({
+				type:"post",
+				url:"selectAllBrands",
+				async:false,
+				contentType:"application/json;charset=utf-8",
+				success:function (data) {
+					$(".brands").empty();
+					$(".brands1").empty();
+					var allbrand="<option value=\"\">全部</option>";
+					$(".brands").append(allbrand);
+					$.each(data,function (index,element) {
+						var opts="<option value="+element.id+">"+element.namea+"</option>";
+						$(".brands").append(opts);
+						$(".brands1").append(opts);
+					})
+				}
+			});
+			/*查询所有类型并放入下拉框*/
+			$.ajax({
+				type:"post",
+				url:"selectAllCarTypes",
+				async:false,
+				contentType:"application/json;charset=utf-8",
+				success:function (data) {
+					$(".types").empty();
+					$(".types1").empty();
+					var alltypes="<option value=\"\">全部</option>";
+					$(".types").append(alltypes);
+					$.each(data,function (index,element) {
+						var opts="<option value="+element.tyid+">"+element.tyname+"</option>";
+						$(".types").append(opts);
+						$(".types1").append(opts);
+					})
+				}
+			});
+			/*查询显示所有车系信息*/
+			$.ajax({
+				type:"post",
+				url:"selectAllCarSeriesDto",
+				async:false,
+				contentType:"application/json;charset=utf-8",
+				success:function (data) {
+					$("#carSeriesList").empty();
+					var count=0;
+					$.each(data,function (index,element) {
+						count++;
+						var trStr="<tr >\n" +
+								"\t\t\t\t\t\t\t<td style=\"line-height: 30px;\">"+count+"</td>\n" +
+								"\t\t\t\t\t\t\t<td style=\"line-height: 30px;\">"+element.seriesName+"</td>\n" +
+								"\t\t\t\t\t\t\t<td style=\"line-height: 30px;\">"+element.namea+"</td>\n" +
+								"\t\t\t\t\t\t\t<td style=\"line-height: 30px;\">"+element.facName+"</td>\n" +
+								"\t\t\t\t\t\t\t<td style=\"line-height: 30px;\">"+element.tyName+"</td>\n" +
+								"\t\t\t\t\t\t\t<td style=\"width: 200px;line-height: 30px;\">\n" +
+								"\t\t\t\t\t\t\t\t<button type=\"button\" data-id=\""+element.id+"\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#myModalbj\">编辑</button>\n" +
+								"\t\t\t\t\t\t\t\t<button type=\"button\" data-id=\""+element.id+"\"  class=\"btn btn-danger\" data-toggle=\"modal\" data-target=\"#myModaldel\">删除</button>\n" +
+								"\t\t\t\t\t\t\t</td>\n" +
+								"\t\t\t\t\t\t</tr>";
+						$("#carSeriesList").append(trStr);
+
+					})
+
+				}
+			});
+			/*新建框打开时 厂商随 品牌的变化而变化*/
+			window.onload=function(){
+				$("#b2").change(function(){
+					var opt2=$("#b2").val();
+					$.ajax({
+						type:"get",
+						url:"selectFactoryBybrandId?brandId="+opt2,
+						contentType:"application/json;charset=utf-8",
+						success:function (data) {
+							$("#c2").empty();
+							$.each(data,function (index,element) {
+								var opts="<option value=\""+element.facId+"\">"+element.facName+"</option>";
+								$("#c2").append(opts);
+							})
+						}
+					});
+				});
+				/*编辑框打开时 厂商随 品牌的变化而变化*/
+				$("#b1").change(function() {
+					var opt1 = $("#b1").val();
+					$.ajax({
+						type: "get",
+						url: "selectFactoryBybrandId?brandId=" + opt1,
+						contentType: "application/json;charset=utf-8",
+						success: function (data) {
+							$("#c1").empty();
+							$.each(data, function (index, element) {
+								var opts = "<option value=\"" + element.facId + "\">" + element.facName + "</option>";
+								$("#c1").append(opts);
+							})
+						}
+					});
+				});
+			}
+			/*新增框的保存*/
+			function tijiao4() {
+				var seriesName = $("#inputEmail31").val();
+				var typeId =	$("#t2").find("option:selected").val();
+				var brandId =	$("#b2").find("option:selected").val();
+				var facId =	$("#c2").find("option:selected").val();
+				var paramObj={};
+				paramObj.seriesName=seriesName;
+				paramObj.typeId=typeId;
+				paramObj.brandId=brandId;
+				paramObj.facId=facId;
+				$.ajax({
+					type:"post",
+					url:"addCarSeries",
+					data:JSON.stringify(paramObj),
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						window.location.reload();
+					},error:function () {
+						alert("请求失败")
+					}
+				});
+			}
+			/*编辑框的保存*/
+			function tijiao5() {
+				var seriesName = $("#inputEmail3").val();
+				var typeId =	$("#t1").find("option:selected").val();
+				var brandId =	$("#b1").find("option:selected").val();
+				var facId =	$("#c1").find("option:selected").val();
+				var id = bianjiId;
+				var paramObj={};
+				paramObj.seriesName=seriesName;
+				paramObj.typeId=typeId;
+				paramObj.brandId=brandId;
+				paramObj.facId=facId;
+				paramObj.id=id;
+				$.ajax({
+					type:"post",
+					url:"updateCarSeries",
+					data:JSON.stringify(paramObj),
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						window.location.reload();
+					},error:function () {
+						alert("请求失败")
+					}
+				});
+			}
+			function shanchu2() {
+				$.ajax({
+					type:"get",
+					url:"deleteCarSeries?id="+shanchuId,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						window.location.reload();
+					},error:function () {
+						alert("请求错误")
+					}
+				});
+			}
+			/*模糊搜索功能*/
+			function sousuo2() {
+				var seriesName = $("#exampleInputEmail3").val();
+				var brandId = $("#f1").find("option:selected").val();
+				var typeId = $("#f2").find("option:selected").val();
+				var paramObj={};
+				paramObj.seriesName=seriesName;
+				paramObj.brandId=brandId;
+				paramObj.typeId=typeId;
+				$.ajax({
+					type:"post",
+					url:"selectCarSeriesByMohu",
+					data:JSON.stringify(paramObj),
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#carSeriesList").empty();
+						var count=0;
+						$.each(data,function (index,element) {
+							count++;
+							var trStr="<tr >\n" +
+									"\t\t\t\t\t\t\t<td style=\"line-height: 30px;\">"+count+"</td>\n" +
+									"\t\t\t\t\t\t\t<td style=\"line-height: 30px;\">"+element.seriesName+"</td>\n" +
+									"\t\t\t\t\t\t\t<td style=\"line-height: 30px;\">"+element.namea+"</td>\n" +
+									"\t\t\t\t\t\t\t<td style=\"line-height: 30px;\">"+element.facName+"</td>\n" +
+									"\t\t\t\t\t\t\t<td style=\"line-height: 30px;\">"+element.tyName+"</td>\n" +
+									"\t\t\t\t\t\t\t<td style=\"width: 200px;line-height: 30px;\">\n" +
+									"\t\t\t\t\t\t\t\t<button type=\"button\" data-id=\""+element.id+"\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#myModalbj\">编辑</button>\n" +
+									"\t\t\t\t\t\t\t\t<button type=\"button\" data-id=\""+element.id+"\"  class=\"btn btn-danger\" data-toggle=\"modal\" data-target=\"#myModaldel\">删除</button>\n" +
+									"\t\t\t\t\t\t\t</td>\n" +
+									"\t\t\t\t\t\t</tr>";
+							$("#carSeriesList").append(trStr);
+
+						})
+					}
+				});
+			}
+		</script>
+	</body>
+</html>

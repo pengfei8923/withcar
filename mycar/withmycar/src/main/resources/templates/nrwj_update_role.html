@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/demo/demo.css" />
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+    <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+    <link href="css/niurui.css" type="text/css" rel="stylesheet"/>
+    <title>编辑角色</title>
+</head>
+<body>
+<div id="bigdiv">
+    <br/>
+    <button onclick="window.location.href='role'">&nbsp; < &nbsp;</button> &nbsp; &nbsp;编辑角色:
+    <div class="line"></div>
+    <br/>
+    <div class="rolename" th:each="menu2:${gairole}" ><font class="rolezi">角色名称:</font><input type="text" id="shuru" class="role1" placeholder="请填入角色名称"  th:value="${menu2.name}"/></div><br>
+    <input type="text" class="gray" value="分配权限" readonly="readonly"/>
+    <br/>
+    <div th:each="menu:${quanxianquancha}" id="zz">
+        <input id="tt"  th:value="${menu.id}"  type="checkbox"/><input id="aa"  readonly="readonly" th:value="${menu.name}"  type="text"/>
+        <div th:each="menu1:${menu.children}" id="yy">
+            <input id="cc"  type="checkbox" th:value="${menu1.id}" /><input id="dd"  readonly="readonly" type="text" th:value="${menu1.name}"/>
+        </div>
+        <br/>
+    </div>
+    <button onclick="tijiao()" class="add3"><font class="zicolor1">保存</font></button>
+</div>
+</body>
+<script th:inline="javascript">
+    function tijiao(){
+        var id = [[${gairole.id}]];
+        // alert(id);
+        var name=$("#shuru").val();
+        // alert(name);
+        var userids=[];
+        $("input:checkbox[id=tt]:checked").each(function(i){
+            //使用循环遍历迭代的方式得到所有被选中的checkbox复选框
+            userids.push($(this).val());
+        });
+        $("input:checkbox[id=cc]:checked").each(function(i){
+            //使用循环遍历迭代的方式得到所有被选中的checkbox复选框
+            userids.push($(this).val());
+        });
+        // alert(userids);
+        $.ajax({
+            type : 'post',
+            url : "updateRoleById",
+            async : false,
+            traditional:true,//设置允许传递数组
+            data:{"userids":userids,"name":name,"id":id},
+            // dataType: "json",
+            // contentType: "application/json;charset=utf-8",
+            success:function (data) {
+                if (data ){
+                    alert("编辑成功");
+                    window.location.href="role";
+                }}
+        });
+    }
+</script>
+
+</html>

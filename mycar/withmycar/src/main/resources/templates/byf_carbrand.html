@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>品牌管理</title>
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css">
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css">
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/demo/demo.css" />
+			<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+			<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+			<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+			<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+	</head>
+	<style>
+		th {
+			text-align: center;
+		}
+		td {
+			text-align: center;
+			
+		}
+	.file {
+    position: relative;
+    display: inline-block;
+    background: #D0EEFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.file:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}
+	</style>
+	<body class="easyui-layout" >
+		<div data-options="region:'center',title:'品牌管理'">
+			<div style="margin: auto; width: 90%; height: 50px;">
+			 <div class="row">
+			 	<div class="col-md-1" style="margin-top: 8px;text-align: right;">国别：</div>
+				  <div class="col-md-2">
+				  	<select class="form-control countryOption" id="Countries" style="width: 150px;">
+
+					</select>
+				  </div>
+				  <div class="col-md-3">
+				  	 <div class="form-group">
+    <label class="sr-only" for="exampleInputEmail3">Email address</label>
+    <input type="email" class="form-control" id="exampleInputEmail3" placeholder="品牌/品牌代码">
+  </div>
+				  </div>
+				  <div class="col-md-3">
+				  	<button type="button" class="btn btn-success" onclick="sousuo()">搜索</button>
+				  </div>
+				  <div class="col-md-3"><button type="button" class="btn btn-success" style="float: right;" data-toggle="modal" data-target="#myModal">新增</button>	
+			</div>
+		</div>
+			
+				</div>
+			
+			<div style="margin: auto; width: 90%;" >
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>品牌名称</th>
+							<th>logo</th>
+							<th>创建时间</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody id="brandList">
+						<tr >
+							<td style="line-height: 75px;">1</td>
+							<td style="line-height: 75px;">奔驰</td>
+							<td style="line-height: 75px;"><img style="width: 130px; height: 80px;" class="img-thumbnail" src="img/Peng_2019-04-08_202540.png"/></td>
+							<td style="line-height: 75px;">2019-04-11</td>
+							<td style="line-height: 75px;">
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalbj">编辑</button>
+								<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModaldel">删除</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!-- 新增Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel1">新增品牌</h4>
+		      </div>
+		      <div class="modal-body" style="height: 450px">
+					<form class="form-horizontal">
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">品牌名称</label>
+					    <div class="col-sm-10">
+					      <input type="email" class="form-control" id="inputEmail31" placeholder="品牌名称">
+					    </div>
+					  </div>
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">英文名称</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" id="inputEmail32" placeholder="品牌英文名称">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">品牌介绍</label>
+							<div class="col-sm-10">
+								<!--<input type="" class="form-control" id="inputEmail32" placeholder="品牌英文名称">-->
+								<textarea id="brandIntro" placeholder="品牌介绍" rows="3" style=" resize: none;width: 469px;height: 50px"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label">所属国家</label>
+							<div class="col-sm-5">
+								<select class="form-control countryOption" id="addBrandSelect">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+								</select>
+							</div>
+							<div class="col-sm-5">
+
+							</div>
+						</div>
+
+						  <div class="form-group">
+							  <form role="form" style="" id="file" enctype="multipart/form-data">
+							<label for="inputEmail3" class="col-sm-2 control-label">品牌logo</label>
+								<div class="col-sm-10">
+									<a href="javascript:;" class="file">选择文件
+									<input type="file" name="file" id="uploadImgBtn" accept="image/gif, image/jpeg, image/png, image/jpg"></a>
+								</div>
+							  </form>
+						  </div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">logo含义</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" id="logoMeans" placeholder="logo含义">
+							</div>
+						</div>
+						<br/>
+					  <div class="form-group">
+					    <label for="inputPassword3231" class="col-sm-2 control-label">logo预览</label>
+					    <div class="col-sm-5">
+					      <img src="htstatic/images/logo/156.jpg" id="tihuan" class="img-thumbnail" style="height: 70px; width: 100px;"/>
+					    </div>
+					    <div class="col-sm-5">
+					    </div>
+					  </div>
+					</form>	         
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		        <button type="button" class="btn btn-primary" onclick="tijiao1()">保存</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- 编辑Modal -->
+		<div class="modal fade" id="myModalbj" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel123">修改品牌名称</h4>
+		      </div>
+		      <div class="modal-body" style="height: 450px">
+					<form class="form-horizontal">
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">品牌名称</label>
+					    <div class="col-sm-10">
+					      <input type="email" class="form-control" id="inputEmail3" placeholder="品牌名称">
+					    </div>
+					  </div>
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">英文名称</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" id="inputEmail313" placeholder="品牌英文名称">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">品牌介绍</label>
+							<div class="col-sm-10">
+								<!--<input type="" class="form-control" id="inputEmail32" placeholder="品牌英文名称">-->
+								<textarea id="brandIntro1" placeholder="品牌介绍" rows="3" style=" resize: none;width: 469px;height: 50px"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword" class="col-sm-2 control-label">所属国家</label>
+							<div class="col-sm-5">
+								<select class="form-control countryOption" id="countrySelect">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+								</select>
+							</div>
+							<div class="col-sm-5">
+
+							</div>
+						</div>
+
+					    <div class="form-group">
+							<form role="form" style="" id="file1" enctype="multipart/form-data">
+								<label for="inputEmail3" class="col-sm-2 control-label">品牌logo</label>
+								<div class="col-sm-10">
+									<a href="javascript:;" class="file">选择文件
+										<input type="file" name="file1" id="uploadImgBtn1"></a>
+								</div>
+							</form>
+					    </div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">logo含义</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" id="logoMeans1" placeholder="logo含义">
+							</div>
+						</div>
+						<br/>
+					  <div class="form-group">
+					    <label for="inputPassword335" class="col-sm-2 control-label">logo预览</label>
+					    <div class="col-sm-5">
+					      <img id="tihuan1" src="img/timg.jpg" class="img-thumbnail" style="height: 70px; width: 100px;"/>
+					    </div>
+					    <div class="col-sm-5">
+					  
+					    </div>
+					  </div>
+					</form>	         
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		        <button type="button" class="btn btn-primary" onclick="tijiao2()">保存</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- 删除Modal -->
+		<div class="modal fade" id="myModaldel" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">删除</h4>
+		      </div>
+		      <div class="modal-body">
+					<h3>确定删除？</h3>      
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		        <button type="button" class="btn btn-primary" onclick="shanchu()">确定</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<script type="text/javascript">
+			$('#myModal').on('shown.bs.modal', function () {
+			  $('#myInput').focus()
+			})
+			/*编辑*/
+			var bianjiId;
+			$('#myModalbj').on('shown.bs.modal', function (event) {
+			  $('#myInput').focus();
+				var button = $(event.relatedTarget);
+				var brandId = button.data('id');
+				bianjiId=brandId;
+				$.ajax({
+					type:"get",
+					url:"selectBrandById?id="+brandId,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#inputEmail3").val(data.namea);//品牌名称
+						$("#inputEmail313").val(data.englishName);//英文名称
+						$("#brandIntro1").val(data.introduction);//品牌介绍
+						$("#logoMeans1").val(data.logoMeaning);//logo含义
+						$("#tihuan1").attr("src",data.logoUrl);//图片
+						$("#countrySelect option[value=\""+data.id+"\"]").prop("selected",true);
+					}
+				})
+			});
+			/*编辑的保存*/
+			function tijiao2(){
+				var formData=new FormData();
+				var namea = $("#inputEmail3").val();//品牌名称
+				var englishName = $("#inputEmail313").val();//英文名称
+				var introduction = $("#brandIntro1").val();//简介
+				var logoMeaning = $("#logoMeans1").val();//logo含义
+				var countryId=$("#countrySelect").find("option:selected").val();
+				var realImg1 = $('#uploadImgBtn1')[0].files[0];
+				formData.append("namea",namea);
+				formData.append("introduction",introduction);
+				formData.append("logoMeaning",logoMeaning);
+				formData.append("englishName",englishName);
+				formData.append("countryId",countryId);
+				formData.append("realImg1",realImg1);
+				formData.append("id",bianjiId);
+				$.ajax({
+					type: 'post',
+					async: false,
+					cache: false,
+					contentType: false, //不设置内容类型
+					processData: false, //不处理数据
+					url: 'updateCarBrand',
+					data: formData,
+					success: function (message) {
+						window.location.reload();
+					},
+					error: function (message) {
+						alert("请求错误");
+					}
+				});
+			}
+			/*删除模块*/
+			var delId;
+			$('#myModaldel').on('shown.bs.modal', function (event) {
+			  $('#myInput').focus();
+				var button = $(event.relatedTarget);
+				var brandId = button.data('id');
+				delId=brandId;
+			});
+			function shanchu(){
+				$.ajax({
+					type:"get",
+					url:"deleteCarBrand?id="+delId,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						window.location.reload();
+					},error:function () {
+						alert("删除失败")
+					}
+				});
+			}
+			/*查询所有国家并放入下拉框*/
+			$.ajax({
+				type:"post",
+				url:"selectAllCountries",
+				async:false,
+				contentType:"application/json;charset=utf-8",
+				success:function (data) {
+					console.log(data);
+					$(".countryOption").empty();
+					var allCountry="<option value=\"\">全部</option>";
+					$(".countryOption").append(allCountry);
+					$.each(data,function (index,element) {
+						var opts="<option value="+element.id+">"+element.name+"</option>";
+						$(".countryOption").append(opts);
+					})
+				}
+			});
+			/*品牌展示*/
+			$.ajax({
+				type:"post",
+				url:"selectAllBrands",
+				async:false,
+				contentType:"application/json;charset=utf-8",
+				success:function (data) {
+					console.log(data);
+					$("#brandList").empty();
+					var count=0;
+					$.each(data,function (index,element) {
+					var time=renderTime(element.createTime);
+						count++;
+						var td="<tr >\n" +
+								"\t\t\t\t\t\t\t<td style=\"line-height: 75px;\">"+count+"</td>\n" +
+								"\t\t\t\t\t\t\t<td style=\"line-height: 75px;\">"+element.namea+"</td>\n" +
+								"\t\t\t\t\t\t\t<td style=\"line-height: 75px;\"><img style=\"width: 130px; height: 80px;\" class=\"img-thumbnail\" src=\""+element.logoUrl+"\"/></td>\n" +
+								"\t\t\t\t\t\t\t<td style=\"line-height: 75px;\">"+time+"</td>\n" +
+								"\t\t\t\t\t\t\t<td style=\"line-height: 75px;\">\n" +
+								"\t\t\t\t\t\t\t\t<button type=\"button\" data-id=\""+element.id+"\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#myModalbj\">编辑</button>\n" +
+								"\t\t\t\t\t\t\t\t<button type=\"button\" data-id=\""+element.id+"\" class=\"btn btn-danger\" data-toggle=\"modal\" data-target=\"#myModaldel\">删除</button>\n" +
+								"\t\t\t\t\t\t\t</td>\n" +
+								"\t\t\t\t\t\t</tr>"
+						$("#brandList").append(td);
+					})
+				}
+			});
+			/*搜索功能*/
+			function sousuo() {
+				var countryId=$("#Countries").find("option:selected").val();
+				var namea = $("#exampleInputEmail3").val();
+				$.ajax({
+					type:"get",
+					url:"findBrandList1?countryId="+countryId+"&namea="+namea,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#brandList").empty();
+						var count=0;
+						$.each(data,function (index,element) {
+							var time=renderTime(element.createTime);
+							count++;
+							var td="<tr >\n" +
+									"\t\t\t\t\t\t\t<td style=\"line-height: 75px;\">"+count+"</td>\n" +
+									"\t\t\t\t\t\t\t<td style=\"line-height: 75px;\">"+element.namea+"</td>\n" +
+									"\t\t\t\t\t\t\t<td style=\"line-height: 75px;\"><img style=\"width: 130px; height: 80px;\" class=\"img-thumbnail\" src=\""+element.logoUrl+"\"/></td>\n" +
+									"\t\t\t\t\t\t\t<td style=\"line-height: 75px;\">"+time+"</td>\n" +
+									"\t\t\t\t\t\t\t<td style=\"line-height: 75px;\">\n" +
+									"\t\t\t\t\t\t\t\t<button type=\"button\" data-id=\""+element.id+"\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#myModalbj\">编辑</button>\n" +
+									"\t\t\t\t\t\t\t\t<button type=\"button\" data-id=\""+element.id+"\" class=\"btn btn-danger\" data-toggle=\"modal\" data-target=\"#myModaldel\">删除</button>\n" +
+									"\t\t\t\t\t\t\t</td>\n" +
+									"\t\t\t\t\t\t</tr>"
+							$("#brandList").append(td);
+						})
+					},error:function () {
+						alert("请求失败")
+					}
+				});
+			}
+			/*从数据库读出的时间转为可读时间*/
+			function renderTime(date) {
+				var dateee = new Date(date).toJSON();
+				return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+			}
+			/*新增时替换图片位置*/
+			$('#uploadImgBtn').on('change', function () {
+				var filePath = $(this).val();
+				fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();//取后缀“.”以后的，并转大写
+				src = window.URL.createObjectURL(this.files[0]);//转换成本地格式。读本地图片的方法
+				if (!fileFormat.match(/.png|.jpg|.jpeg/)) {
+					alert(文件传输格式错误);
+					$(this).val("");
+				}
+				$("#tihuan").attr('src', src);//替换图片位置
+			});
+			/*编辑时替换图片位置*/
+			$('#uploadImgBtn1').on('change', function () {
+				var filePath = $(this).val();
+				fileFormat1 = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();//取后缀“.”以后的，并转大写
+				src = window.URL.createObjectURL(this.files[0]);//转换成本地格式。读本地图片的方法
+				if (!fileFormat1.match(/.png|.jpg|.jpeg/)) {
+					alert(文件传输格式错误);
+					$(this).val("");
+				}
+				$("#tihuan1").attr('src', src);//替换图片位置
+			});
+			/*新增品牌信息*/
+			function tijiao1() {
+				var formData=new FormData();
+				var namea = $("#inputEmail31").val();//品牌名称
+				var brandIntro = $("#brandIntro").val();//品牌介绍
+				var logoMeans = $("#logoMeans").val();//logo含义
+				var englishName = $("#inputEmail32").val();//品牌名称
+				var countryId=$("#addBrandSelect").find("option:selected").val();
+				var realImg = $('#uploadImgBtn')[0].files[0];
+				formData.append("namea",namea);
+				formData.append("brandIntro",brandIntro);
+				formData.append("logoMeans",logoMeans);
+				formData.append("englishName",englishName);
+				formData.append("countryId",countryId);
+				formData.append("realImg",realImg);
+				$.ajax({
+					type: 'post',
+					async: false,
+					cache: false,
+					contentType: false, //不设置内容类型
+					processData: false, //不处理数据
+					url: 'insertCarBrand',
+					data: formData,
+					success: function (message) {
+						window.location.reload();
+					},
+					error: function (message) {
+						alert("请求错误");
+					}
+				});
+			}
+
+		</script>
+	</body>
+</html>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.withmycar.mapper.CarModelsMapper" >
+    <insert id="insertCarModels" parameterType="com.qf.withmycar.pojo.CarModels">
+        insert into car_models values(null,#{cmname},#{cmyear},#{brandid},#{facid},#{seriesid},#{tyid},#{styid},#{picurl},#{createtime},#{lastupdate})
+    </insert>
+    <!--查询所有-->
+    <select id="selectAllCarModelsDto" resultType="com.qf.withmycar.dto.CarModelsDto">
+       select cm.cmid,cm.cmname,cb.namea,cm.cmyear,cs.seriesname,ct1.tyname,ct2.tyname styname,cm.picurl from car_models cm,car_brand cb,factory f,car_series cs,car_type ct1,car_type ct2 where cm.brandid=cb.id and cm.facid=f.facid and cm.seriesid=cs.id and cm.tyid=ct1.tyid and cm.styid=ct2.tyid
+    </select>
+    <!--根据id查询一条carModels-->
+    <select id="selectCarModelsById" parameterType="java.lang.Integer" resultType="com.qf.withmycar.pojo.CarModels">
+        select * from car_models where cmid=#{cmid}
+    </select>
+    <!--修改车款信息-->
+    <update id="updateCarModels" parameterType="com.qf.withmycar.pojo.CarModels">
+        update car_models
+        <trim prefix="set" suffixOverrides=",">
+            <if test="cmname!=null and cmname!=''">
+                cmname=#{cmname},
+            </if>
+            <if test="cmyear!=null and cmyear!=''">
+                cmyear=#{cmyear},
+            </if>
+            <if test="brandid!=null and brandid!=''">
+                brandid=#{brandid},
+            </if>
+            <if test="facid!=null and facid!=''">
+                facid=#{facid},
+            </if>
+            <if test="seriesid!=null and seriesid!=''">
+                seriesid=#{seriesid},
+            </if>
+            <if test="tyid!=null and tyid!=''">
+                tyid=#{tyid},
+            </if>
+            <if test="styid!=null and styid!=''">
+                styid=#{styid},
+            </if>
+            <if test="lastupdate!=null">
+                lastupdate=#{lastupdate},
+            </if>
+        </trim>
+        where cmid=#{cmid}
+    </update>
+    <!--删除车款信息-->
+    <delete id="deleteCarModels" parameterType="java.lang.Integer">
+        delete from car_models where cmid=#{cmid}
+    </delete>
+    <!--模糊查询车款信息-->
+    <select id="selectCarModelsMohu" parameterType="com.qf.withmycar.pojo.CarModels" resultType="com.qf.withmycar.dto.CarModelsDto">
+        select cm.cmid,cm.cmname,cb.namea,cm.cmyear,cs.seriesname,ct1.tyname,ct2.tyname styname,cm.picurl from car_models cm,car_brand cb,factory f,car_series cs,car_type ct1,car_type ct2 where cm.brandid=cb.id and cm.facid=f.facid and cm.seriesid=cs.id and cm.tyid=ct1.tyid and cm.styid=ct2.tyid
+        <trim>
+            <if test="brandid!=null and brandid!=''">
+               and cm.brandid=#{brandid}
+            </if>
+            <if test="tyid!=null and tyid!=''">
+               and cm.tyid=#{tyid}
+            </if>
+            <if test="seriesid!=null and seriesid!=''">
+               and cm.seriesid=#{seriesid}
+            </if>
+            <if test="cmname!=null and cmname!=''">
+                and cm.cmname like concat('%',#{cmname},'%')
+            </if>
+        </trim>
+    </select>
+    <!--通过车系查询所有车款-->
+    <select id="selectCarModelsBySeriesId" resultType="com.qf.withmycar.pojo.CarModels" parameterType="java.lang.Integer">
+        SELECT * from car_models where seriesid=#{seriesid}
+    </select>
+    <!--查询最高价最低价-->
+    <select id="selectPrice" resultType="com.qf.withmycar.vo.CarSeriesModelsVo" parameterType="java.lang.Integer">
+        select * from ((SELECT a.carpcinfo highprice from car_s_param_class a where carid=#{carid} and cpcid=1 )tb1,(SELECT a.carpcinfo lowprice from car_s_param_class a where carid=#{carid} and cpcid=2 )tb2)
+    </select>
+
+    <select id="queryCarModelBySeriesId" parameterType="java.lang.Integer" resultType="com.qf.withmycar.pojo.CarModels">
+        select * from car_models where seriesid = #{id}
+     </select>
+    <!--通过车系id查询所有车款的年款-->
+    <select id="getCarModelsYearBySeriesId" resultType="java.lang.String" parameterType="java.lang.Integer">
+        select cmyear from car_models where seriesid = #{seriesid} GROUP BY cmyear;
+    </select>
+    <!--根据车系id查车款信息和厂商指导售价-->
+    <select id="getCarModelBySeriesId" resultType="com.qf.withmycar.vo.CarModelBySeriesIdVo" parameterType="java.lang.Integer">
+        SELECT
+            a.cmid,
+            a.cmname,
+            a.cmyear,
+            b.carpcinfo
+        from
+            car_models a,
+            car_s_param_class b
+        where
+            a.cmid = b.carid
+            and a.seriesid = #{seriesid}
+            and b.cpcid = 1
+    </select>
+</mapper>

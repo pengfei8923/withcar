@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>修改性别</title>
+	<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+	<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js" ></script>
+	<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+</head>
+<style>
+	p{
+		margin: 0;
+	}
+</style>
+<body  class="easyui-layout" style="background-color:#F0F0F0">
+<div class="row" style="background-color: #FF6F29; margin: auto;height: 50px; line-height: 46px; " align="center" >
+	<div class="col-xs-3"><a href="javascript:history.go(-1)"><img src="img/fanhui.png" style="width:50%;"></a></div>
+	<div class="col-xs-5">
+		<span style="font-size: 25px; color: #FFFFFF;">性别</span>
+	</div>
+	<div class="col-xs-4">
+		<button onclick="gai()" style="font-size: 20px; color: #FFFFFF;background-color: #FF6F29; border: 0px;">保存</button>
+	</div>
+</div>
+<div>
+	<br />
+	<div class="row" style="height: 50px; background-color: #F0F0F0; line-height: 48px;">
+		<div class="col-xs-12">
+			<button type="checkbox" onclick="sex(1)" value="男" class="btn btn-default" style="width: 100%;">男</button>
+		</div>
+		<div class="col-xs-12">
+			<button type="checkbox" onclick="sex(2)" value="女"  class="btn btn-default"  style="width: 100%;">女</button>
+		</div>
+	</div>
+</div>
+
+<script>
+	var gender;
+	function sex(x) {
+		gender=x;
+	}
+	function gai() {
+		var res =new Object()
+		res.gender = gender;
+		console.log(res.gender);
+		var s = JSON.stringify(res);
+		$.ajax({
+			type:"POST",
+			url: "updateName",
+			async:false,
+			contentType: "application/json; charset=utf-8",
+			data:s,
+			success:function (data) {
+				console.log(data)
+				window.location.href="getUserInfo?userId="+data;
+			}
+		});
+	}
+</script>
+</body>
+</html>

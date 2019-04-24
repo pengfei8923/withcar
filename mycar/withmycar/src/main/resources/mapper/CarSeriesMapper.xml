@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.withmycar.mapper.CarSeriesMapper" >
+    <!--新增车系-->
+    <insert id="addCarSeries" parameterType="com.qf.withmycar.pojo.CarSeries">
+        insert into car_series values(null,#{seriesName},#{brandId},#{facId},#{typeId},#{createTime},#{lastUpdate})
+    </insert>
+    <!--查询所有车系-->
+    <select id="selectAllCarSeriesDto" resultType="com.qf.withmycar.dto.CarSeriesDto">
+        select  cs.id,cs.seriesname,cb.namea,f.facname,ct.tyname from car_series cs,car_brand cb,factory f,car_type ct where cs.brandid=cb.id and cs.facid=f.facid and cs.typeid=ct.tyid
+    </select>
+    <!--根据id查询一个车系信息-->
+    <select id="selectCarSeriesById" parameterType="java.lang.Integer" resultType="com.qf.withmycar.pojo.CarSeries">
+        SELECT * from car_series  where  id=#{id}
+    </select>
+    <!--修改车系信息-->
+    <update id="updateCarSeries" parameterType="com.qf.withmycar.pojo.CarSeries">
+        update car_series
+        <trim prefix="set" suffixOverrides=",">
+            <if test="seriesName!=null and seriesName!=''">
+                seriesName=#{seriesName},
+            </if>
+            <if test="brandId!=null and brandId!=''">
+                brandId=#{brandId},
+            </if>
+
+            <if test="facId!=null and facId!=''">
+                facId=#{facId},
+            </if>
+            <if test="typeId!=null and typeId!=''">
+                typeId=#{typeId},
+            </if>
+            <if test="lastUpdate!=null">
+                lastUpdate=#{lastUpdate},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+    <!--删除车系信息-->
+    <delete id="deleteCarSeries" parameterType="java.lang.Integer">
+        delete from car_series where id=#{id}
+    </delete>
+    <!--模糊查询-->
+    <select id="selectCarSeriesByMohu" parameterType="com.qf.withmycar.pojo.CarSeries" resultType="com.qf.withmycar.dto.CarSeriesDto">
+        select  cs.id,cs.seriesname,cb.namea,f.facname,ct.tyname from car_series cs,car_brand cb,factory f,car_type ct where cs.brandid=cb.id and cs.facid=f.facid and cs.typeid=ct.tyid
+        <trim>
+            <if test="brandId!=null and brandId!=''">
+               and cs.brandId=#{brandId}
+            </if>
+            <if test="typeId!=null and typeId!=''">
+                and cs.typeId=#{typeId}
+            </if>
+            <if test="seriesName!=null and seriesName!=''">
+                and cs.seriesName like concat('%',#{seriesName},'%')
+            </if>
+        </trim>
+    </select>
+    <!--下拉框:根据厂商信息查询车系信息-->
+    <select id="selectCarSeriesByFacId" resultType="com.qf.withmycar.pojo.CarSeries" parameterType="java.lang.Integer">
+        select * from car_series where facId=#{facId}
+    </select>
+    <!--根据车系id查询车系的主类型-->
+    <select id="selectTypeIdBySeriesId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+      select typeid from car_series where id=#{id}
+    </select>
+</mapper>

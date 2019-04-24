@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html  xmlns:th="www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8"/>
+		<title>配置表</title>
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css">
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css">
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/demo/demo.css" />
+			<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+			<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+			<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+			<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+	</head>
+	<style>
+		th {
+			text-align: center;
+		}
+		td {
+			text-align: center;
+		}
+        hr {
+            margin:10px;
+        }
+		table {
+			margin-bottom: 20px;
+		}
+	</style>
+	<body class="easyui-layout" >
+		<div data-options="region:'center'"  style="padding: 0;">
+            <div style="margin: 10px;">
+                <a href="javascript:history.go(-1)"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> 配置表</a>
+            </div>
+            <hr/>
+            <div style="margin: auto; width: 90%; height: 50px;">
+                <button type="button" class="btn btn-success cledit" style="float: right;" onclick="editAll()">编辑</button>
+            </div>
+			<div style="margin: auto; width: 90%; height: 50px;" id="tableslpf">
+				<!--ajax-->
+			</div>
+			<input type="hidden" id="hiddenInput" value="" th:value="${id}">
+		</div>
+        <script type="text/javascript">
+			/*车款id值*/
+			var cmid = $("#hiddenInput").val();
+			console.log(cmid);
+
+            var lpfedit = false;
+            $.ajax({
+                type:"post",
+                url:"selectCarModelsConfig",
+                async:false,
+                contentType:"application/json;charset=utf-8",
+                success:function (data) {
+                    // console.log(data);
+                    $.each(data,function (index,element) {
+                        // console.log(index);
+                        str = "<table class=\"table table-bordered\" style=\"margin: 0;\">\n" +
+                            "<tr>\n" +
+                            "<th colspan=\"3\" style=\"text-align: left;\">"+ index +"</th>\n" +
+                            "</tr>\n";
+                        $.each(element,function (indexs,elements) {
+                            console.log(elements);
+                            str += "<tr>\n" +
+                                "<td style='width: 200px'>"+ elements.paramname +"</td>\n" +
+                                "<td>\n" +
+                                "<input type=\"email\" class=\"form-control "+ "input"+ elements.paramid+ "\" name='"+elements.paramid+"' disabled=\"disabled\" placeholder=\""+ elements.paramname +"\"/>\n" +
+                                "</td>\n" +
+                                "<td>\n" +
+                                "<button type=\"button\" class=\"btn btn-success lpfbtn "+ "btn"+ elements.cpcsortid+ "\"  onclick=\"editelement('input"+elements.paramid+"','btn"+elements.cpcsortid+"','"+elements.paramid+"')\">编辑</button>\n"+
+                                "</td>\n" +
+                                "</tr>\n" ;
+                        })
+                        str += "</table>";
+                        $("#tableslpf").append(str);
+                    })
+                },
+                error:function () {
+                    console.log("意外错误");
+                }
+            });
+            /*查询所有参数*/
+			$.ajax({
+				type:"post",
+				url:"selectCarSParamClassBycarid?carid="+cmid,
+				async:false,
+				contentType:"application/json;charset=utf-8",
+				success:function (data) {
+					console.log(data);
+					$.each(data,function (index,element) {
+						$(".input"+element.cpcid+"").val(element.carpcinfo);
+					});
+				},
+				error:function () {
+					console.log("意外错误");
+				}
+			})
+
+            function editelement(ipt,btn,cpcid){
+                lpfedit = !lpfedit;
+                if(lpfedit){
+                    $("."+btn+"").html("保存");
+                    $("."+ipt+"").attr("disabled",false);
+
+                } else {//保存
+                    /*存数据******************************************保存————等待补充*/
+					CarSParamC = {};
+					CarSParamC.carid = cmid;
+					CarSParamC.cpcid = cpcid;
+					CarSParamC.carpcinfo = $("."+ipt+"").val();
+					console.log(CarSParamC);
+					$.ajax({
+						type:"post",
+						url:"updateCarSParamClass",
+						data:JSON.stringify(CarSParamC),
+						async:false,
+						contentType:"application/json;charset=utf-8",
+						success:function (data) {
+							if(data==1){
+								// console.log("完成");
+								$("."+btn+"").html("编辑");
+								$("."+ipt+"").attr("disabled",true);
+							}
+						},
+						error:function () {
+							console.log("意外错误");
+						}
+					});
+
+                }
+            }
+
+            editAlllpf = true;
+            function editAll() {
+                $(".cledit").html("保存");
+                if(editAlllpf){
+					// $(".lpfbtn").attr("disabled",true);
+                    $(":input").prop("disabled",false);
+                    editAlllpf = !editAlllpf;
+                }else {
+                	var CarSParamCList = new Array();
+                    $("#tableslpf input[type=email]").each(function () {
+                        console.log(this.name+"="+this.value);
+						carspc = {};
+						carspc.carid = cmid;
+                        carspc.cpcid = this.name;
+						carspc.carpcinfo = this.value;
+						CarSParamCList.push(carspc);
+                    })
+					// console.log(CarSParamCList);
+					$.ajax({
+						type:"post",
+						url:"addCarSParamClass",
+						data:JSON.stringify(CarSParamCList),
+						async:false,
+						contentType:"application/json;charset=utf-8",
+						success:function (data) {
+							// console.log("完成");
+							window.location.href="javascript:history.go(-1)";
+						},
+						error:function () {
+							console.log("意外错误");
+						}
+					});
+                }
+            }
+
+        </script>
+    </body>
+</html>

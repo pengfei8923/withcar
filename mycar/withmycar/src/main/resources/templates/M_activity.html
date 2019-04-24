@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>活动推荐</title>
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css">
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css">
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/demo/demo.css" />
+			<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+			<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+			<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+			<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+	</head>
+	<style>
+		th {
+			text-align: center;
+		}
+		td {
+			text-align: center;
+		}
+	</style>
+	<body class="easyui-layout" >
+		<div data-options="region:'center',title:'活动推荐'">
+		  <div style="margin: auto; width: 90%;">
+			<div class="form-inline" style="height: 50px;">
+				 <!-- <div class="form-group">
+					<label for="exampleInputName2">品牌</label>
+					<select class="form-control" style="width: 200px;">
+						<option>奥迪</option>
+					</select>
+				  </div>
+				  <div class="form-group">
+					<label for="exampleInputEmail2">类型</label>
+					<select class="form-control" style="width: 200px;">
+						<option>SUV</option>
+					</select>
+				  </div>
+				  <div class="form-group">
+					<label for="exampleInputEmail2">车系</label>
+					<select class="form-control" style="width: 200px;">
+						<option>奔驰E系</option>
+					</select>
+                    
+				  </div>-->
+                  <div class="form-group">
+                  <input type="text" placeholder="标题/创建者"/>
+                  </div>
+                  <div class="form-group">
+                  <label>时间：</label><input type="date" />-<input type="date" />
+                  </div>
+                  <div class="form-group">
+                  <button type="submit"  class="btn btn-info">搜索</button>
+                  </div>
+                   <div class="form-group" style="float: right;">
+                  <button type="button" class="btn btn-success"  data-toggle="modal" data-target="#myModal">新增</button>	
+                  </div>
+			  </div>
+			  <!--<div style="height: 50px;">
+					<div style="float: left;">
+						<form class="form-inline">
+						  <div class="form-group">
+							<label class="sr-only" for="exampleInputEmail3">Email address</label>
+							<input type="email" class="form-control" id="exampleInputEmail3" placeholder="名称模糊匹配">
+						  </div>
+						  <button type="submit"  class="btn btn-info">搜索</button>
+						</form>
+					</div>
+					<button type="button" class="btn btn-success" style="float: right;" data-toggle="modal" data-target="#myModal">新增</button>	
+				</div>-->
+			  <div>
+				  <table class="table table-bordered">
+					 	<tr>
+					 		<th>序号</th>
+					 		<th>标题</th>
+					 		<th>活动创建者</th>
+					 		<th>
+                            	<select>
+                                	<option>活动类型</option>
+                                    <option>类型1</option>
+                                    <option>类型2</option>
+                                    <option>类型3</option>
+                                </select>
+                            </th>
+					 		<th>时间</th>
+					 		<th>链接</th>
+					 		<th>
+                            	<select>
+                                	<option>状态</option>
+                                    <option>未推荐</option>
+                                    <option>已推荐</option>
+                                    
+                                </select>
+                            </th>
+                            <th>点赞量</th>
+					 		<th>访问量</th>
+					 		<th>收藏量</th>
+					 		<th>操作</th>
+					 	</tr>
+					 	<tr>
+					 		<td>1</td>
+					 		<td>***</td>
+					 		<td>市场部</td>
+					 		<td>类型1</td>
+					 		<td>2017/2/22-2.17/5/33</td>
+					 		<td>www.baidu.com</td>
+                            <td>未推荐</td>
+					 		<td>56</td>
+					 		<td>100</td>
+					 		<td>50</td>
+					 		<td>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalbj">推荐</button>
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModaldel">取消推荐</button>
+
+					 		</td>
+					 	</tr>
+					 	<td>2</td>
+					 		<td>***</td>
+					 		<td>市场部</td>
+					 		<td>类型2</td>
+					 		<td>2017/2/22-2.17/5/33</td>
+					 		<td>www.baidu.com</td>
+                            <td>已推荐</td>
+					 		<td>56</td>
+					 		<td>100</td>
+					 		<td>50</td>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalbj">推荐</button>
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModaldel">取消推荐</button>
+					 			
+					 	</tr>
+					</table>
+				</div>				
+			</div>
+			
+		</div>
+		<!--
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">新增车型</h4>
+		      </div>
+		      <div class="modal-body">
+					<form class="form-horizontal">
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">车型名称</label>
+					    <div class="col-sm-10">
+					      <input type="email" class="form-control" id="inputEmail3" placeholder="宝马X6">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">所属品牌</label>
+					    <div class="col-sm-10">
+							<select class="form-control">
+								<option>奥迪</option>
+								<option>2</option>
+							</select>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">所属厂商</label>
+					    <div class="col-sm-10">
+							<select class="form-control">
+								<option>一汽奥迪</option>
+								<option>2</option>
+							</select>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">所属车系</label>
+					    <div class="col-sm-10">
+							<select class="form-control">
+								<option>奥迪A4L</option>
+								<option>2</option>
+							</select>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">所属年款</label>
+					    <div class="col-sm-10">
+							<select class="form-control">
+								<option>2017款</option>
+								<option>2</option>
+							</select>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">类型</label>
+					    <div class="col-sm-10">
+							<select class="form-control">
+								<option>轿车</option>
+								<option>2</option>
+							</select>
+					    </div>
+					  </div>
+					</form>	         
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		        <button type="button" class="btn btn-primary">保存</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<div class="modal fade" id="myModalbj" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">编辑车型</h4>
+		      </div>
+		      <div class="modal-body">
+					<form class="form-horizontal">
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">车型名称</label>
+					    <div class="col-sm-10">
+					      <input type="email" class="form-control" id="inputEmail3" placeholder="宝马X6">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">所属品牌</label>
+					    <div class="col-sm-10">
+							<select class="form-control">
+								<option>奥迪</option>
+								<option>2</option>
+							</select>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">所属厂商</label>
+					    <div class="col-sm-10">
+							<select class="form-control">
+								<option>一汽奥迪</option>
+								<option>2</option>
+							</select>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">所属车系</label>
+					    <div class="col-sm-10">
+							<select class="form-control">
+								<option>奥迪A4L</option>
+								<option>2</option>
+							</select>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">所属年款</label>
+					    <div class="col-sm-10">
+							<select class="form-control">
+								<option>2017款</option>
+								<option>2</option>
+							</select>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">类型</label>
+					    <div class="col-sm-10">
+							<select class="form-control">
+								<option>轿车</option>
+								<option>2</option>
+							</select>
+					    </div>
+					  </div>
+					</form>	   	         
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		        <button type="button" class="btn btn-primary">保存</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<div class="modal fade" id="myModaldel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">删除</h4>
+		      </div>
+		      <div class="modal-body">
+					<h3>确定删除？</h3>      
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		        <button type="button" class="btn btn-primary">确定</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>-->
+		<script type="text/javascript">
+			$('#myModal').on('shown.bs.modal', function () {
+			  $('#myInput').focus()
+			})
+			$('#myModalbj').on('shown.bs.modal', function () {
+			  $('#myInput').focus()
+			})
+			$('#myModaldel').on('shown.bs.modal', function () {
+			  $('#myInput').focus()
+			})
+			function carlpfmodelsconfig() {
+				window.location.href="carlpfmodelsconfig";
+			}
+		</script>
+	</body>
+</html>

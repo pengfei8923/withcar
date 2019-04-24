@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>车详情</title>
+		<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+		<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js" ></script>
+		<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+	</head>
+	<style>
+		p{
+			margin: 0;
+		}
+		td{
+			text-align: center;
+		}
+	</style>
+	<body  class="easyui-layout"  style="background-color:#F0F0F0">
+		<div class="row" style="background-color: #FF6F29; margin: auto;height: 50px; line-height: 46px; " align="center" >
+			<div class="col-xs-3"><a href="javaScript:history.go(-1)"><img src="img/fanhui.png" style="width:50%;"></a></div>
+			<div class="col-xs-6">
+				<span style="font-size: 25px; color: #FFFFFF;">车详情</span>
+			</div>
+			<div class="col-xs-3">
+				  <button type="button" class="btn dropdown-toggle glyphicon glyphicon-star" style="background-color: #FF6F29; border-color: #FF6F29;"></button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<img src="img/Peng_2019-04-08_205602.png" id="lpfimgs" style="width: 100%;" />
+			</div>
+		</div>
+		<div class="row" style="height: 100px; background-color: #FFFFFF;">
+			<div class="col-xs-8" style="padding-left: 30px;padding-top: 20px;">
+				<p>厂商指导价：<span style="color: red; font-size: 20px;" id="lpfzhidaojia">19.80万</span></p>
+				<p>
+					<span>车型：</span><span id="lpfchexing">SUV</span>&nbsp;&nbsp;&nbsp;
+					<span>耗油：</span><span id="lpfyouhao">8.3-9.3</span>
+				</p>
+			</div>
+			<div class="col-xs-4" style="padding-top: 20px;">
+				<a href="javaScript:history.go(-1)"><button type="button" class="btn btn-default btn-lg" >更换车款</button></a>
+			</div>
+		</div>
+		<!--<div style="height: 40px;">
+			<h3>活动说明</h3>
+		</div>
+		<div class="row" style="background-color: #FFFFFF;">
+			<div class="col-xs-12">
+				<img src="img/Peng_2019-04-08_205602.png" style="width: 100%;" />
+			</div>
+			<div class="col-xs-12" style="padding-left: 30px;">
+				<h5> 全新奥迪Q3正式上市 售27.18-35.98万元</h5>
+			</div>
+		</div>-->
+		
+		<!--<div style="height: 40px;">
+			<h3>车型说明</h3>
+		</div>
+		<div class="row" style="background-color: #FFFFFF;">
+			<div class="col-xs-12" style="padding-left: 30px;">
+				<h5>哈弗H7是长城汽车在15-20万元中型SUV市场的主力产品，传祺GS8是它最有竞争力的对手，二者不仅同样全系搭载2.0T涡轮增压发动机，并且都能提供5座或7座版车型，它们都能保证拥有足够好的动力和空间表现。</h5>
+			</div>
+		</div>-->
+		<div style="height: 40px;">
+			<h3>参数配置</h3>
+		</div>
+		<div class="row" style="background-color: #FFFFFF;">
+			<div class="col-xs-12">
+				<table class="table table-condensed" id="qtconfig">
+				 <!--	<tr>
+				 		<th colspan="2">基本信息</th>
+				 	</tr>
+				 	<tr>
+				 		<td>车型</td>
+				 		<td>SUV</td>
+				 	</tr>-->
+				</table>
+			</div><input type="hidden" id="hiddenInput" value="" th:value="${ids}">
+			
+		</div>
+	<script>
+		/*车款id值*/
+		var cmid = $("#hiddenInput").val();
+		// var cmid = 5;
+				$.ajax({
+			type:"post",
+			url:"selectCarModelsByIdlpf?cmid="+cmid,
+			async:false,
+			contentType:"application/json;charset=utf-8",
+			success:function (data) {
+				console.log(data);
+				$("#lpfimgs").attr("src",data.picurl);
+				/*$.each(data,function (index,element) {
+					str =  "<tr>\n" +
+							"<th colspan=\"2\">"+element.pacname+"</th>\n" +
+							"</tr>";
+					$("#qtconfig").append(str);
+					addcarinfo(element.pacid);
+				});*/
+			},
+			error:function () {
+				console.log("意外错误");
+			}
+		})
+		/*查询参数类别*/
+		$.ajax({
+			type:"post",
+			url:"selectCarParamclass",
+			async:false,
+			contentType:"application/json;charset=utf-8",
+			success:function (data) {
+				// console.log(data);
+				$.each(data,function (index,element) {
+					str =  "<tr>\n" +
+							"<th colspan=\"2\">"+element.pacname+"</th>\n" +
+							"</tr>";
+					$("#qtconfig").append(str);
+					addcarinfo(element.pacid);
+				});
+			},
+			error:function () {
+				console.log("意外错误");
+			}
+		})
+		/*查询所有参数*/
+		function addcarinfo(pacid){
+			$.ajax({
+				type:"post",
+				url:"queryCarSParamClassBycarid?carid="+cmid+"&pacid="+pacid,
+				async:false,
+				contentType:"application/json;charset=utf-8",
+				success:function (data) {
+					console.log(data);
+					$.each(data,function (index,element) {
+						if(element.paramid == 1){
+							$("#lpfzhidaojia").html("<span style=\"color: red; font-size: 20px;\" id=\"lpfzhidaojia\">"+element.carpcinfo+"</span>");
+						}
+						if(element.paramid == 4){
+							$("#lpfchexing").html("<span id=\"lpfchexing\">"+element.carpcinfo+"</span>");
+						}
+						if(element.paramid == 10){
+							$("#lpfyouhao").html("<span id=\"lpfyouhao\">"+element.carpcinfo+"</span>");
+						}
+						str = "<tr>\n" +
+								"<td>"+element.paramname+"</td>\n" +
+								"<td>"+element.carpcinfo+"</td>\n" +
+								"</tr>";
+						$("#qtconfig").append(str);
+					});
+				},
+				error:function () {
+					console.log("意外错误");
+				}
+			})
+		}
+
+
+	</script>
+	</body>
+</html>

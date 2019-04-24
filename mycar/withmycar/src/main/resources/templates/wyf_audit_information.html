@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css">
+    <!--<link rel="stylesheet" href="moumou/css/jquery.page.css">-->
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
+
+    <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <style>
+        .left {
+            float: left;
+            width: 50%;
+        }
+
+        p {
+            margin-bottom: 0px;
+            border-bottom: 1px solid #333;
+            border-left: 1px solid #333;
+            border-right: 1px solid #333;
+        }
+
+        span {
+            margin-left: 5px;
+        }
+
+        .left2 {
+            float: left;
+        }
+
+        ul {
+            margin-bottom: 0px;
+        }
+
+        ul li {
+            list-style: none;
+            margin-left: -40px;
+        }
+    </style>
+<body>
+<div class="easyui-layout" style=" height: 700px; width: 100%;">
+    <div id="content" region="center" style="padding:0px;">
+        <div id="tt" class="easyui-tabs" data-options="fit:true">
+            <!--<div title="欢迎页" style="padding:20px;display:none;">
+                Welcome  to   1000phone's  Shiro World!
+            </div>-->
+            <div title="资讯审核" style="padding:20px;display:none;">
+                <div style="margin-bottom:40px;margin-top:40px">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="sr-only" for="exampleInputEmail3"></label>
+                            <input type="text" class="form-control" id="exampleInputEmail3" placeholder="标签/来源/作者"/>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control" style="width: 100px;">
+                            <option>未通过</option>
+                            <option>已通过</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-success">搜索</button>
+                    </div>
+                </div>
+                <table class="easyui-datagrid" id="tb" style="width:100%;height:auto"
+                       data-options="singleSelect:true,collapsible:true,url:'datagrid_data1.json',method:'get'">
+                    <thead>
+                    <tr>
+                        <th data-options="field:'itemid',align:'center',resizable:false" width="5%">序号</th>
+                        <th data-options="field:'productid',align:'center',resizable:false" width="16%">标题</th>
+                        <th data-options="field:'listprice',align:'center',resizable:false" width="5%">来源</th>
+                        <th data-options="field:'status',align:'center',resizable:false" width="5%">作者</th>
+                        <th data-options="field:'aa',align:'center',resizable:false" width="16%">时间</th>
+                        <th data-options="field:'staaatus',align:'center',resizable:false" width="7%">访问量</th>
+                        <th data-options="field:'stcatus',align:'center',resizable:false" width="7%">点赞量</th>
+                        <th data-options="field:'stasdsatus',align:'center',resizable:false" width="7%"> 收藏</th>
+                        <th data-options="field:'stsaatus',align:'center',resizable:false" width="7%">转发量</th>
+                        <th data-options="field:'statsaus',align:'center',resizable:false" width="8%">状态</th>
+                        <th data-options="field:'statsas',align:'center',resizable:false" width="8%">提交人</th>
+                        <th data-options="field:'statsaaus',align:'center',resizable:false" width="10%">功能</th>
+                    </tr>
+                    </thead>
+                </table>
+                <div class="easyui-pagination" data-options="
+					total: 50,
+                    pagesize: 10,
+					showPageList: false,
+					showRefresh: false,
+					displayMsg: ''
+				">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- 审核Modal -->
+<div class="modal fade" id="myModalsh" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="sh1" class="col-sm-2 control-label">ID</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="sh1">
+                        </div>
+                        <label for="sh9" class="col-sm-2 control-label">状态</label>
+                        <div class="col-sm-10">
+                            <select id="sh9" class="col-sm-10" style="width: 100px;">
+                                <option>未提交</option>
+                                <option>审核中</option>
+                                <option>未通过</option>
+                                <option>已通过</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button onclick="updateArticle()" type="button" class="btn btn-primary">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#myModalsh').on('shown.bs.modal', function () {
+        $('#myInput').focus()
+    })
+    //全表查询
+    $.ajax({
+        type:"post",
+        url:"selectByUsername",
+        async:false,//使用同步方式
+        success:function (data) {
+            $.each(data,function (index,element){
+                var trStr="<tr>"+
+                    "<td>"+element.id+"</td>"+
+                    "<td>"+element.title+"</td>"+
+                    "<td>"+element.source+"</td>"+
+                    "<td>"+element.author+"</td>"+
+                    "<td>"+element.createTime+"</td>"+
+                    "<td>"+element.accessCount+"</td>"+
+                    "<td>"+element.likeCount+"</td>"+
+                    "<td>"+element.favCount+"</td>"+
+                    "<td>"+element.shareCount+"</td>"+
+                    "<td>"+element.state+"</td>"+
+                    "<td>"+element.username+"</td>"+
+                    "<td>"+
+                        "<button data-id=\""+element.id+"\" class=\"easyui-linkbutton\" style=\"width:80px;\"data-toggle=\"modal\" data-target=\"#myModalsh\">审核</button>"+
+                    "</td>"+ /*onclick='updateArticle("+element.id+")'*/
+                "</tr>";
+                $("#tb").append(trStr);
+            });
+        }
+    });
+    $("#myModalsh").on('shown.bs.modal',function(event) {
+        var button=$(event.relatedTarget);
+        var id=button.data('id');
+        $.ajax({
+            type:"post",
+            url:"selectById",
+            data:{"id":id},
+            async:false,
+            success:function (data){
+                $("#sh1").val(data.id);
+                $("#sh9").val(data.state);
+            }
+        })
+    })
+    function updateArticle(){
+        var id=$("#sh1").val();
+        alert(id);
+        var state=$("#sh9").val();
+        alert(state);
+        $.ajax({
+            type:"post",
+            url:"updateAuditInformation",
+            data:JSON.stringify({"id":id,"state":state}),
+            contentType: "application/json;charset=utf-8",
+            async:false,
+            success:function (data){
+                window.location.href="information";
+            }
+        })
+    }
+    //审核
+  /*  var id=window.location.search.split("=");
+    var uid=id[1];
+    $.ajax({
+        type:"post",
+        url:"selectById",
+        data:{"id":uid},
+        async:false,
+        success:function (data){
+         /!*   $("sh1").val(data.title);
+            $("sh2").val(data.source);
+            $("sh3").val(data.author);
+            $("sh4").val(data.createTime);
+            $("sh5").val(data.accessCount);
+            $("sh6").val(data.likeCount);
+            $("sh7").val(data.favCount);
+            $("sh8").val(data.shareCount);*!/
+            $("sh9").val(data.state);
+          /!*  $("sh10").val(data.username);*!/
+        }
+    })*/
+
+</script>
+</body>
+</html>

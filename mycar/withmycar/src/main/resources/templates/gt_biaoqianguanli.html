@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+
+
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css"/>
+    <!--<link rel="stylesheet" href="moumou/css/jquery.page.css">-->
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
+
+    <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <style>
+        .left {
+            float: left;
+            width: 50%;
+        }
+
+        p {
+            margin-bottom: 0px;
+            border-bottom: 1px solid #333;
+            border-left: 1px solid #333;
+            border-right: 1px solid #333;
+        }
+
+        span {
+            margin-left: 5px;
+        }
+
+        .left2 {
+            float: left;
+        }
+
+        ul {
+            margin-bottom: 0px;
+        }
+
+        ul li {
+            list-style: none;
+            margin-left: -40px;
+        }
+    </style>
+<body>
+<div class="easyui-layout" style=" height: 700px; width: 100%;">
+    <div id="content" region="center" style="padding:0px;">
+        <div id="tt" class="easyui-tabs" data-options="fit:true">
+            <!--<div title="欢迎页" style="padding:20px;display:none;">
+                Welcome  to   1000phone's  Shiro World!
+            </div>-->
+            <div title="系统标签" style="padding:20px;display:none;">
+                <div style="margin-bottom:40px;margin-top:40px">
+                    <b style="font-size:15px">名称：</b>
+                    <input type="text" id="sousuo1"/>
+                    <button class="easyui-linkbutton" style="width:80px" onclick="sousuo()">搜索</button>
+                    <button class="easyui-linkbutton" style="width:80px;float:right" data-toggle="modal"
+                            data-target="#myModal">新增
+                    </button>
+                </div>
+                <table class="easyui-datagrid" id="dg" style="width:100%;height:auto"
+                       data-options="singleSelect:true,collapsible:true,url:'datagrid_data1.json',method:'get'">
+                    <thead>
+                    <tr>
+                        <th data-options="field:'itemid',align:'center',resizable:false" width="25%">序号</th>
+                        <th data-options="field:'productid',align:'center',resizable:false" width="25%">名称</th>
+                        <th data-options="field:'listprice',align:'center',resizable:false" width="25%">使用量</th>
+                        <th data-options="field:'status',align:'center',resizable:false" width="26.5%">功能</th>
+                    </tr>
+                    </thead>
+                    <tr th:each="tag1:${tag1}">
+                        <td th:text="${tag1.id}"></td>
+                        <td th:text="${tag1.namee}"></td>
+                        <td th:text="${tag1.clickCount}"></td>
+                        <td>
+                            <button class="easyui-linkbutton" th:attr="data-id=${tag1.id}"
+                                    style="width:50px;margin-right:20px" data-toggle="modal"
+                                    data-target="#myModalbj">编辑
+                            </button>
+                            <button class="easyui-linkbutton" th:attr="data-id=${tag1.id}" style="width:50px;"
+                                    data-toggle="modal"
+                                    data-target="#myModaldel">删除
+                            </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button class="easyui-linkbutton" th:attr="data-id=${tag1.id}" style="width:50px;"
+                                    data-toggle="modal"
+                                    data-target="#myModaldel2">移出
+                            </button>
+                        </td>
+                    </tr>
+                    <!--<tr>-->
+                    <!--<td>2</td>-->
+                    <!--<td><b onClick="window.location='wk_msgshow.html'">标题2</b></td>-->
+                    <!--<td>2019/04/12</td>-->
+                    <!--<td>-->
+                    <!--<button class="easyui-linkbutton" style="width:50px;margin-right:20px" onClick="window.location='wk_editmsg.html'">编辑</button>-->
+                    <!--<button class="easyui-linkbutton" style="width:50px;"data-toggle="modal" data-target="#myModaldel">删除</button>-->
+                    <!--</td>-->
+                    <!--</tr>-->
+
+                </table>
+                <div class="easyui-pagination" data-options="
+					total: 50,
+                    pagesize: 10,
+					showPageList: false,
+					showRefresh: false,
+					displayMsg: ''
+				">
+                </div>
+            </div>
+            <div title="用户标签" style="padding:20px;display:none;">
+                <div style="margin-bottom:40px;margin-top:40px">
+                    <b style="font-size:15px">名称：</b>
+                    <input type="text"/>
+                    <button class="easyui-linkbutton" style="width:80px">搜索</button>
+                </div>
+                <table class="easyui-datagrid" id="dg1" style="width:100%;height:auto"
+                       data-options="singleSelect:true,collapsible:true,url:'datagrid_data1.json',method:'get'">
+                    <thead>
+                    <tr>
+                        <th data-options="field:'itemid',align:'center',resizable:false" width="25%">序号</th>
+                        <th data-options="field:'productid',align:'center',resizable:false" width="25%">名称</th>
+                        <th data-options="field:'listprice',align:'center',resizable:false" width="25%">使用量</th>
+                        <th data-options="field:'status',align:'center',resizable:false" width="26.5%">功能</th>
+                    </tr>
+                    </thead>
+                    <tr th:each="tag2:${tag2}">
+                        <td th:text="${tag2.id}"></td>
+                        <td th:text="${tag2.namee}"></td>
+                        <td th:text="${tag2.clickCount}"></td>
+                        <td>
+                            <button id="genggai" class="easyui-linkbutton" style="margin-right:20px"
+                                    th:onclick="'javascript:yidong(\''+${tag2.id}+'\');'">移入系统标签库
+                            </button>
+                        </td>
+                    </tr>
+                    <!--<tr>-->
+                    <!--<td>2</td>-->
+                    <!--<td><b onClick="window.location='wk_msgshow.html'">标题2</b></td>-->
+                    <!--<td>2019/04/12</td>-->
+                    <!--<td>-->
+                    <!--<button class="easyui-linkbutton" style="width:80px;margin-right:20px" data-toggle="modal" data-target="#myModaldel2">移入标签库</button>-->
+                    <!--</td>-->
+                    <!--</tr>-->
+
+                </table>
+                <div class="easyui-pagination" data-options="
+					total: 50,
+                    pagesize: 10,
+					showPageList: false,
+					showRefresh: false,
+					displayMsg: ''
+				">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+</div>
+<!-- 新增Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel0">新增标签信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">标签名称</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="inputEmail3" placeholder="标签名称">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="baocunx()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 编辑Modal -->
+<div class="modal fade" id="myModalbj" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel1">编辑标签信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">标签名称</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="biaoqianmingcheng" placeholder="标签名称"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="bianji()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+删除Modal
+<div class="modal fade" id="myModaldel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">删除</h4>
+            </div>
+            <div class="modal-body">
+                <h3>确定删除？</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="shanchu()">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+移出Modal
+<div class="modal fade" id="myModaldel2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">移出系统标签库</h4>
+            </div>
+            <div class="modal-body">
+                <h3>确定移出系统标签库</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="yichu()">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').focus()
+    });
+
+    function baocunx() {
+        tagname = $("#inputEmail3").val();
+        // alert(tagname);
+        var myDate = new Date();
+//获取当前年
+        var year = myDate.getFullYear();
+//获取当前月
+        var month = myDate.getMonth() + 1;
+//获取当前日
+        var date = myDate.getDate();
+        var h = myDate.getHours();       //获取当前小时数(0-23)
+        var m = myDate.getMinutes();     //获取当前分钟数(0-59)
+        var s = myDate.getSeconds();
+
+        var now = year + '-' + month + "-" + date + " " + h + ':' + m + ":" + s;
+        alert(now);
+        tag = {};
+        tag.name = tagname;
+        tag.is_deleted = 0;
+        tag.type = 0;
+        tag.click_count = 0;
+        tag.create_time = now;
+        $.ajax({
+            type: "post",
+            url: "addTag",
+            async: false,
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify(tag),
+            dataType: "text",
+            success: function (message) {
+                if (message == "true") {
+                    alert(message);
+                    alert("增加成功");
+                    window.location.reload();
+                } else {
+                    alert("增加失败,标签名重复");
+                }
+            },
+            error: function () {
+                alert("增加失败");
+                window.location.reload();
+            }
+        })
+    };
+    $('#myModalbj').on('shown.bs.modal', function (event) {
+        button = $(event.relatedTarget);
+        recipient2 = button.data('id');
+        // $('#myInput').focus()
+    });
+
+
+    function bianji() {
+        tagname1 = $("#biaoqianmingcheng").val()
+        tag1 = {};
+        tag1.id = recipient2;
+        tag1.name = tagname1;
+        $.ajax({
+            type: "post",
+            url: "updateTag",
+            async: false,
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify(tag1),
+            success: function () {
+                alert("ok");
+                window.location.reload();
+            },
+            error: function () {
+                alert("nook");
+                window.location.reload();
+            }
+        })
+
+    };
+
+
+    $('#myModaldel').on('shown.bs.modal', function (event) {
+        button = $(event.relatedTarget);
+        recipient = button.data('id');
+        // $('#myInput').focus()
+    });
+
+    function shanchu() {
+        id = recipient;
+        $.ajax({
+            type: "post",
+            url: "deleteTag",
+            async: false,
+            contentType: "application/json;charset=utf-8",
+            data: {"id": id},
+            success: function () {
+                alert("ok");
+                window.location.reload();
+            },
+            error: function () {
+                alert("nook");
+                window.location.reload();
+            }
+        });
+
+    };
+
+    $('#myModaldel2').on('shown.bs.modal', function (event) {
+        button = $(event.relatedTarget);
+        recipient1 = button.data('id');
+        // $('#myInput').focus()
+    });
+
+    function yichu(id) {
+        // alert(id);
+        id = recipient1
+        $.ajax({
+            type: "post",
+            url: "selectId",
+            async: false,
+            data: {"id": id},
+            // contentType: "application/json;charset=utf-8",
+            success: function (messag) {
+                // alert(messag);
+                if (messag == "true") {
+                    // alert("移出成功");
+                    // $("#genggai").html("移出系统标签库");
+                    window.location.reload();
+                }
+            },
+            error: function () {
+                alert("移出失败");
+            }
+
+        });
+
+    }
+
+    function yidong(id) {
+        // alert(state);
+        // alert(id);
+        $.ajax({
+            type: "post",
+            url: "selectId",
+            async: false,
+            data: {"id": id},
+            // contentType: "application/json;charset=utf-8",
+            success: function (messag) {
+                // alert(messag);
+                if (messag == "true") {
+                    // alert("移出成功");
+                }
+                window.location.reload();
+            },
+            error: function () {
+                alert("移出失败");
+            }
+
+        });
+
+    };
+
+    function sousuo() {
+        var name = $("#sousuo1").val();
+        $.ajax({
+            type: "post",
+            url: "selectTagMoHu",
+            async: false,
+            data: {"name": name},
+            // contentType: "application/json;charset=utf-8",
+            success: function () {
+                alert("查询成功");
+                // window.location.reload();
+            },
+            error: function () {
+                alert("查询异常");
+                // window.location.reload();
+            }
+
+        });
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.withmycar.mapper.MemberMapper" >
+  <select id="selectUserInfoByEmail" parameterType="java.lang.String" resultType="com.qf.withmycar.pojo.Member">
+    select * from member where useremail=#{useremail}
+  </select>
+  <!--将用户插入member表-->
+  <insert id="insertMember" parameterType="com.qf.withmycar.pojo.Member">
+    insert  into member(useremail,password) values(#{useremail},#{password})
+  </insert>
+
+</mapper>

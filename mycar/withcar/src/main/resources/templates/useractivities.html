@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>我的活动</title>
+		<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+		<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js" ></script>
+		<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+	</head>
+	<style>
+		p{
+			margin: 0;
+		}
+	</style>
+	<body  class="easyui-layout">
+		<div class="row" style="background-color: #FF6F29; margin: auto;height: 50px; line-height: 46px; " align="center" >
+			<div class="col-xs-3"><a href="javaScript:history.go(-1)"><img src="img/fanhui.png" style="width:50%;"></a></div>
+			<div class="col-xs-6">
+				<span style="font-size: 25px; color: #FFFFFF;">我的活动</span>
+			</div>
+			<div class="col-xs-3">
+				<div class="btn-group">
+					  <button type="button" class="btn dropdown-toggle" style="background-color: #FF6F29; border-color: #FF6F29;"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<img src="img/shezhi.png">
+					  </button>
+					  <ul class="dropdown-menu" >
+						<li><a href="/">首页</a></li>
+						<li><a href="#">我的</a></li>
+						<li><a href="#">消息</a></li>
+						<li><a href="/cardiscounts">新车优惠</a></li>
+						<li><a href="/selectbrand">伴我选车</a></li>
+					  </ul>
+				</div>
+			</div>
+		</div>
+		<!--<hr style="margin: 1px;"/>-->
+		<div th:each="act:${activit}">
+			<div class="row">
+				<div class="col-xs-4">
+					<img src="img/Peng_2019-04-08_202540.png" th:src="${act.cover_pic}" style="width: 90%; margin: 10px;"/>
+				</div>
+				<div class="col-xs-6" style="padding-right: 20px; padding-top: 10px;font-size: 14px " >
+					<p style="padding: 5px;padding-left: 15px;" ><span th:text="${act.title}">试驾车福特猛禽</span><span style="border: 1px solid red; color: red;" th:text="${act.state}">已报名</span></p><br />
+					<p style="padding: 5px;padding-left: 15px;"><span th:text="${act.begin_time}"></span>-<span th:text="${act.end_time}"></span></p>
+				</div>
+				<div class="col-xs-2" style="padding-top: 40px; ">
+					<button type="button" id="dels" name="dels"  th:value="${act.id}" style="border: 1px solid red; color: black;margin-left: -20px">删除</button>
+				</div>
+			</div>
+			<!--<div class="row" style="height: 50px;line-height: 23px;">-->
+			  <!---->
+			<!--</div>-->
+			<hr style="margin: 0px;"/>
+		</div>
+
+		
+		<!--<div>-->
+			<!--<div class="row">-->
+			  <!--<div class="col-xs-12">-->
+			  	<!--<img src="img/Peng_2019-04-08_202540.png" style="width: 100%;"/>-->
+			  <!--</div>-->
+			<!--</div>-->
+			<!--<div class="row" style="height: 50px;line-height: 23px;">-->
+			  <!--<div class="col-xs-12" style="height: 100%;">-->
+			  	<!--<a style="padding: 5px;padding-left: 15px;">试驾车福特猛禽</a><span style="border: 1px solid red; color: red;">已报名</span><br />-->
+			  	<!--<a style="padding: 5px;padding-left: 15px;">2018.05.17-2018.05.17</a>-->
+			  <!--</div>-->
+			<!--</div>-->
+		<!--</div>-->
+		<!--<hr style="margin: 0px;"/>-->
+		<!---->
+		<!--<div>-->
+			<!--<div class="row">-->
+			  <!--<div class="col-xs-12">-->
+			  	<!--<img src="img/Peng_2019-04-08_202540.png" style="width: 100%;"/>-->
+			  <!--</div>-->
+			<!--</div>-->
+			<!--<div class="row" style="height: 50px;line-height: 23px;">-->
+			  <!--<div class="col-xs-12" style="height: 100%;">-->
+			  	<!--<a style="padding: 5px;padding-left: 15px;">试驾车福特猛禽</a><span style="border: 1px solid red; color: red;">已报名</span><br />-->
+			  	<!--<a style="padding: 5px;padding-left: 15px;">2018.05.17-2018.05.17</a>-->
+			  <!--</div>-->
+			<!--</div>-->
+		<!--</div>-->
+		<!--<hr style="margin: 0px;"/>-->
+	<script>
+		//删除
+		$("button[name='dels']").click(function () {
+			// alert($(this).val());
+			var id=$(this).val();
+			$.ajax({
+				type:"POST",
+				url: "removeMyCollect?id="+id,
+				async:false,
+				// data:info,
+				// contentType: "application/json; charset=utf-8",
+				success:function (data) {
+					window.location.href = "goUserActi";
+				},
+				error:function () {
+					alert("错误");
+				}
+			});
+		})
+
+	</script>
+	</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>操作日志</title>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css" />
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/demo/demo.css" />
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+    <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+</head>
+<style>
+    th {
+        text-align: center;
+    }
+    td {
+        text-align: center;
+
+    }
+    .file {
+        position: relative;
+        display: inline-block;
+        background: #D0EEFF;
+        border: 1px solid #99D3F5;
+        border-radius: 4px;
+        padding: 4px 12px;
+        overflow: hidden;
+        color: #1E88C7;
+        text-decoration: none;
+        text-indent: 0;
+        line-height: 20px;
+    }
+    .file input {
+        position: absolute;
+        font-size: 100px;
+        right: 0;
+        top: 0;
+        opacity: 0;
+    }
+    .file:hover {
+        background: #AADFFD;
+        border-color: #78C3F3;
+        color: #004974;
+        text-decoration: none;
+    }
+</style>
+<body style="padding:0px;margin:0px">
+
+<div id="p" class="easyui-panel" title="操作日志:" style="width:auto;height:auto;padding:20px;border-bottom:0px">
+
+    <div style="margin-bottom:40px;margin-top:40px">
+        <b style="font-size:15px">操作人员：</b>&nbsp;&nbsp;
+        <input  id="admin1" type="text" />
+        <b style="font-size:15px">时间：</b>
+        <input id="admin2" type="date">
+        -
+        <input id="admin3" type="date">
+        <button class="easyui-linkbutton" style="width:80px" onclick="chaxun()">搜索</button>
+    </div>
+    <table class="easyui-datagrid" id="dg" style="width:100%;height:auto"
+           data-options="singleSelect:true,collapsible:true,url:'datagrid_data1.json',method:'get'">
+        <thead>
+            <tr>
+                <th data-options="field:'itemid',align:'center',resizable:false" width="25%">操作人员</th>
+                <th data-options="field:'productid',align:'center',resizable:false" width="25%">操作时间</th>
+                <th data-options="field:'listprice',align:'center',resizable:false" width="25%">操作ip</th>
+                <th data-options="field:'attr1',align:'center',resizable:false" width="26.5%">操作状态</th>
+            </tr>
+        </thead>
+        <tr th:each="member:${memberu}" id="adminx">
+            <td th:text="${member.named}"></td>
+            <td th:text="${#dates.format(member.timed, 'yyyy-MM-dd')}"></td>
+            <td th:text="${member.ip}"></td>
+            <td th:text="${member.firstd}"></td>
+        </tr>
+        <!--<tr>-->
+            <!--<td>2</td>-->
+            <!--<td><b onClick="window.location='wk_msgshow.html'">标题2</b></td>-->
+            <!--<td>2019/04/12</td>-->
+            <!--<td>李四</td>-->
+        <!--</tr>-->
+    </table>
+    <div class="easyui-pagination" data-options="
+					total: 50,
+                    pagesize: 10,
+					showPageList: false,
+					showRefresh: false,
+					displayMsg: ''
+				">
+    </div>
+</div>
+<script>
+
+function chaxun() {
+    admin1 = $("#admin1").val();
+    admin2 = $("#admin2").val();
+    admin3 = $("#admin3").val();
+    console.log(admin1+admin2+admin3);
+
+    var admin={};
+        admin.named = admin1,
+        admin.name = admin2,
+        admin.name = admin3,
+
+    $.ajax({
+        type: "post",
+        url: "selectMoHu",
+        async: false,
+        contentType: "application/json;charset=utf-8",
+        data:JSON.stringify(admin),
+        success:function () {
+            alert("ok");
+        },
+        error:function () {
+            alert("nook");
+        }
+    });
+    
+}
+
+</script>
+</body>
+</html>

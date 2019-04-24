@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <link href="css/niurui.css" type="text/css" rel="stylesheet"/>
+ <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+<title>编辑管理员</title>
+</head>
+<body>
+<div id="bigdiv">
+<br />
+ <button onclick="window.location.href='admin_one'">&nbsp; < &nbsp;</button> &nbsp; &nbsp;编辑管理员:
+ <div class="line"></div>
+ <br />
+ <br />
+ <div id="smalldiv" th:each="xungaichaxun1:${xungaichaxun}">
+ ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" th:value="${xungaichaxun1.id}" readonly="readonly" id="id" placeholder="id"/><br />
+  <br />
+ 用户名:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="username" th:value="${xungaichaxun1.username}" readonly="readonly" placeholder="账号"/><br />
+ <br />
+ 密码:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="password" th:value="${xungaichaxun1.password}"  placeholder="请输入您的密码"/><br />
+ <br />
+ 密码确认:&nbsp;<input type="text" id="password1" name="repass" placeholder="确认密码"/><br />
+ <br />
+ 所属角色:&nbsp;<select id="xia" th:value="${xungaichaxun1.isSuper}"  name="status">
+                      <option value="">请选择角色</option>
+                      <option th:selected="${xungaichaxun1.isSuper==0}" value="管理员">管理员</option>
+                      <option th:selected="${xungaichaxun1.isSuper==1}" value="超级管理员">超级管理员</option>
+               </select><br />
+ <br />
+  姓名:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="name" th:value="${xungaichaxun1.name}" placeholder="请输入您的手机号"/><br />
+  <br />
+ 所属部门:&nbsp;<input type="text" id="dept" th:value="${xungaichaxun1.dept}" placeholder="请确认您所在的部门"/><br />
+ <br />
+ 手机:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="tel" th:value="${xungaichaxun1.phone}" placeholder="请输入您的手机号"/><br />
+ <br />
+ 邮箱:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="email" th:value="${xungaichaxun1.email}" placeholder="请输入您的邮箱"/><br />
+ <br />
+ 备注:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" class="note" id="remark" th:value="${xungaichaxun1.remark}" placeholder="请输入您的备注"/><br />
+ <br />
+ <br />
+ <br />
+ <br />
+ <div class="restore">
+    <button onclick="" class="add2">取消</button>
+</div>
+ <div class="restore">
+    <button type="button" onclick="baocun()" class="add3">保存</button>
+</div>
+ </div>
+
+ </div>
+</body>
+<script>
+function baocun() {
+      var username = $("#username").val();
+      var password = $("#password").val();
+      var password1 = $("#password1").val();
+      var isSuper = $(":selected").val();
+      var name = $("#name").val();
+      var dept = $("#dept").val();
+      var phone = $("#tel").val();
+      var email = $("#email").val();
+      var remark = $("#remark").val();
+      if(isSuper=="超级管理员"){
+       is_Super=1;
+      }else {
+       is_Super=0;
+      }
+        $.ajax({
+         type : 'post',
+         url : "/updateAdminUser",
+         async : false,
+         dataType : 'json',
+         data:{ "username":username,"password":password,"is_Super":is_Super,"name":name,"dept":dept,"phone":phone,"email":email,"remark":remark},
+           success:function (data) {
+          if (data ){
+          // alert("修改成功");
+           window.location.href="admin_one";
+           }}
+        });
+}
+ </script>
+</html>

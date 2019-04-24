@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8"/>
+		<title>渠道管理</title>
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css">
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css">
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/demo/demo.css" />
+			<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+			<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+			<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+			<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+	</head>
+	<style>
+		th {
+			text-align: center;
+		}
+		td {
+			text-align: center;
+		}
+	</style>
+	<body class="easyui-layout" >
+		<div data-options="region:'center',title:'渠道管理'">
+		  <div style="margin: auto; width: 90%;">
+			<div class="form-inline" style="height: 50px;">
+
+                  <div class="form-group">
+                  <input type="text" placeholder="名称"/>
+                  </div>
+                 
+                  <div class="form-group">
+                  <button type="submit"  class="btn btn-info">搜索</button>
+                  </div>
+                   <div class="form-group" style="float: right;">
+                  <button type="button" class="btn btn-success"  data-toggle="modal" data-target="#myModal">新增</button>	
+                  </div>
+			  </div>
+
+			  <div>
+				  <table class="table table-bordered">
+					 	<tr >
+					 		<th >序号</th>
+					 		<th >名称</th>
+					 		<th >使用数量</th>
+					 		<th>操作</th>
+					 	</tr>
+					 	<tr th:each="channel:${channels}">
+					 		<td th:text="${channel.id}">1</td>
+					 		<td th:text="${channel.name}">类型2</td>
+					 		<td th:text="${channel.useCount}">9</td>
+					 		<td>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalbj" th:attr="data-id=${channel.id}">编辑</button>
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModaldel" th:attr="data-id=${channel.id}">删除</button>
+					 		</td>
+					 	</tr>
+					 	<!--<tr>
+					 		<td>2</td>
+					 		<td>类型2</td>
+					 		<td>4</td>
+					 		
+					 		<td>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalbj">编辑</button>
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModaldel">删除</button>
+
+					 		</td>
+					 	</tr>-->
+					</table>
+				</div>				
+			</div>
+			
+		</div>
+		<!--新增-->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">新增渠道</h4>
+		      </div>
+		      <div class="modal-body">
+					<form class="form-horizontal">
+					  <div class="form-group">
+					    <label for="inputRoad" class="col-sm-2 control-label">渠道名称</label>
+					    <div class="col-sm-10">
+					      <input type="text" class="form-control" id="inputRoad">
+					    </div>
+					  </div>
+
+					</form>	         
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		        <button type="button" class="btn btn-primary" id="addSave">保存</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!--编辑-->
+		<div class="modal fade" id="myModalbj" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel2">编辑车型</h4>
+		      </div>
+		      <div class="modal-body">
+					<form class="form-horizontal">
+					  <div class="form-group">
+					    <label for="inputRoad" class="col-sm-2 control-label">渠道名称</label>
+					    <div class="col-sm-10">
+					      <input type="email" class="form-control" id="editActivityChannelName">
+					    </div>
+					  </div>
+
+					</form>	   	         
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		        <button type="button" class="btn btn-primary" id="editSave">保存</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!--删除-->
+		<div class="modal fade" id="myModaldel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel3">删除</h4>
+		      </div>
+		      <div class="modal-body">
+					<h3>确定删除？</h3>      
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		        <button type="button" class="btn btn-primary" id="delSave">确定</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<script type="text/javascript">
+			/*$('#myModal').on('shown.bs.modal', function () {
+			  $('#myInput').focus()
+			})
+			$('#myModalbj').on('shown.bs.modal', function () {
+			  $('#myInput').focus()
+			})
+			$('#myModaldel').on('shown.bs.modal', function () {
+			  $('#myInput').focus()
+			})
+			function carlpfmodelsconfig() {
+				window.location.href="carlpfmodelsconfig";
+			}*/
+			//新增一个活动渠道
+			$("#addSave").click(function(){
+				var roadName=$("#inputRoad").val();
+				$.ajax({
+					url:"addActivityRoad?roadName="+roadName,
+					type:"post",
+					async:false,
+					success:function(result){
+						if(result>0){
+							alert("渠道新增ok");
+							window.location.reload();
+						}
+					}
+
+				});
+			});
+			//编辑活动渠道
+			$('#myModalbj').on('shown.bs.modal', function (event) {
+				var button=$(event.relatedTarget);
+				var editId=button.data('id');
+				alert(editId);
+				$.ajax({
+					url:"selectActivityChannelById?id="+editId,
+					type:"get",
+					async:false,
+					contentType:"application/json;charset=utf-8",
+					success:function(result){
+						$("#editActivityChannelName").val(result.name);
+					}
+				});
+				$("#editSave").click(function(){
+					alert(editId);
+					var activityChannelName= $("#editActivityChannelName").val();
+					var ActivityChannel={};
+					ActivityChannel.id=editId;
+					ActivityChannel.name=activityChannelName;
+					$.ajax({
+						url:"updateActivityChannelBy",
+						type:"post",
+						data:JSON.stringify(ActivityChannel),
+						contentType:"application/json;charset=utf-8",
+						async:false,
+						success:function(result){
+							if(result>0){
+								window.location.reload();
+							}
+						}
+					});
+				});
+			});
+			//确定删除
+			$('#myModaldel').on('shown.bs.modal', function (event) {
+				var button=$(event.relatedTarget);
+				var delId=button.data('id');
+				$("#delSave").click(function(){
+					$.ajax({
+						url:"delActivityChannelById?id="+delId,
+						type:"get",
+						async:false,
+						contentType:"application/json;charset=utf-8",
+						success:function(result){
+							if(result>0){
+								alert("删除ok");
+								window.location.reload();
+							}
+						}
+					});
+				});
+			});
+		</script>
+	</body>
+</html>
+
+

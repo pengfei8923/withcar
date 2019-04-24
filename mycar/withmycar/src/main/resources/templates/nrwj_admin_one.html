@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/demo/demo.css" />
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+    <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+    <link href="css/niurui.css" type="text/css" rel="stylesheet"/>
+    <title>管理员列表</title>
+</head>
+<body>
+<div id="bigdiv">
+    <br/>
+    <button onclick="">&nbsp; < &nbsp;</button> &nbsp; &nbsp;管理员列表:
+    <div class="line"></div>
+    <div class="u1">
+        <input type="text" id="username1" placeholder="账号"/>
+    </div>
+    <!--<div class="a1">-->
+        <!--<font class="zi">角色&nbsp;:</font>-->
+        <!--<select id="down">-->
+            <!--<option value="角色1">角色1</option>-->
+            <!--<option value="角色2">角色2</option>-->
+        <!--</select>-->
+    <!--</div>-->
+    <!--<div class="a2">-->
+        <!--<input id="input1" type="submit" value="搜搜"/>-->
+    <!--</div>-->
+    <!--<div class="add">-->
+        <!--<button onclick="window.location.href='new_admin'" class="add1">新增</button>-->
+    <!--</div>-->
+      <!--</div>-->
+<div class="a1">
+<font class="zi">角色&nbsp;:</font>
+  <select id="down">
+    <option value="管理员">管理员</option>
+    <option value="超级管理员">超级管理员</option>
+  </select>
+</div>
+<div class="a2">
+  <input id="input1" type="button" @click="sousuo()" value="搜搜"/>
+</div>
+<div class="add">
+    <button onclick="window.location.href='new_admin'" class="add1"><font class="zicolor">新增</font></button>
+</div>
+
+    <br/>
+    <div style="margin: auto; width: 90%;">
+        <table class="table table-bordered" id="userTable">
+            <thead>
+            <tr>
+                <th width="30">#</th>
+                <th width="30"><input type="checkbox"></th>
+                <th>管理员姓名</th>
+                <th>登录账号</th>
+                <th>角色</th>
+                <th>操作</th>
+            </tr>
+            </tbody>
+            </thead>
+            <tbody>
+            <tr v-for="user in users">
+                <td>{{user.id}}</td>
+                <td><input type="checkbox"></td>
+                <td>{{user.username}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.rname}}</td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-xs" @click="xiugai(user.id)"><i class=" glyphicon glyphicon-pencil"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-xs" @click="shanchu(user.id)"><i class=" glyphicon glyphicon-remove"></i>
+                    </button>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+<script src="js/vue-2.2.2-min.js"></script>
+<script>
+    new Vue({
+        el:"#bigdiv",
+        data:{
+            users:[]
+        },
+        created:function(){
+            var self = this;
+            $.ajax({
+                url: '/getur',
+                type: 'get',
+                dataType: 'json'
+            }).then(function(responseValue){
+                self.users = responseValue;
+                //console.log(self.users);
+            }).fail(function () {
+                console.error("查询失败");
+            })
+        },
+        methods:{
+            shanchu:function(id){
+                $.ajax({
+                    url: '/updatestatus?id='+id,
+                    type: 'get',
+                    dataType: 'json'
+                }).then(function(responseValue){
+                    alert("删除成功");
+                    window.location.reload();
+                }).fail(function () {
+                    console.error("删除失败");
+                })
+            },
+            xiugai:function (id) {
+               // alert(id);
+                window.location.href="updateadmin?id="+id;
+
+            },
+            sousuo:function(){
+
+                var self=this;
+                var username=$("#username1").val();
+                var js = $(":selected").val();
+               // alert(username+"++"+js);
+                $.ajax({
+                    type:"post",
+                    url:"/mohuchaAdminUserRole",
+                    async:false,
+                    data:{"username":username,"js":js},
+
+                }).then(function(responseValue){
+                    self.users=responseValue;
+                    console.log(self.users);
+                }).fail(function(){
+                    console.error("查询失败");
+                })
+            },
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,36 @@
+@charset "utf-8";
+/* CSS Document */
+#bigdiv{width:100%;height:1500px;border:1px solid gray; margin:auto}
+.u1{width:150px;height:20px;margin-top:50px;margin-left:120px;}
+.a1{height:20px;margin-top:-18px;margin-left:300px;}
+#down{width:100px;}
+.a2{height:18px;margin-top:-23px;margin-left:460px;width:100px;}
+#input1{width:80px;background-color:#A9FACD}
+.zi{color:#666}
+#admin{width:100%;border:1px solid gray;height:800px;margin:auto}
+.add{margin-top:-18px;margin-left:850px;}
+.add1{height:30px;width:80px;background-color:#0e85c3}
+#xia{width:170px;}
+.line{width:100%;height:5px;background-color:#CCC}
+#smalldiv{margin-left:100px}
+.note{height:80px;}
+.add2{height:30px;width:80px}
+.add3{height:30px;width:80px;margin-left:120px;margin-top:-30px}
+.zicolor{color:white}
+.gray{background-color:#CCC;height:50px;width:100%;font-size:18px}
+.rolename{margin-left:30px}
+.rolezi{font-class:23px}
+.role1{width:180px;height:30px;margin-left:10px}
+.xian{width:100%;height:1px;background-color:#CCC}
+.add3{margin-left: 300px;margin-top: 10px}
+.zicolor1{color:black}
+#aa{border:1px solid white;width:100px;height:20px}
+#dd{border:1px solid white;width:100px;height:20px}
+#zz{margin-left: 60px}
+#yy{margin-left: 15px;display: block}
+.aa{height:18px;margin-top:-20px;margin-left:300px;width:100px;}
+
+
+
+
+

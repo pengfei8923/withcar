@@ -1,0 +1,192 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8"/>
+<title>新增活动</title>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/demo/demo.css" />
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+    <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+</head>
+	<style>
+		th {
+			text-align: center;
+		}
+		td {
+			text-align: center;
+		}
+	</style>
+    <body class="easyui-layout" >
+		<div data-options="region:'center',title:'渠道管理'">
+		  <div style="margin: auto; width: 70%;">
+          	<table class="table table-bordered">
+            	<tr>
+                	<th>*标  题:</th>
+                    <td><input type="text" placeholder="活动标题" id="title"/></td>
+                </tr>
+           		<tr>
+                	<th>*描  述:</th>
+                    <td><input type="text" placeholder="活动描述" id="description"/></td>
+                </tr>
+                <tr>
+                    <th>*图  片:</th>
+                    <td><input type="file"  accept="image/*" id="imgid"/><img src="" id="phoid" style="width:100px;height:50px"/></td>
+                </tr>
+                <tr>
+                	<th> *活动创建者:</th>
+                    <td><input type="text" placeholder="活动创建者" id="createName"/></td>
+                </tr>
+                <tr>
+                	<th> *活动类型:</th>
+                    <td>
+                    	<select id="selectType">
+                            <option th:each="category:${categorys}" th:text="${category.name}">类型1</option>
+                            <!--<option>类型1</option>
+                            <option>类型2</option>
+                            <option>类型3</option>-->
+                        </select>
+                    </td>
+                </tr>
+                 <tr>
+                	<th> *活动时间:</th>
+                    <td><input type="date" placeholder="时间" id="startTime"/>--<input type="date" placeholder="时间" id="endTime"/></td>
+                </tr>
+           		 <tr>
+                	<th> *活动链接:</th>
+                    <td><input type="text" placeholder="活动链接" id="activityLink"/></td>
+                </tr>
+            <!--*图  片:<input type="image" value="选择图片"/><br/><br/>-->
+          		<tr>
+                	<th> *渠道:</th>
+                    <td id="road">
+                    	
+                        <!--<input type="checkbox" name="road"/>微信 <input type="url" placeholder="渠道链接"/><br/>
+                        <input type="checkbox" name="road"/>  QQ  <input type="url" placeholder="渠道链接"/><br/>
+                        <input type="checkbox" name="road"/>微博 <input type="url" placeholder="渠道链接"/><br/>-->
+                    </td>
+                </tr>
+                <tr>
+                	<th>SEO关键字：</th>
+                    <td>SUV<button>+</button></td>
+                </tr>
+                <tr>
+                	<th> SEO描述:</th>
+                    <td><input type="text" placeholder="SEO描述"/></td>
+                </tr>
+                <tr>
+                	<th> 关联车型：</th>
+                    <td>
+                        <input type="file"  accept="image/*" id="carid"/><img src="" id="carphoid" style="width:100px;height:50px"/>
+                    </td>
+                </tr>
+                 <tr>
+                	<th> 接口文档：</th>
+                    <td><button type="button" class="btn btn-success"  data-toggle="modal" data-target="#myModal">生成文档</button><br/>活动标题接口文档<a href="">下载</a></td>
+                </tr>
+                <tr>
+                	<th> 标 签:</th>
+                    <td>SUV<button>+</button></td>
+                </tr>
+                <tr>
+                	<th colspan="2">
+                    	<button type="button" class="btn btn-success"  data-toggle="modal" data-target="#myModal" onclick="jumpToScan()">预览</button>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModaldel" onclick="jumpToSave()">保存</button>
+                    </th> 
+                </tr>
+            </table>
+          </div>
+
+        </div>
+</body>
+<script>
+   /*function jumpToScan(){
+       var title=$("#title").val();
+       var description=$("#description").val();
+       var createName=$("#createName").val();
+       var startTime=$("#startTime").val();
+       var endTime=$("#endTime").val();
+       var activityLink=$("#activityLink").val();
+   }*/
+    $("#imgid").change(function(){
+        // var imgAddress=$(this).val();
+        // alert(imgAddress);
+        var file=this.files[0];
+        var url = getObjectURL(file);
+        //alert(url);
+        $("#phoid").attr("src",url);
+
+    });
+   $("#carid").change(function(){
+
+       var file=this.files[0];
+       var url = getObjectURL(file);
+       //alert(url);
+       $("#carphoid").attr("src",url);
+
+   });
+   function getObjectURL(file) {
+       var url = null;
+       if (window.createObjcectURL != undefined) {
+           url = window.createOjcectURL(file);
+       } else if (window.URL != undefined) {
+           url = window.URL.createObjectURL(file);
+       } else if (window.webkitURL != undefined) {
+           url = window.webkitURL.createObjectURL(file);
+       }
+       return url;
+   }
+
+//遍历所有渠道
+   $.ajax({
+       url:"selectChannels",
+       type:"post",
+       async:false,
+       success:function(result){
+            $.each(result,function(index,element){
+                var strInput="<input type=\"checkbox\" name=\"road\"/>"+element.name+" <input type=\"url\" placeholder=\"渠道链接\"/><br/>";
+                $("#road").append(strInput);
+            })
+       }
+   });
+    function jumpToSave(){
+        var title=$("#title").val();
+        var description=$("#description").val();
+        var activityType=$("#selectType option:selected").text();
+        var createName=$("#createName").val();
+        var startTime=$("#startTime").val();
+        var endTime=$("#endTime").val();
+        var activityLink=$("#activityLink").val();
+        var activityPho=$("#phoid").attr(src);
+        var carPho=$("#carphoid").attr(src);
+        var activityVo={};
+        activityVo.title=title;
+        activityVo.description=description;
+        activityVo.activityType=activityType;
+        activityVo.startTime=startTime;
+        activityVo.endTime=endTime;
+        activityVo.activityLink=activityLink;
+        activityVo.createName=createName;
+        activity.cars=carPho;
+        activity.coverPic=activityPho;
+        var dataSave=JSON.stringify(activityVo);
+        $.ajax({
+            url:"addOneActivity",
+            type:"post",
+            data:dataSave,
+            async:false,
+            contentType:"application/json;charset=utf-8",
+            success:function(result){
+                if(result>0){
+                    alert("活动新增ok");
+                }
+            }
+        });
+
+    }
+
+
+</script>
+</html>

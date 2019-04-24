@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>修改姓名</title>
+		<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+		<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js" ></script>
+		<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+	</head>
+	<style>
+		p{
+			margin: 0;
+		}
+	</style>
+	<body  class="easyui-layout" style="background-color:#F0F0F0">
+		<div class="row" style="background-color: #FF6F29; margin: auto;height: 50px; line-height: 46px; " align="center" >
+			<div class="col-xs-3"><a href="javascript:history.go(-1)"><img src="img/fanhui.png" style="width:50%;"></a></div>
+			<div class="col-xs-5">
+				<span style="font-size: 25px; color: #FFFFFF;">姓名</span>
+			</div>
+			<div class="col-xs-4">
+				<button onclick="gai()" style="font-size: 20px; color: #FFFFFF;background-color: #FF6F29; border: 0px;">保存</button>
+			</div>
+		</div>
+		<div>
+			<br />
+			<div class="row" style="height: 50px; background-color: #F0F0F0; line-height: 48px;">
+			  <div class="col-xs-12">
+				<input type="text" name="name" th:value="${name}" class="form-control">
+			  </div>
+			</div>
+		</div>
+
+<script>
+		function gai() {
+		var res =new Object()
+		res.name = $("input[name='name']").val();
+		var s = JSON.stringify(res);
+		$.ajax({
+		type:"POST",
+		url: "updateName",
+		async:false,
+		data:s,
+		contentType: "application/json; charset=utf-8",
+		success:function (data) {
+		window.location.href="getUserInfo?userId="+data;
+		}
+		});
+		}
+</script>
+		
+	</body>
+</html>

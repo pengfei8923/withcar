@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="utf-8" />
+		<title>汽车情报站</title>
+		<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+		<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js" ></script>
+		<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+		<link rel="stylesheet" href="css/nr.css" />
+
+	</head>
+	<style type="text/css">
+		p{
+			margin: 0;
+		}
+	</style>
+	<body>
+	<div id="bigdiv">
+		<div class="row" style="background-color: #FF6F29; margin: auto;height: 70px; line-height: 65px; " align="center" >
+			<div class="col-xs-3"><a href="javaScript:history.go(-1)"><img src="img/fanhui.png" style="width:50%;"></a></div>
+			<div class="col-xs-6">
+				<span style="font-size: 25px; color: #FFFFFF;">汽车情报站</span>
+			</div>
+			<div class="col-xs-3">
+				<div class="btn-group">
+					  <button type="button" class="btn dropdown-toggle" style="background-color: #FF6F29; border-color: #FF6F29;"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<img src="img/shezhi.png">
+					  </button>
+					  <ul class="dropdown-menu" >
+						<li><a href="/">首页</a></li>
+						<li><a href="#">我的</a></li>
+						<li><a href="#">消息</a></li>
+						<li><a href="/cardiscounts">新车优惠</a></li>
+						<li><a href="/selectbrand">伴我选车</a></li>
+					  </ul>
+				</div>
+			</div>
+		</div>
+		<div class="row" style="line-height: 34px">
+			<div class="col-xs-9">
+				<input type="text" class="form-control" id="xx" value="" placeholder=""/>
+			</div>
+			<div class="col-xs-3">
+				<button type="button" id="sobtn" class="btn btn-default" @click="soso()">搜索</button>
+			</div>
+		</div>
+		<!--<div class="mo">
+				<input type="text" id="xx" value="" placeholder=""/>
+				<button type="button" id="sobtn" class="btn btn-default" @click="soso()">搜索</button>
+		</div>-->
+		<div id="liebiao" class="row">
+			<div class="col-xs-4 small" @click="biaoqian1()" value="热门">
+				<font class="ll">热门</font>
+			</div>
+			<!--<div class="small" value="投资">-->
+				<!--<font class="ll">投资</font>-->
+			<!--</div>-->
+			<div class="col-xs-4 small" @click="biaoqian2()" value="原创">
+				<font class="ll">原创</font>
+			</div>
+			<div class="col-xs-4 small" @click="biaoqian3()" value="行情">
+				<font class="ll">行情</font>
+			</div>
+		</div>
+		<div class="row" v-for="role in roles">
+			<a v-bind:href="role.desrUrl"><div class="col-xs-5">
+				<img v-bind:src="role.carUrl" style="width: 90%; margin: 10px;"/>
+			</div>
+			<div class="col-xs-7" style="padding-right: 20px; padding-top: 10px;" >
+
+					<font class="desr"><p>{{role.carPrice}}</p></font>
+					<font class="desr"><p>{{role.carDesr}}</p></font>
+
+			</div></a>
+		</div>
+	</div>
+</body>
+	<script src="js/vue-2.2.2-min.js"></script>
+		<script>
+			new Vue({
+				el: '#bigdiv',
+				data: {roles: []},
+				created: function () {
+					var self = this;
+					$.ajax({
+						url: 'findAllIntelligence',
+						type: 'get',
+						dataType: 'json'
+					}).then(function (responseValue) {
+						//console.log(responseValue);
+						self.roles = responseValue;
+					}).fail(function () {
+						console.log("查询失败");
+					})
+				},
+				methods:{
+					biaoqian1:function(){
+
+						var self=this;
+						var carSpan="热门";
+
+						$.ajax({
+							type:"post",
+							url:"/selectMohu",
+							async:false,
+							data:{"carSpan":carSpan},
+
+						}).then(function(responseValue){
+							self.roles=responseValue;
+							console.log(self.roles);
+						}).fail(function(){
+							console.error("查询失败");
+						})
+					},
+					biaoqian2:function(){
+
+						var self=this;
+						var carSpan="原创";
+
+						// alert(carSpan);
+						$.ajax({
+							type:"post",
+							url:"/selectMohu",
+							async:false,
+							data:{"carSpan":carSpan},
+
+						}).then(function(responseValue){
+							self.roles=responseValue;
+							console.log(self.roles);
+						}).fail(function(){
+							console.error("查询失败");
+						})
+					},
+					biaoqian3:function(){
+
+						var self=this;
+						var carSpan="行情";
+
+						// alert(carSpan);
+						$.ajax({
+							type:"post",
+							url:"/selectMohu",
+							async:false,
+							data:{"carSpan":carSpan},
+
+						}).then(function(responseValue){
+							self.roles=responseValue;
+							console.log(self.roles);
+						}).fail(function(){
+							console.error("查询失败");
+						})
+					},
+					soso:function(){
+
+						var self=this;
+						var carName=$("#xx").val();
+
+						// alert(carName);
+						$.ajax({
+							type:"post",
+							url:"/selectMohuByName",
+							async:false,
+							data:{"carName":carName},
+
+						}).then(function(responseValue){
+							self.roles=responseValue;
+							console.log(self.roles);
+						}).fail(function(){
+							console.error("查询失败");
+						})
+					},
+					// xiangqing:function(id){
+					// 		// alert(id);
+					// 		window.location.href="car_message";
+					//
+					// },
+				}
+
+			})
+			// sosotrue = false ;
+			// function soso(){
+			// 	sosotrue=!sosotrue;
+			// 	if(sosotrue){
+			// 		$("#sobtn").html("取消");
+			// 		$("#soso").html("<div class=\"col-xs-12\"><input type='text' class=\"form-control\"/></div>")
+			// 	}else{
+			// 		window.location.reload();
+			// }
+			// }
+		</script>
+</html>

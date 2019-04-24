@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css">
+    <!--<link rel="stylesheet" href="moumou/css/jquery.page.css">-->
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
+
+    <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <style>
+        .left {
+            float: left;
+            width: 50%;
+        }
+
+        p {
+            margin-bottom: 0px;
+            border-bottom: 1px solid #333;
+            border-left: 1px solid #333;
+            border-right: 1px solid #333;
+        }
+
+        span {
+            margin-left: 5px;
+        }
+
+        .left2 {
+            float: left;
+        }
+
+        ul {
+            margin-bottom: 0px;
+        }
+
+        ul li {
+            list-style: none;
+            margin-left: -40px;
+        }
+    </style>
+<body>
+<div class="easyui-layout" style=" height: 700px; width: 100%;">
+    <div id="content" region="center" style="padding:0px;">
+        <div id="tt" class="easyui-tabs" data-options="fit:true">
+            <!--<div title="欢迎页" style="padding:20px;display:none;">
+                Welcome  to   1000phone's  Shiro World!
+            </div>-->
+            <div title="资讯发布" style="padding:20px;display:none;">
+                <table class="easyui-datagrid" id="dg" style="width:100%;height:auto"
+                       data-options="singleSelect:true,collapsible:true,url:'datagrid_data1.json',method:'get'">
+                    <thead>
+                    <tr>
+                        <th data-options="field:'itemid',align:'center',resizable:false" width="5%">序号</th>
+                        <th data-options="field:'productid',align:'center',resizable:false" width="14%">标题</th>
+                        <th data-options="field:'listprice',align:'center',resizable:false" width="6%">来源</th>
+                        <th data-options="field:'status',align:'center',resizable:false" width="6%">作者</th>
+                        <th data-options="field:'aa',align:'center',resizable:false" width="16%">时间</th>
+                        <th data-options="field:'stcatus',align:'center',resizable:false" width="7%">点赞量</th>
+                        <th data-options="field:'staaatus',align:'center',resizable:false" width="7%">访问量</th>
+                        <th data-options="field:'stasdsatus',align:'center',resizable:false" width="7%"> 收藏</th>
+                        <th data-options="field:'statsaus',align:'center',resizable:false" width="7%">状态</th>
+                        <th data-options="field:'statsas',align:'center',resizable:false" width="9%">提交人</th>
+                        <th data-options="field:'statsaaus',align:'center',resizable:false" width="18%">功能</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><a href="http://baidu.com">a</a></td>
+                        <td>a</td>
+                        <td>vv</td>
+                        <td>dd</td>
+                        <td>eee</td>
+                        <td>wew</td>
+                        <td>wewe</td>
+                        <td>ewdewa</td>
+                        <td>超级管理员</td>
+                        <td>
+                            <button class="easyui-linkbutton" style="width:80px;"data-toggle="modal" data-target="#myModalfb">取消发布</button>
+                            <button class="easyui-linkbutton" style="width:80px;"data-toggle="modal" data-target="#myModaltj">取消推荐</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><a href="http://baidu.com">a</a></td>
+                        <td>a</td>
+                        <td>a</td>
+                        <td>a</td>
+                        <td>a</td>
+                        <td>a</td>
+                        <td>a</td>
+                        <td>a</td>
+                        <td>超级管理员</td>
+                        <td>
+                            <button class="easyui-linkbutton" style="width:80px;"data-toggle="modal" data-target="#myModalfb">取消发布</button>
+                            <button class="easyui-linkbutton" style="width:80px;"data-toggle="modal" data-target="#myModaltj">取消推荐</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="easyui-pagination" data-options="
+					total: 50,
+                    pagesize: 10,
+					showPageList: false,
+					showRefresh: false,
+					displayMsg: ''
+				">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- 发布Modal -->
+<div class="modal fade" id="myModalfb" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">取消发布</h4>
+            </div>
+            <div class="modal-body">
+                <h3>取消发布？</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 推荐Modal -->
+<div class="modal fade" id="myModaltj" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">取消推荐</h4>
+            </div>
+            <div class="modal-body">
+                <h3>取消推荐？</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#myModalfb').on('shown.bs.modal', function () {
+        $('#myInput').focus()
+    })
+    $('#myModaltj').on('shown.bs.modal', function () {
+        $('#myInput').focus()
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css">
+    <!--<link rel="stylesheet" href="moumou/css/jquery.page.css">-->
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
+
+    <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <style>
+        .left {
+            float: left;
+            width: 50%;
+        }
+
+        p {
+            margin-bottom: 0px;
+            border-bottom: 1px solid #333;
+            border-left: 1px solid #333;
+            border-right: 1px solid #333;
+        }
+
+        span {
+            margin-left: 5px;
+        }
+
+        .left2 {
+            float: left;
+        }
+
+        ul {
+            margin-bottom: 0px;
+        }
+
+        ul li {
+            list-style: none;
+            margin-left: -40px;
+        }
+    </style>
+<body>
+<div class="easyui-layout" style=" height: 700px; width: 100%;">
+    <div id="content" region="center" style="padding:0px;">
+        <div id="tt" class="easyui-tabs" data-options="fit:true">
+            <!--<div title="欢迎页" style="padding:20px;display:none;">
+                Welcome  to   1000phone's  Shiro World!
+            </div>-->
+            <div title="草稿箱" style="padding:20px;display:none;">
+                <div style="margin-bottom:40px;margin-top:40px">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="sr-only" for="ss1"></label>
+                            <input type="text" class="form-control" id="ss1" placeholder="标签/来源/作者"/>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <select id="ss2" class="form-control" style="width: 100px;">
+                            <option>未提交</option>
+                            <option>审核中</option>
+                            <option>未通过</option>
+                            <option>已通过</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <button onclick="selectBy()" type="button" class="btn btn-success">搜索</button>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-success" style="float: right;" data-toggle="modal" data-target="#myModal">新增</button>
+                    </div>
+                </div>
+                <table class="easyui-datagrid"  style="width:100%;height:auto"
+                       data-options="singleSelect:true,collapsible:true,url:'datagrid_data1.json',method:'get'">
+                    <thead>
+                    <tr>
+                        <th data-options="field:'itemid',align:'center',resizable:false" width="5%">序号</th>
+                        <th data-options="field:'productid',align:'center',resizable:false" width="13%">标题</th>
+                        <th data-options="field:'listprice',align:'center',resizable:false" width="6%">来源</th>
+                        <th data-options="field:'status',align:'center',resizable:false" width="6%">作者</th>
+                        <th data-options="field:'aa',align:'center',resizable:false" width="13%">时间</th>
+                        <th data-options="field:'staaatus',align:'center',resizable:false" width="7%">访问量</th>
+                        <th data-options="field:'stcatus',align:'center',resizable:false" width="7%">点赞量</th>
+                        <th data-options="field:'stasdsatus',align:'center',resizable:false" width="7%"> 收藏</th>
+                        <th data-options="field:'stsaatus',align:'center',resizable:false" width="7%">转发量</th>
+                        <th data-options="field:'statsaus',align:'center',resizable:false" width="9%">状态</th>
+                        <th data-options="field:'statsaaus',align:'center',resizable:false" width="22%">功能</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tb">
+
+                    </tbody>
+                </table>
+                <div class="easyui-pagination" data-options="
+					total: 50,
+                    pagesize: 10,
+					showPageList: false,
+					showRefresh: false,
+					displayMsg: ''
+				">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- 新增Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel0">新增资讯</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="aa1" class="col-sm-2 control-label">标题</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="aa1">
+                        </div>
+                        <label for="aa2" class="col-sm-2 control-label">来源</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="aa2">
+                        </div>
+                        <label for="aa3" class="col-sm-2 control-label">作者</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="aa3">
+                        </div>
+                        <label for="aa4" class="col-sm-2 control-label">时间</label>
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control" id="aa4">
+                        </div>
+                        <label for="aa5" class="col-sm-2 control-label">点赞量</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="aa5" value="0" readonly="readonly">
+                        </div>
+                        <label for="aa6" class="col-sm-2 control-label">转发量</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="aa6" value="0" readonly="readonly">
+                        </div>
+                        <label for="aa7" class="col-sm-2 control-label">访问量</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="aa7" value="0" readonly="readonly">
+                        </div>
+                        <label for="aa8" class="col-sm-2 control-label">收藏</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="aa8" value="0" readonly="readonly">
+                        </div>
+                        <label for="aa9" class="col-sm-2 control-label">状态</label>
+                        <div class="col-sm-10">
+                            <select id="aa9" class="form-control" style="width: 100px;">
+                                <option>未提交</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button onclick="addArticle()" type="button" class="btn btn-primary">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 编辑Modal -->
+<div class="modal fade" id="myModalbj" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel1">编辑标签信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="aaa1" class="col-sm-2 control-label">标题</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="aaa1">
+                        </div>
+                        <label for="aaa2" class="col-sm-2 control-label">来源</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="aaa2">
+                        </div>
+                        <label for="aaa3" class="col-sm-2 control-label">作者</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="aaa3">
+                        </div>
+                        <label for="aaa4" class="col-sm-2 control-label">时间</label>
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control" id="aaa4">
+                        </div>
+                        <label for="aaa5" class="col-sm-2 control-label">点赞量</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="aaa5">
+                        </div>
+                        <label for="aaa6" class="col-sm-2 control-label">转发量</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="aaa6">
+                        </div>
+                        <label for="aaa7" class="col-sm-2 control-label">访问量</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="aaa7">
+                        </div>
+                        <label for="aaa8" class="col-sm-2 control-label">收藏</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="aaa8">
+                        </div>
+                        <label for="aaa9" class="col-sm-2 control-label">状态</label>
+                        <div class="col-sm-10">
+                            <select id="aaa9" class="form-control">
+                                <option>未提交</option>
+                            </select>htstatic\images\sl1.jpg
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 删除Modal -->
+<div class="modal fade" id="myModaldel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">删除</h4>
+            </div>
+            <div class="modal-body">
+                <h3>确定删除？</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 提交审核Modal -->
+<div class="modal fade" id="myModaltj" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">提交审核</h4>
+            </div>
+            <div class="modal-body">
+                <h3>确定提交？</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').focus()
+    })
+    $('#myModalbj').on('shown.bs.modal', function () {
+        $('#myInput').focus()
+    })
+    $('#myModaldel').on('shown.bs.modal', function () {
+        $('#myInput').focus()
+    })
+    $('#myModaltj').on('shown.bs.modal', function () {
+        $('#myInput').focus()
+    })
+    //全表查询
+    $.ajax({
+        type:"post",
+        url:"findAllArticle",
+        async:false,//使用同步方式
+        success:function (data) {
+            $.each(data,function (index,element){
+                var trStr="<tr>"+
+                    "<td>"+element.id+"</td>"+
+                    "<td>"+element.title+"</td>"+
+                    "<td>"+element.source+"</td>"+
+                    "<td>"+element.author+"</td>"+
+                    "<td>"+element.createTime+"</td>"+
+                    "<td>"+element.accessCount+"</td>"+
+                    "<td>"+element.likeCount+"</td>"+
+                    "<td>"+element.favCount+"</td>"+
+                    "<td>"+element.shareCount+"</td>"+
+                    "<td>"+element.state+"</td>"+
+                    "<td>"+
+                    "<button class=\"easyui-linkbutton\" style=\"width:50px;\" data-toggle=\"modal\" data-target=\"#myModalbj\">编辑</button>"+
+                    "<button class=\"easyui-linkbutton\" style=\"width:50px;\"data-toggle=\"modal\" data-target=\"#myModaldel\">删除</button>"+
+                    "<button class=\"easyui-linkbutton\" style=\"width:80px;\"data-toggle=\"modal\" data-target=\"#myModaltj\">提交审核</button>"
+/*
+                    "<button type='button' onclick='updateGoods("+element.goodsid+")' class=\"am-btn am-btn-default am-btn-xs am-text-secondary\"><span class=\"am-icon-pencil-square-o\"></span>修改</button>"+
+*/
+                    "</td>"
+                "</tr>";
+                $("#tb").append(trStr);
+            });
+        }
+    });
+    //多条件查询
+    function selectBy(){
+
+      /* $("#tb tbody").html("");//将原本展示的数据清空*!/*/
+        var ss1 = $("#ss1").val();
+        alert(ss1);
+        var ss2 = $("#ss2").val();
+        alert(ss2);
+        var	tStr;
+        $.ajax({
+            type: "get",
+            url: "selectBy",
+            data:{"ss1":ss1,"ss2":ss2},
+            async: false,//使用同步方式
+            success: function (data) {
+                $("#tb").empty();//将原本展示的数据清空
+                console.log(data);
+                if (data!= null) {
+                    /*$("#tb tr:not(:first)").empty("");//将原本展示的数据清空*/
+                    $.each(data, function (index, element) {
+                        var trStr = "<tr>" +
+                            "<td>" + element.id + "</td>" +
+                            "<td>" + element.title + "</td>" +
+                            "<td>" + element.source + "</td>" +
+                            "<td>" + element.author + "</td>" +
+                            "<td>" + element.createTime + "</td>" +
+                            "<td>" + element.accessCount + "</td>" +
+                            "<td>" + element.likeCount + "</td>" +
+                            "<td>" + element.favCount + "</td>" +
+                            "<td>" + element.shareCount + "</td>" +
+                            "<td>" + element.state + "</td>" +
+                            "<td>" +
+                            "<button class=\"easyui-linkbutton\" style=\"width:50px;\" data-toggle=\"modal\" data-target=\"#myModalbj\">编辑</button>" +
+                            "<button class=\"easyui-linkbutton\" style=\"width:50px;\"data-toggle=\"modal\" data-target=\"#myModaldel\">删除</button>" +
+                            "<button class=\"easyui-linkbutton\" style=\"width:80px;\"data-toggle=\"modal\" data-target=\"#myModaltj\">提交审核</button>"
+                        "</td>"
+                        "</tr>";
+                        $("#tb").append(trStr);
+                    });
+                }else {
+                    alert("false");
+                }
+            }
+        });
+    }
+    //新增
+    function addArticle() {
+        //取值
+        var title = $("#aa1").val();
+        var source = $("#aa2").val();
+        var author = $("#aa3").val();
+        var create_time = $("#aa4").val();
+        var like_count = $("#aa5").val();
+        var share_count = $("#aa6").val();
+        var access_count = $("#aa7").val();
+        var fav_count = $("#aa8").val();
+        alert(create_time);
+        var state = $("#aa9").val();
+        if (title == "") {
+            alert("标题能为空");
+        } else if (source == "") {
+            alert("来源不能为空");
+        } else if (author == "") {
+            alert("作者不能为空");
+        } else if (create_time == "") {
+            alert("创建时间不能为空");
+        } else if (like_count == "") {
+            alert("点赞数不能为空");
+        } else if (share_count == "") {
+            alert("分享数不能为空");
+        } else if (access_count == "") {
+            alert("访问数不能为空");
+        } else if (fav_count == "") {
+            alert("收藏数不能为空");
+        } else if (state == "") {
+            alert("资讯审核状态不能为空");
+        } else {
+            $.ajax({
+                type: "post",
+                url: "addArticle",
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify({
+                    "title": title,
+                    "source": source,
+                    "author": author,
+                    "create_time": create_time,
+                    "like_count": like_count,
+                    "share_count": share_count,
+                    "access_count": access_count,
+                    "fav_count": fav_count,
+                    "state": state
+                }),
+                //dataType:"json",
+                success: function (data) {
+                    console.log(data);
+                    if (data == true) {
+                        window.location.href = "information";
+                    } else {
+                        alert(123)
+                    }
+
+                }
+
+            });
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <link href="css/niurui.css" type="text/css" rel="stylesheet"/>
+ <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+<title>新增管理员</title>
+</head>
+<body>
+
+<div id="bigdiv">
+<br />
+ <button onclick="window.location.href='admin_one'">&nbsp; < &nbsp;</button> &nbsp; &nbsp;新增管理员:
+ <div class="line"></div>
+ <br />
+ <br />
+ <form action="admin_one" onsubmit="return tijiao()">
+ <div id="smalldiv">
+ 用户名:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" required="required" id="username" placeholder="姓名/账号"/><br />
+ <br />
+ 密码:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" required="required" id="password" placeholder="请输入您的密码"/><br />
+ <br />
+ 密码确认:&nbsp;<input type="text" required="required" id="password1" name="repass" placeholder="确认密码"/><br />
+ <br />
+ 所属角色:&nbsp;<select id="is_super">
+    <option value="管理员">管理员</option>
+    <option value="超级管理员">超级管理员</option>
+ </select><br />
+ <br />
+  昵称:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" required="required" id="name" placeholder="请输入您昵称"/><br />
+  <br />
+  持有人:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" required="required" id="consumer" placeholder="请输入姓名"/><br />
+  <br />
+ 所属部门:&nbsp;<input type="text" id="dept" required="required" placeholder="请确认您所在的部门"/><br />
+ <br />
+ 手机:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="phone" required="required" placeholder="请输入您的手机号"/><br />
+ <br />
+ 邮箱:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="email" required="required" placeholder="请输入您的邮箱"/><br />
+ <br />
+ 备注:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" class="note" required="required" id="remark" placeholder="请输入您的备注"/><br />
+ <br />
+ <br />
+ <br />
+ <br />
+ <div class="restore">
+    <button  class="add1" type="submit">保存</button>
+</div>
+ </div>
+ </form>
+ </div>
+
+</body>
+<script>
+  function tijiao() {
+   var username = $("#username").val();
+   var password = $("#password").val();
+   var password1 = $("#password1").val();
+   var name = $("#name").val();
+   var phone = $("#phone").val();
+   var email = $("#email").val();
+   var is_supers = $(":selected").val();
+   var consumer = $("#consumer").val();
+   var remark = $("#remark").val();
+   var dept = $("#dept").val();
+   alert(username+password+name+phone+email+is_supers+consumer+remark+dept);
+   if (is_supers=="超级管理员"){
+      var is_super=1;
+      alert(is_super);
+   }else {
+     var is_super=0;
+     alert(is_super);
+   }
+   if (password1!=password){
+    alert("两次密码不匹配");
+    return false;
+   }
+   $.ajax({
+    type : 'post',
+    url : "/zengjia",
+    async : false,
+    data:{"username":username,"password":password,"name":name,"phone":phone,"email":email,"is_super":is_super,"consumer":consumer,"remark":remark,"dept":dept},
+    success:function (data) {
+     if (data ){
+      // alert("修改成功");
+      window.location.href="admin_one";
+     }}
+   });
+  }
+ </script>
+</html>

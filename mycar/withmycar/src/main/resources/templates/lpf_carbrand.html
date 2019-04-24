@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>参数分类管理</title>
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css">
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css">
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/demo/demo.css" />
+			<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+			<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+			<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+			<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+	</head>
+	<style>
+		th {
+			 text-align: center;
+		 }
+		td {
+			text-align: center;
+		}
+		hr {
+			margin:10px;
+		}
+	</style>
+
+
+	<body class="easyui-layout" >
+
+		<div data-options="region:'center'" style="padding: 0;">
+			<div style="margin: 10px;">
+				<a><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> 参数分类管理</a>
+			</div>
+			<hr/>
+			<div style="margin: auto; width: 90%; height: 50px;">
+				<button type="button" class="btn btn-success" style="float: right;" data-toggle="modal" data-target="#myModal">新增</button>	
+			</div>
+			<div style="margin: auto; width: 90%;" >
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>名称</th>
+							<th>状态</th>
+							<th>功能</th>
+						</tr>
+					</thead>
+					<tbody id="idtable">
+				 	<!--ajax循环遍历modal参数分类 -->
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!-- 新增Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title">新增参数分类</h4>
+		      </div>
+		      <div class="modal-body">
+					<form class="form-horizontal">
+					  <div class="form-group">
+					    <label for="idfenpacname" class="col-sm-2 control-label">名称</label>
+					    <div class="col-sm-10">
+					      <input type="email" class="form-control" id="idfenpacname" placeholder="参数分类名称">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="addpacstateid" class="col-sm-2 control-label">是否生效</label>
+					    <div class="col-sm-5">
+					      <div class="checkbox" style="border: 0px;">
+					        <label>
+                                <input type="radio" id="addpacstateid" name="addpacstate" value="生效">是
+					        </label>
+					      </div>
+					    </div>
+					    <div class="col-sm-5">
+					      <div class="checkbox" style="border: 0px;">
+					        <label>
+                                <input type="radio"  name="addpacstate" value="未生效">否
+					        </label>
+					      </div>
+					    </div>
+					  </div>
+					</form>	         
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		        <button type="button" class="btn btn-primary" onclick="addsave()" data-dismiss="modal">保存</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- 编辑Modal -->
+		<div class="modal fade" id="myModalbj" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="ioparamclass">编辑参数分类</h4>
+		      </div>
+		      <div class="modal-body">
+					<form class="form-horizontal">
+					  <div class="form-group">
+					    <label for="ideditpacname" class="col-sm-2 control-label">名称</label>
+					    <div class="col-sm-10">
+					      <input type="email" class="form-control" id="ideditpacname">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="ideditpacstateone" class="col-sm-2 control-label">是否生效</label>
+					    <div class="col-sm-5">
+					      <div class="checkbox" style="border: 0px;">
+					        <label>
+					          <input type="radio" id="ideditpacstateone" name="editpacstate"  value="生效" >是
+					        </label>
+					      </div>
+					    </div>
+					    <div class="col-sm-5">
+					      <div class="checkbox" style="border: 0px;">
+					        <label>
+					          <input type="radio"  id="ideditpacstatetwo" name="editpacstate"  value="未生效">否
+					        </label>
+					      </div>
+					    </div>
+					  </div>
+					</form>
+				  <input type="hidden" id="idcarpam">
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		        <button type="button"  class="btn btn-primary" onclick="editsave()" data-dismiss="modal">保存</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- 删除Modal -->
+		<div class="modal fade" id="myModaldel" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">删除</h4>
+		      </div>
+		      <div class="modal-body">
+					<h3>确定删除？</h3><input type="hidden" id="idcarpamdel">
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		        <button type="button" class="btn btn-primary" onclick='delcars()' data-dismiss="modal">确定</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<script type="text/javascript">
+			/*显示所有参数类型*/
+			$.ajax({
+				type:"post",
+				url:"selectCarParamclass",
+				async:false,
+				contentType:"application/json;charset=utf-8",
+				success:function (data) {
+					// console.log(data);
+					$.each(data,function (index,element) {
+						// console.log(element);
+						var trStr="<tr>\n" +
+								"<td>"+ element.pacid +"</td>\n" +
+								"<td>"+ element.pacname +"</td>\n" +
+								"<td>"+ element.pacstate +"</td>\n" +
+								"<td>\n" +
+								"<button type=\"button\"  data-id=\""+ element.pacid +"\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#myModalbj\">编辑</button>\n" +
+								"<button type=\"button\" class=\"btn btn-danger\" data-toggle=\"modal\" data-target=\"#myModaldel\" data-id=\""+ element.pacid +"\">删除</button>\n" +
+								"</td>\n" +
+								"</tr>";
+						$("#idtable").append(trStr);
+					});
+				}
+			});
+
+			/*新增modal*/
+			$('#myModal').on('shown.bs.modal', function () {
+			  $('#myInput').focus();
+			})
+			/*新增保存——添加*/
+			function addsave() {
+				pacname = $("#idfenpacname").val();
+				pacstate = $("input[name='addpacstate']:checked").val();
+				CarParamclass = {};
+				CarParamclass.pacname = pacname;
+				CarParamclass.pacstate = pacstate;
+				console.log(CarParamclass);
+				$.ajax({
+					type:"post",
+					url:"addCarParamc",
+					data:JSON.stringify(CarParamclass),
+					async:false,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						if(data>0){
+							window.location.reload();
+						}
+
+					},
+					error:function () {
+						console.log("意外错误");
+					}
+				});
+			}
+
+			/*编辑modal*/
+			$('#myModalbj').on('shown.bs.modal', function (event) {
+				var button = $(event.relatedTarget);
+				var recipient = button.data('id');
+				$.ajax({
+					type:"post",
+					url:"getCarParamById?pacid="+recipient,
+					async:false,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						// console.log(data);
+						$("#ideditpacname").val(data.pacname);
+						$("#idcarpam").val(data.pacid);
+						if(data.pacstate == "生效"){
+							$("#ideditpacstateone").prop("checked",true);
+						}else{
+							$("#ideditpacstatetwo").prop("checked",true);
+						}
+					},
+					error:function () {
+						console.log("编辑错误");
+					}
+				});
+			})
+			/*编辑保存——修改参数类型*/
+			function editsave() {
+				var pacid = $("#idcarpam").val();
+				pacname = $("#ideditpacname").val();
+				pacstate = $("input[name='editpacstate']:checked").val();
+				CarParamclass = {};
+				CarParamclass.pacid = pacid;
+				CarParamclass.pacname = pacname;
+				CarParamclass.pacstate = pacstate;
+				// console.log(CarParamclass);
+				$.ajax({
+					type:"post",
+					url:"updateCarParamclass",
+					data:JSON.stringify(CarParamclass),
+					async:false,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						// console.log(data);
+						if(data>0){
+							window.location.reload();
+						}
+					},
+					error:function () {
+						console.log("意外错误");
+					}
+				});
+			}
+
+			/*删除modal*/
+			$('#myModaldel').on('shown.bs.modal', function (event) {
+				var button = $(event.relatedTarget);
+				var recipient = button.data('id');
+				$("#idcarpamdel").val(recipient);
+			})
+			/*删除——单行*/
+			function delcars() {
+				var pacid = $("#idcarpamdel").val();
+				$.ajax({
+					type:"post",
+					url:"lpfdeleteCarParamclass?pacid="+pacid,
+					async:false,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						// console.log(data);
+						if(data>0){
+							window.location.reload();
+						}
+					},
+					error:function () {
+						console.log("意外错误");
+					}
+				});
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>参数管理</title>
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css">
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css">
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/demo/demo.css" />
+			<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="/css/jquery.page.css">
+			<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+			<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+			<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+	</head>
+	<style>
+		th {
+			text-align: center;
+		}
+		td {
+			text-align: center;
+		}
+		hr {
+			margin:10px;
+		}
+	</style>
+	<body class="easyui-layout" >
+		<div data-options="region:'center'"  style="padding: 0px;">
+			<div style="margin: 10px;">
+				<a><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> 参数管理</a>
+			</div>
+			<hr/>
+			<div style="margin: auto; width: 90%; height: 50px;">
+				<button type="button" class="btn btn-success" style="float: right;" data-toggle="modal" data-target="#myModal">新增</button>
+			</div>
+			<div style="margin: auto; width: 90%;" >
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>名称</th>
+							<th>所属分类</th>
+							<th>状态</th>
+							<th>是否为基础参数</th>
+							<th>功能</th>
+						</tr>
+					</thead>
+					<tbody  id="idtable">
+					<!--ajax循环遍历modal参数分类 -->
+					</tbody>
+					<tfoot>
+
+					</tfoot>
+				</table><div id="page" style="margin-bottom: 150px"></div>
+			</div>
+		</div>
+		<!-- 新增Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" >新增参数管理</h4>
+		      </div>
+		      <div class="modal-body">
+					<form class="form-horizontal">
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-3 control-label">名称</label>
+					    <div class="col-sm-9">
+					      <input type="email" class="form-control" id="lpfidparamname" placeholder="参数分类名称">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="lpfidpacname" class="col-sm-3 control-label">所属分类</label>
+					    <div class="col-sm-9">
+							<select class="form-control" id="lpfidpacname">
+								<!--<option>1</option>-->
+								<!--ajax-->
+							</select>
+
+					    </div>
+					  </div>
+						<div class="form-group">
+							<label for="lpfidparamstate" class="col-sm-3 control-label">是否生效</label>
+							<div class="col-sm-4">
+								<div class="checkbox" style="border: 0px;">
+									<label>
+										<input type="radio" id="lpfidparamstate" name="lpfaddparamstate" value="生效">是
+									</label>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="checkbox" style="border: 0px;">
+									<label>
+										<input type="radio"  name="lpfaddparamstate" value="未生效">否
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lpfidparambase" class="col-sm-3 control-label">是否为基础参数</label>
+							<div class="col-sm-4">
+								<div class="checkbox" style="border: 0px;">
+									<label>
+										<input type="radio" id="lpfidparambase" name="lpfaddparambase" value="是">是
+									</label>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="checkbox" style="border: 0px;">
+									<label>
+										<input type="radio"  name="lpfaddparambase" value="否">否
+									</label>
+								</div>
+							</div>
+						</div>
+					</form>	         
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		        <button type="button" class="btn btn-primary" onclick="addsave()" data-dismiss="modal">保存</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- 编辑Modal -->
+		<div class="modal fade" id="myModalbj" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title">编辑参数管理</h4>
+		      </div>
+		      <div class="modal-body">
+					<form class="form-horizontal">
+					  <div class="form-group">
+					    <label for="lpfeditidparamname" class="col-sm-3 control-label">名称</label>
+					    <div class="col-sm-9">
+					      <input type="email" class="form-control" id="lpfeditidparamname" placeholder="参数分类名称">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="lpfcarclassify" class="col-sm-3 control-label">所属分类</label>
+					    <div class="col-sm-9">
+							<select class="form-control" id="lpfcarclassify">
+								<option>1</option>
+							</select>
+					    </div>
+					  </div>
+						<div class="form-group">
+							<label for="lpfideditparamstateone" class="col-sm-3 control-label">是否生效</label>
+							<div class="col-sm-4">
+								<div class="checkbox" style="border: 0px;">
+									<label>
+										<input type="radio" id="lpfideditparamstateone" name="editnameparamstate"  value="生效" >是
+									</label>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="checkbox" style="border: 0px;">
+									<label>
+										<input type="radio"  id="lpfideditparamstatetwo" name="editnameparamstate"  value="未生效">否
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lpfideditparambaseone" class="col-sm-3 control-label">是否为基础参数</label>
+							<div class="col-sm-4">
+								<div class="checkbox" style="border: 0px;">
+									<label>
+										<input type="radio" id="lpfideditparambaseone" name="editnameparambase" value="是">是
+									</label>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="checkbox" style="border: 0px;">
+									<label>
+										<input type="radio"  id="lpfideditparambasetwo" name="editnameparambase" value="否">否
+									</label>
+								</div>
+							</div>
+						</div>
+					</form><input type="hidden" id="lpfeditparamid"><!--<input type="hidden" id="lpfidpacid">-->
+		      </div>
+		      <div class="modal-footer">
+				  <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				  <button type="button"  class="btn btn-primary" onclick="editsave()" data-dismiss="modal">保存</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- 删除Modal -->
+		<div class="modal fade" id="myModaldel" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">删除</h4>
+					</div>
+					<div class="modal-body">
+						<h3>确定删除？</h3><input type="hidden" id="delparamid">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						<button type="button" class="btn btn-primary" onclick='delcarparam()' data-dismiss="modal">确定</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="/js/jquery.page.js"  charset="utf-8"></script>
+		<script type="text/javascript">
+			var totalPages;/*分页总数*/
+			var lpfpageNnm = 7;
+			var lfpliNums;//分页的数字按钮数
+			/*查询分页总数*/
+			$.ajax({
+				type:"POST",
+				url: "getCarParamPages?pageNum="+lpfpageNnm,
+				async:false,
+				contentType: "application/json; charset=utf-8",
+				success:function (data) {
+					totalPages = data;
+					if(totalPages < lfpliNums){
+						lfpliNums = totalPages;
+					}
+					selelctCarParamPage(1,lpfpageNnm);
+				}
+			});
+			/*分页*/
+			$("#page").Page({
+				totalPages: totalPages,//总页数
+				liNums: lfpliNums,//分页的数字按钮数(建议取奇数)
+				activeClass: 'active' ,//active类
+				firstPage: '«',//首页按钮名称
+				lastPage: '»',//末页按钮名称
+				prv: '‹',//前一页按钮名称
+				next: '›',//后一页按钮名称
+				callBack : function(page){
+					// console.log(page);
+					selelctCarParamPage(page,lpfpageNnm);
+				}
+			});
+			/*调用分页方法_显示所有参数*/
+			function selelctCarParamPage(page,pageNum){
+				$.ajax({
+					type:"post",
+					url:"getCarParamByPage?page="+page+"&pageNum="+pageNum,
+					async:false,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#idtable").empty();
+						$.each(data,function (index,element) {
+							// console.log(element);
+							var trStr="<tr>\n" +
+									"<td>"+ element.paramid +"</td>\n" +//序号
+									"<td>"+ element.paramname +"</td>\n" +//名称
+									"<td>"+ element.pacname +"</td>\n" +//所属分类
+									"<td>"+ element.paramstate +"</td>\n" +//状态
+									"<td>"+ element.parambase +"</td>\n" +//基础参数
+									"<td>\n" +
+									"<button type=\"button\" class=\"btn btn-primary\" data-parambase=\""+element.parambase+"\" data-paramstate=\""+element.paramstate+"\" data-paramname=\""+element.paramname+"\" data-id=\""+ element.paramid +"\" data-pacid=\""+ element.pacid +"\" data-toggle=\"modal\" data-target=\"#myModalbj\">编辑</button>\n" +
+									"<button type=\"button\" class=\"btn btn-danger\" data-paramid=\""+ element.paramid +"\" data-pacid=\""+ element.pacid +"\"  data-toggle=\"modal\" data-target=\"#myModaldel\">删除</button>\n" +
+									"</td>\n" +
+									"</tr>";
+							$("#idtable").append(trStr);
+						});
+					}
+				});
+			}
+
+			/*新增modal*/
+			$('#myModal').on('shown.bs.modal', function () {
+				getCarClass("lpfidpacname");
+			  $('#myInput').focus()
+			})
+			/*查询所有参数类型添加到指定的ID位置*/
+			function getCarClass(ids) {
+				$.ajax({
+					type:"post",
+					url:"selectCarParamclass",
+					async:false,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						$("#"+ids+"").empty();
+						$.each(data,function (index,element) {
+							// console.log(element);
+							var trStr="<option value='"+ element.pacid +"'>"+ element.pacid +"-"+element.pacname +"</option>";
+							$("#"+ids+"").append(trStr);
+						});
+
+					}
+				});
+			}
+			/*新增保存——添加*/
+			function addsave() {
+				paramname = $("#lpfidparamname").val();
+				pacid = $("#lpfidpacname").val();
+				paramstate = $("input[name='lpfaddparamstate']:checked").val();
+				parambase = $("input[name='lpfaddparambase']:checked").val();
+				CarParam = {};
+				CarParam.paramname = paramname;
+				CarParam.paramstate = paramstate;
+				CarParam.parambase = parambase;
+				var formData = new FormData();
+				formData.append("pacids",pacid);
+				formData.append("carParam",JSON.stringify(CarParam));
+				$.ajax({
+					type:"post",
+					url:"lpfaddCarParam",
+					data: formData,
+					async: false,
+					cache: false,
+					contentType: false, //不设置内容类型
+					processData: false, //不处理数据
+					success:function (data) {
+						if(data>0){
+							window.location.reload();
+						}
+					},
+					error:function () {
+						console.log("意外错误");
+					}
+				});
+			}
+
+			/*打开修改模态框*/
+			$('#myModalbj').on('shown.bs.modal', function (event) {
+				var button = $(event.relatedTarget);
+				var paramid = button.data('id');//序号
+				var paramnames = button.data('paramname');//名称
+				var pacids = button.data('pacid');//所属分类id
+				var paramstates = button.data('paramstate');//状态
+				var parambases = button.data('parambase');//基础参数
+				// console.log(paramid+"-"+paramnames+"-"+pacids+"-"+paramstates+"-"+parambases);
+				getCarClass("lpfcarclassify");
+				$("#lpfeditparamid").val(paramid);//序号
+				// $("#lpfidpacid").val(pacids);//序号
+				$("#lpfeditidparamname").val(paramnames);//名称
+				document.getElementById("lpfcarclassify")[pacids-1].selected=true;//默认选择所属分类
+				if(paramstates == "生效"){//状态
+					$("#lpfideditparamstateone").prop("checked",true);
+				}else{
+					$("#lpfideditparamstatetwo").prop("checked",true);
+				}
+				if(parambases == "是"){//基础参数
+					$("#lpfideditparambaseone").prop("checked",true);
+				}else{
+					$("#lpfideditparambasetwo").prop("checked",true);
+				}
+			  $('#myInput').focus()
+			})
+			/*编辑保存——修改参数类型*/
+			function editsave() {
+				paramid = $("#lpfeditparamid").val();//序号
+				paramname = $("#lpfeditidparamname").val();//名称
+				// pacid = $("#lpfidpacid").val();
+				pacid = $("#lpfcarclassify").val();//所属分类
+				paramstate = $("input[name='editnameparamstate']:checked").val();
+				parambase = $("input[name='editnameparambase']:checked").val();
+				CarParam = {};
+				CarParam.paramid = paramid;
+				CarParam.paramname=paramname;
+				CarParam.paramstate=paramstate;
+				CarParam.parambase=parambase;
+				CarParam.pacid=pacid;
+				console.log(CarParam);
+				$.ajax({
+					type:"post",
+					url:"editCarParam",
+					data:JSON.stringify(CarParam),
+					async:false,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						console.log(data);
+						if(data>0){
+							window.location.reload();
+						}
+					},
+					error:function () {
+						console.log("意外错误");
+					}
+				});
+			}
+
+			/*删除模态框*/
+			$('#myModaldel').on('shown.bs.modal',function (event) {
+				var button = $(event.relatedTarget);
+				var paramid = button.data('paramid');
+				$("#delparamid").val(paramid);
+			  $('#myInput').focus()
+			})
+
+			/*删除确定*/
+			function delcarparam() {
+				var paramid = $("#delparamid").val();
+				$.ajax({
+					type:"post",
+					url:"delCarPACByParamid?paramid="+paramid,
+					async:false,
+					contentType:"application/json;charset=utf-8",
+					success:function (data) {
+						if(data>0){
+							window.location.reload();
+						}
+					},
+					error:function () {
+						console.log("意外错误");
+					}
+				});
+			}
+
+		</script>
+	</body>
+</html>

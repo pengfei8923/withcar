@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>修改手机</title>
+		<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+		<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js" ></script>
+		<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+	</head>
+	<style>
+		p{
+			margin: 0;
+		}
+	</style>
+	<body  class="easyui-layout" style="background-color:#F0F0F0">
+		<div class="row" style="background-color: #FF6F29; margin: auto;height: 50px; line-height: 46px; " align="center" >
+			<div class="col-xs-3"><a href="javascript:history.go(-1)"><img src="img/fanhui.png" style="width:50%;"></a></div>
+			<div class="col-xs-5">
+				<span style="font-size: 25px; color: #FFFFFF;">手机</span>
+			</div>
+			<div class="col-xs-4">
+				<button onclick="gei()" style="font-size: 20px; color: #FFFFFF;background-color: #FF6F29; border: 0px;">保存</button>
+			</div>
+		</div>
+		<div>
+			<br />
+			<div class="row" style="height: 50px; background-color: #FFFFFF; line-height: 48px;">
+			  <div class="col-xs-3" style="text-align: right;">
+				<p>手机</p>
+			  </div>
+			  <div class="col-xs-8">
+				<input type="text" name="mobile" th:value="${mobile}" style="margin-top: 10px;" class="form-control">
+			  </div>
+			</div>
+				<br />
+			<div class="row" style="height: 50px; background-color: #FFFFFF; line-height: 48px;">
+			  <div class="col-xs-3" style="text-align: right;">
+				<p>验证码</p>
+			  </div>
+			  <div class="col-xs-4">
+				<input type="text" style="margin-top: 10px;" class="form-control">
+			  </div>
+			   <div class="col-xs-5">
+				<button style="font-size: 20px; color: #FFFFFF;background-color: #FF6F29; border: 0px;">获取验证码</button>
+			  </div>
+			</div>
+		</div>
+		
+		
+	</body>
+</html>

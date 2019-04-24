@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8"/>
+	<title>类型管理</title>
+	<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/demo/demo.css" />
+	<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+	<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+	<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+</head>
+<style>
+	th {
+		text-align: center;
+	}
+	td {
+		text-align: center;
+	}
+</style>
+<body class="easyui-layout" >
+<div data-options="region:'center',title:'类型管理'">
+	<div style="margin: auto; width: 90%;">
+		<div class="form-inline" style="height: 50px;">
+
+			<div class="form-group">
+				<input type="text" placeholder="名称" id="searchName"/>
+			</div>
+
+			<div class="form-group">
+				<button type="submit"  class="btn btn-info" id="searchLike">搜索</button>
+			</div>
+			<div class="form-group" style="float: right;">
+				<button type="button" class="btn btn-success"  data-toggle="modal" data-target="#myModal">新增</button>
+			</div>
+		</div>
+
+		<div>
+			<table class="table table-bordered" id="dataTab">
+				<tr>
+					<th>序号</th>
+					<th>名称</th>
+					<th>活动数量</th>
+					<th>操作</th>
+				</tr>
+				<tr th:each="category:${categorys}">
+					<td th:text="${category.id}">1</td>
+					<td th:text="${category.name}">类型2</td>
+					<td th:text="${category.useCount}">9</td>
+					<td>
+						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalbj" th:attr="data-id=${category.id}">编辑</button>
+						<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModaldel" th:attr="data-id=${category.id}">删除</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+</div>
+<!-- 新增Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">新增活动类型</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<!--<label for="idfenpacname" class="col-sm-2 control-label">名称</label>-->
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="typeName" placeholder="名称">
+						</div>
+					</div>
+
+
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				<button type="button" class="btn btn-primary" onclick="addsave()" data-dismiss="modal">保存</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 编辑Modal -->
+<div class="modal fade" id="myModalbj" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="ioparamclass">编辑活动类型</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<!--<label for="ideditpacname" class="col-sm-2 control-label">名称</label>-->
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="editActivityType">
+						</div>
+					</div>
+					<!--<div class="form-group">
+                        <label for="ideditpacstateone" class="col-sm-2 control-label">是否生效</label>
+                        <div class="col-sm-5">
+                            <div class="checkbox" style="border: 0px;">
+                                <label>
+                                    <input type="radio" id="ideditpacstateone" name="editpacstate"  value="生效" >是
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="checkbox" style="border: 0px;">
+                                <label>
+                                    <input type="radio"  id="ideditpacstatetwo" name="editpacstate"  value="未生效">否
+                                </label>
+                            </div>
+                        </div>
+                    </div>-->
+				</form>
+				<input type="hidden" id="idcarpam">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				<button type="button"  class="btn btn-primary" id="editSave" data-dismiss="modal">保存</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 删除Modal -->
+<div class="modal fade" id="myModaldel" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">删除</h4>
+			</div>
+			<div class="modal-body">
+				<h3>确定删除？</h3><input type="hidden" id="idcarpamdel">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				<button type="button" class="btn btn-primary" id="delSave" data-dismiss="modal">确定</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	//新增保存方法
+	function addsave(){
+		var typeName=$("#typeName").val();
+		$.ajax({
+			url:"addActivityType?typeName="+typeName,
+			type:"post",
+			contentType:"application/json;charset=utf-8",
+			async:false,
+			success:function(result){
+				if(result>0){
+					alert("类型新增ok");
+					window.location.reload();
+				}
+			}
+
+		});
+	}
+	//进入编辑并保存
+	$('#myModalbj').on('shown.bs.modal', function (event) {
+		var button=$(event.relatedTarget);
+		var editId=button.data('id');
+		alert(editId);
+		$.ajax({
+			url:"selectActivityCategoryById?id="+editId,
+			type:"get",
+			async:false,
+			contentType:"application/json;charset=utf-8",
+			success:function(result){
+				$("#editActivityType").val(result.name);
+			}
+		});
+		$("#editSave").click(function(){
+			alert(editId);
+			var activityType= $("#editActivityType").val();
+			var ActivityCategory={};
+			ActivityCategory.id=editId;
+			ActivityCategory.name=activityType;
+			$.ajax({
+				url:"updateActivityCategoryBy",
+				type:"post",
+				data:JSON.stringify(ActivityCategory),
+				contentType:"application/json;charset=utf-8",
+				async:false,
+				success:function(result){
+					if(result>0){
+						window.location.reload();
+					}
+				}
+			});
+		});
+	});
+	//确定删除
+	$('#myModaldel').on('shown.bs.modal', function (event) {
+		var button=$(event.relatedTarget);
+		var delId=button.data('id');
+		$("#delSave").click(function(){
+			$.ajax({
+				url:"delActivityCategoryById?id="+delId,
+				type:"get",
+				async:false,
+				contentType:"application/json;charset=utf-8",
+				success:function(result){
+					if(result>0){
+						alert("删除ok");
+						window.location.reload();
+					}
+				}
+			});
+		});
+	});
+	//模糊搜索
+	$("#searchLike").click(function(){
+		var searchName=$("#searchName").val();
+		var uriName=encodeURI(searchName);
+		$.ajax({
+			url:"selectActivityCategoryLike?name="+uriName,
+			type:"get",
+			async:false,
+			success:function(result){
+				console.log(result);
+				if(result!=null){
+					$("#dataTab").empty();
+					var trTitle="<tr><th>序号</th><th>名称</th><th>活动数量</th><th>操作</th></tr>";
+					$("#dataTab").append(trTitle);
+					$.each(result,function(index,element){
+						var trStr="<tr><td>"+element.id+"</td>"+
+								"<td >"+element.name+"</td>"+
+								"<td >"+element.useCount+"</td>"+
+								"<td><button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#myModalbj\" data-id="+element.id+">编辑</button><button type=\"button\" class=\"btn btn-danger\" data-toggle=\"modal\" data-target=\"#myModaldel\" data-id="+element.id+">删除</button></td></tr>";
+						$("#dataTab").append(trStr);
+					});
+				}else{
+					alert("没有匹配数据");
+				}
+			}
+		});
+	});
+</script>
+</body>
+</html>
+

@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/demo/demo.css"/>
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <link href="css/niurui.css" type="text/css" rel="stylesheet"/>
+    <title>角色管理</title>
+</head>
+<body>
+<div id="bigdiv">
+    <br/>
+    <button onclick="">&nbsp; < &nbsp;</button> &nbsp; &nbsp;角色管理:
+    <div class="line"></div>
+    <div class="u1">
+        <input type="text" id="mohu" placeholder="角色名称"/>
+    </div>
+    <div class="aa">
+        <input id="input1" type="button" @click="sousuo()" value="搜搜"/>
+    </div>
+    <!--<br/>-->
+    <!--<br/>-->
+    <!--<br/>-->
+    <div class="add">
+        <button onclick="window.location.href='new_role'" class="add1"><font class="zicolor">新增</font></button>
+    </div>
+
+    <br/>
+    <div style="margin: auto; width: 90%;">
+        <table class="table table-bordered" id="dataTable">
+            <thead>
+            <tr>
+                <th width="30">#</th>
+                <th width="30"><input type="checkbox"></th>
+                <th>序号名</th>
+                <th>名称</th>
+                <!--<th>人数</th>-->
+                <th width="100">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="role in roles">
+                <th width="30">#</th>
+                <td><input type="checkbox"></td>
+                <td>{{role.id}}</td>
+                <td>{{role.name}}</td>
+                <!--<td>{{role.count}}</td>-->
+                <td>
+                    <button type="button" class="btn btn-primary btn-xs" @click="xiugai(role.id)"><i class=" glyphicon glyphicon-pencil"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-xs" @click="shanchu(role.id)"><i class=" glyphicon glyphicon-remove"></i>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+<script src="js/vue-2.2.2-min.js"></script>
+<script>
+    new Vue({
+        el: '#bigdiv',
+        data: {roles: []},
+        created: function () {
+            var self = this;
+            $.ajax({
+                url: 'selectAdminRoleOne',
+                type: 'get',
+                dataType: 'json'
+            }).then(function (responseValue) {
+                self.roles = responseValue;
+            }).fail(function () {
+                console.log("查询失败");
+            })
+        },
+        methods:{
+            shanchu:function(id){
+                $.ajax({
+                    url: '/updateRoleDeleted?id='+id,
+                    type: 'get',
+                    dataType: 'json'
+                }).then(function(responseValue){
+                    alert("删除成功");
+                    window.location.reload();
+                }).fail(function () {
+                    console.error("删除失败");
+                })
+            },
+            xiugai:function(id){
+                window.location.href="update_role?id="+id;
+            },
+            sousuo:function(){
+                // $("#dataTable").html('');
+                var self=this;
+                var name1=$("#mohu").val();
+                $.ajax({
+                    type:"post",
+                    url:"/mohuchaxun",
+                    async:false,
+                    data:{"mohu":name1},
+                }).then(function(responseValue){
+                    self.roles=responseValue;
+                    console.log(self.roles);
+                }).fail(function(){
+                    console.error("查询失败");
+                })
+            },
+        }
+
+    })
+</script>
+</html>

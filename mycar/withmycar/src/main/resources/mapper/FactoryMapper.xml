@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.withmycar.mapper.FactoryMapper" >
+    <insert id="addFactory" parameterType="com.qf.withmycar.pojo.Factory">
+        insert into factory values(null,#{facName,jdbcType=VARCHAR},#{brandId,jdbcType=INTEGER},#{facLogo,jdbcType=VARCHAR},#{createTime},#{lastUpdate})
+    </insert>
+    <select id="selectAllFactory" resultType="com.qf.withmycar.pojo.Factory">
+        select * from factory
+    </select>
+    <!--厂商表和品牌表联查dto查询所有-->
+    <select id="selectAllBrandFactoryDto" resultType="com.qf.withmycar.dto.Brand_FactoryDto">
+        select f.facid facid,f.facname facname,c.namea namea,f.faclogo faclogo,f.createtime createtime from car_brand c,factory f where c.id=f.brandid
+    </select>
+    <!--根据厂商id查询厂商信息-->
+    <select id="selectFactoryById" parameterType="java.lang.Integer" resultType="com.qf.withmycar.pojo.Factory">
+        select * from factory where facid=#{facId}
+    </select>
+    <!--修改-->
+    <update id="updateFactory" parameterType="com.qf.withmycar.pojo.Factory">
+        update factory
+        <trim prefix="set" suffixOverrides=",">
+            <if test="facName!=null and facName!=''">
+                facName=#{facName},
+            </if>
+            <if test="brandId!=null and brandId!=''">
+                brandId=#{brandId},
+            </if>
+            <if test="facLogo!=null and facLogo!=''">
+                facLogo=#{facLogo},
+            </if>
+            <if test="lastUpdate!=null">
+                lastUpdate=#{lastUpdate},
+            </if>
+        </trim>
+        where facId=#{facId}
+    </update>
+    <!--删除一条厂商信息-->
+    <delete id="deleteFactory" parameterType="java.lang.Integer">
+        delete from factory where facId=#{facId}
+    </delete>
+    <!--模糊查询-->
+    <select id="factoryMohu" parameterType="com.qf.withmycar.pojo.Factory" resultType="com.qf.withmycar.dto.Brand_FactoryDto">
+        select  f.facid facid,f.facname facname,c.namea namea,f.faclogo faclogo,f.createtime createtime from car_brand c,factory f
+        <trim prefix="where f.brandid=c.id ">
+            <if test="brandId!=null and brandId!=''">
+              and  f.brandId=#{brandId}
+            </if>
+            <if test="facName!=null and facName!=''">
+              and  f.facName like concat('%',#{facName},'%')
+            </if>
+        </trim>
+    </select>
+    <!--查询一个品牌下的所有厂商-->
+    <select id="selectFactoryBybrandId" resultType="com.qf.withmycar.pojo.Factory" parameterType="java.lang.Integer">
+        select * from factory where brandid=#{brandId}
+    </select>
+</mapper>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>会员信息</title>
+	</head>
+	
+	
+	<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css">
+	<link rel="stylesheet" href="css/jquery.page.css">
+	<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+	
+	<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+	<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
+<body>
+
+	<div style="margin-left: 130px; margin-top: 5px; ">
+		<a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-back'" style="margin-left: 0px;">返回上一层</a>
+		<input class="easyui-textbox" data-options="prompt:'手机/姓名/昵称'" th:value="${infos.info}" name="info" style="width:170px"/>&nbsp;&nbsp;&nbsp;&nbsp;
+		性别:
+		<select style="width: 50px;" name="sex">
+			<option disabled="disabled" selected="selected">性别</option>
+			<option  th:selected="${infos.sex eq '男'}" value="男">男</option>
+			<option  th:selected="${infos.sex eq '女'}" value="女">女</option>
+		</select>&nbsp;&nbsp;&nbsp;&nbsp;
+		注册时间:
+		<input class="easyui-datebox" id="time1" name="time1" data-options="formatter:myformatter,parser:myparser" th:value="${infos.getTime1()}" />&nbsp;—&nbsp;
+		<input class="easyui-datebox" id="time2" name="time2" data-options="formatter:myformatter,parser:myparser" th:value="${infos.getTime2()}" />
+		<!--<input class="easyui-textbox" name="time1" th:value="${infos.getTime1()}" style="width:150px"/>&nbsp;—&nbsp;-->
+		<!--<input class="easyui-textbox" name="time2" th:value="${infos.getTime2()}" style="width:150px"/>-->
+		<a onclick="getClaim(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search'" style="width:80px">搜索</a>
+	</div>
+<hr style="height:2px;background-color:#000;margin-top: 0px;" />
+	<table class="page_content table table-bordered">
+		<thead>
+			<tr style="text-align: center;">
+				<td>序号</td>
+				<td>账号</td>
+				<td>昵称</td>
+				<td>姓名</td>
+				<td>性别</td>
+				<td>注册时间</td>
+				<td>详情</td>
+			</tr>
+		</thead>
+		<tbody id="userInfo">
+			<tr style="text-align: center;" th:each="user:${users}">
+				<td th:text="${user.id}">序号</td>
+				<td th:text="${user.userName}">账号</td>
+				<td th:text="${user.nickname}">昵称</td>
+				<td th:text="${user.name}">姓名</td>
+				<td th:text="${user.sex}">性别</td>
+				<td th:text="${user.register_time}">注册时间</td>
+				<td><button type="button" name="goinfo" th:value="${user.id}">详情</button></td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr><td colspan="12">
+				<div id="page" style="margin-bottom: 0px"></div></td></tr>
+		</tfoot>
+	</table>
+	<input hidden="hidden" name="yeshu" th:value="${pageNum}">
+	<input hidden="hidden" name="currentPage" th:value="${page}">
+	<!--分页插件-->
+<script src="js/jquery.page.js"  charset="utf-8"></script>
+	<script type="text/javascript" th:inline="javascript">
+		//后台给日期框赋值
+		/*<![CDATA[*/
+		var time1=[[${infos.getTime1()}]] ;
+		var time2=[[${infos.getTime2()}]] ;
+		$('#time1').datetimebox('setValue', time1 );
+		$('#time2').datetimebox('setValue', time2 );
+		/*]]>*/
+
+	</script>
+	<script>
+		// $('#dt').datetimebox('setValue', '6/1/2012 12:30:56');
+		// alert("seek页面")
+		var totalPages=$("input[name='yeshu']").val();;/*分页总数*/
+		var currentPage=$("input[name='currentPage']").val();/*当前页*/
+		$(function(){
+
+
+			/*获取分页总数*/
+//				$.ajax({
+//					type:"POST",
+//					url: "getOrderAllPage",
+//					async:false,
+//					contentType: "application/json; charset=utf-8",
+//					success:function (data) {
+//						totalPages=data;
+//						console.log(totalPages);
+//					}
+//				});
+			/*分页*/
+	$("#page").Page({
+		totalPages: totalPages,//总页数
+		liNums: 5,//分页的数字按钮数(建议取奇数)
+		activeClass: 'active' ,//active类
+		firstPage: '«',//首页按钮名称
+		lastPage: '»',//末页按钮名称
+		prv: '‹',//前一页按钮名称
+		next: '›',//后一页按钮名称
+		callBack : function(page){
+			if (page ==currentPage) {
+				return;
+			}
+			// var info=$("input[name='info']").val();
+			// var sex=$("select[name='sex']").val();
+			// var time1=$("input[name='time1']").val();
+			// var time2=$("input[name='time2']").val();
+			// if (info==null && sex==null && time1==null && time2==null){
+			// //		搜索框为空 跳all页面
+			// 	window.location.href="ck_userall?page="+(page-1);
+			// }
+			//不为空 携带数据再原页面翻页
+			var p=(page-1);
+			getClaim(p);
+		}
+	});
+		})
+		// function userInfo() {
+		// 	var id=$(this).val();
+		// 	alert(id);
+		// 	// window.location.href="ck_userInfo?userId="+id;
+		// }
+		$("button[name='goinfo']").click(function () {
+			// alert($(this).val());
+			var id=$(this).val();
+			window.location.href="ck_userInfo?userId="+id
+		})
+function getClaim(p) {
+	var info=$("input[name='info']").val();
+	var sex=$("select[name='sex']").val();
+	var time1=$("input[name='time1']").val();
+	var time2=$("input[name='time2']").val();
+	if (info=="" && sex==null && time1=="" && time2==""){
+		//		搜索框为空 跳all页面
+		window.location.href="ck_userall?page="+0;
+		return;
+	}
+	if (sex==null) {
+		sex="";
+	}
+	if (time1 != "") {
+		var ss = (time1.split('-'));
+		var y = parseInt(ss[0],10);
+		var m = parseInt(ss[1],10);
+		var d = parseInt(ss[2],10);
+		time1=y+''+(m<10?('0'+m):m)+''+(d<10?('0'+d):d);
+	}
+	if (time2 != "") {
+		var ss = (time2.split('-'));
+		var y = parseInt(ss[0],10);
+		var m = parseInt(ss[1],10);
+		var d = parseInt(ss[2],10);
+		time2=y+''+(m<10?('0'+m):m)+''+(d<10?('0'+d):d);
+	}
+	if(time1>time2){
+		var time=0;
+		time=time2;
+		time2=time1;
+		time1=time;
+		// alert(time1+"***"+time2);
+	}
+	var res=new Object();
+	res.info=info;
+	res.sex=sex;
+	res.time1=time1;
+	res.time2=time2;
+	res.page=p;
+	 var info =JSON.stringify(res);
+	// alert(res.sex == null);
+	// alert(info);
+	$.ajax({
+		type:"POST",
+		url: "getUserByInfo",
+		async:false,
+		data:info,
+		contentType: "application/json; charset=utf-8",
+		success:function () {
+			// $("#userInfo").empty();
+			window.location.href = "goSeekUser";
+		},
+		error:function () {
+			alert("错误");
+		}
+	});
+}
+
+		/*根据页码查询商品*/
+//	function selectGoodPage(page) {
+//		$.ajax({
+//			type:"POST",
+//			url: encodeURI("getAllOrder?page="+page),
+//			async:false,
+//			contentType: "application/json; charset=utf-8",
+//			success:function (data) {
+//				$("#idgoods").empty();
+//			},
+//			error:function () {
+//				alert("错误");
+//			}
+//		});
+//	}
+	//日期框
+	function myformatter(date){
+		var y = date.getFullYear();
+		var m = date.getMonth()+1;
+		var d = date.getDate();
+		return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);
+	}
+	function myparser(s){
+		if (!s) return new Date();
+		var ss = (s.split('-'));
+		var y = parseInt(ss[0],10);
+		var m = parseInt(ss[1],10);
+		var d = parseInt(ss[2],10);
+		if (!isNaN(y) && !isNaN(m) && !isNaN(d)){
+			return new Date(y,m-1,d);
+		} else {
+			return new Date();
+		}
+	}
+
+	</script>
+</body>
+</html>

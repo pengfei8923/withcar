@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>编辑消息</title>
+	<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css" />
+	<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css" />
+	<link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/demo/demo.css" />
+	<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+	<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+</head>
+<body style="padding:0px;margin:0px">
+	<div class="easyui-panel" style="width:auto;">
+    <div style="background:#E0ECFF; padFding-top:5px;height:25px">
+			<button style="background:#E0ECFF;border:0px;font-size:14px;" onClick="window.location='/msglist'" >&nbsp;&nbsp;<< 编辑消息</button>
+		</div>
+		<div th:each="message:${messages}" style="border-bottom:1px solid #80FFFF;padding:20px 80px 20px;">
+                <b style="font-size:18px; ">标题：</b>
+                <input th:value="${message.title}" type="text" class="easyui-textbox" data-options="prompt:'Enter something here...'" style="width:30%;height:36px"><br><br><br>
+                <b style="font-size:18px;">正文：</b>
+                <input th:value="${message.content}" type="text" class="easyui-textbox" name="message" data-options="multiline:true" style="height:200px;width:500px;"></input><br><br><br>
+                <b style="font-size:18px;">更多：</b>
+                 <input th:value="${message.link}" type="text" class="easyui-textbox" data-options="prompt:'Enter something here...'" style="width:10%;height:36px"><br><br><br>
+                <button class="easyui-linkbutton" style="width:100px;margin:0px 80px 0px 160px" onclick="window.location='/msglist'">取消</button>
+                <button class="easyui-linkbutton" style="width:100px" th:onclick="'javascript: editsave('+${message.id}+')' ">保存</button>
+     	</div>
+	</div>
+</body>
+</html>

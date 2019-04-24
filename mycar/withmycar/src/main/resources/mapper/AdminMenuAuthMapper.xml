@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.withmycar.mapper.AdminMenuAuthMapper">
+
+    <resultMap id="AdminMap" type="com.qf.withmycar.dto.AdminMenuAuthDto">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <collection property="children" ofType="com.qf.withmycar.dto.AdminMenuAuthDto" column="parent_id">
+            <id column="pid" property="id"/>
+            <result column="pname" property="name"></result>
+            <result column="parent_id" property="parent_id"></result>
+        </collection>
+    </resultMap>
+    <!--ma.id id,-->
+    <!--ma.name name,-->
+    <!--ma.status status,-->
+    <!--ma.sort sort,-->
+    <!--ma.parent_id pid,-->
+    <!--ma.classname icon,-->
+    <!--ma.url url-->
+    <select id="dongtai" parameterType="int" resultType="com.qf.withmycar.dto.AdminMenuAuthDto">
+        select
+         ma.id id,
+         ma.parent_id pid,
+         ma.classname icon,
+         ma.url url,
+          ma.name name
+         from
+         admin_menu_auth ma,
+         admin_role r,
+         admin_role_menu rm,
+         admin_user u,
+         admin_user_role ur
+
+         where
+             ma.id=rm.menu_id
+         and rm.role_id= r.id
+         and r.id=ur.role_id
+         and ur.user_id=u.id
+         and u.id=#{id}
+    </select>
+
+    <!--权限全查-->
+    <select id="quanxianquancha" resultMap="AdminMap">
+    select
+    ama1.id,
+    ama1.name,
+    ama2.id pid,
+    ama2.name pname,
+    ama2.parent_id
+    from
+    admin_menu_auth ama1,
+    admin_menu_auth ama2
+    where
+    ama1.id=ama2.parent_id
+    </select>
+
+    <!--根据id修改角色-->
+    <update id="updateRoleById" parameterType="com.qf.withmycar.pojo.AdminRole">
+        update admin_role set name=#{name} where id=#{id}
+    </update>
+
+    <!--通过ID查角色-->
+    <select id="selectRoleById" resultType="com.qf.withmycar.pojo.AdminRole" parameterType="int">
+    select *
+from admin_role where id=#{id}
+  </select>
+
+    <!--修改角色权限-->
+    <delete id="deleteRoleAuth" parameterType="int">
+      delete from admin_role_menu where role_id=#{id}
+  </delete>
+    <insert id="insertRoleAuth" parameterType="com.qf.withmycar.pojo.AdminRoleMenuKey">
+    insert admin_role_menu
+    (role_id,menu_id) values(#{roleId},#{menuId})
+  </insert>
+</mapper>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+
+
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/default/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.7.0/themes/icon.css"/>
+    <!--<link rel="stylesheet" href="moumou/css/jquery.page.css">-->
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
+
+    <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <style>
+        .left {
+            float: left;
+            width: 50%;
+        }
+
+        p {
+            margin-bottom: 0px;
+            border-bottom: 1px solid #333;
+            border-left: 1px solid #333;
+            border-right: 1px solid #333;
+        }
+
+        span {
+            margin-left: 5px;
+        }
+
+        .left2 {
+            float: left;
+        }
+
+        ul {
+            margin-bottom: 0px;
+        }
+
+        ul li {
+            list-style: none;
+            margin-left: -40px;
+        }
+    </style>
+<body>
+<!--<div style="margin-left: 30px; margin-top: 5px; ">-->
+<!--<a href="ck_userall" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-back'" style="margin-left: 0px;">返回上一层</a>-->
+<!--</div>-->
+<!--<hr style="height:2px;background-color:#000;margin-top: 0px; margin-bottom: 0px;" />-->
+
+<!--<div style="font-size: 20px; width: 100%;">-->
+<!--<div style="width: 60%;" class="left2">-->
+<!--<ul>-->
+<!--<li><p>账号:<span>某某</span></p></li>-->
+<!--<li>-->
+<!--<p class="left">昵称:<span>某某</span></p>-->
+<!--<p class="left">姓名:<span>某某</span></p>-->
+<!--</li>-->
+<!--<li>-->
+<!--<p class="left">性别:<span>某某</span></p>-->
+<!--<p class="left">邮箱:<span>某某</span></p>-->
+<!--</li>-->
+<!--<li><p>积分:<span>某某</span></p></li>-->
+<!--<li><p>标签:<span>某某</span></p></li>-->
+<!--<li><p>地址:<span>某某</span></p></li>-->
+<!--<li><p>注册时间:<span>某某</span></p></li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--<div style="width: 40%;" class="left2">-->
+<!--<img src="jquery-easyui-1.7.0/themes/black/images/123.png" class="img-circle" style="margin-top: 3%; margin-left: 3%; width: 22%;"/>-->
+<!--</div>-->
+<!--</div>-->
+<!--<hr style="height:2px;background-color:#000;margin-top: 0px; margin-bottom: 0px;" />-->
+<div class="easyui-layout" style=" height: 700px; width: 100%;">
+    <div id="content" region="center" style="padding:0px;">
+        <div id="tt" class="easyui-tabs" data-options="fit:true">
+            <!--<div title="欢迎页" style="padding:20px;display:none;">
+                Welcome  to   1000phone's  Shiro World!
+            </div>-->
+            <div title="个人资料" style="padding:20px;display:none;">
+                <div class="modal-body" th:each="member:${membera}">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">用户姓名</label>
+                            <div class="col-sm-10">
+                                <input th:value="${member.namea}" type="email" class="form-control" disabled="disabled"
+                                       id="inputEmail3" placeholder="用户姓名">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">用户账户</label>
+                            <div class="col-sm-10">
+                                <input th:value="${member.nameb}" type="email" class="form-control" disabled="disabled"
+                                       id="inputEmail4" placeholder="用户账户">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">用户手机号</label>
+                            <div class="col-sm-10">
+                                <input th:value="${member.phone}" type="email" class="form-control" id="inputEmail5"
+                                       placeholder="用户手机号">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">用户所属角色</label>
+                            <div class="col-sm-10">
+                                <input th:value="${member.namec}" type="email" class="form-control" disabled="disabled"
+                                       id="inputEmail6" placeholder="用户所属角色">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">用户邮箱</label>
+                            <div class="col-sm-10">
+                                <input th:value="${member.eamil}" type="email" class="form-control" id="inputEmail7"
+                                       placeholder="用户邮箱">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">用户所属部门</label>
+                            <div class="col-sm-10">
+                                <input type="email" th:value="${member.dept}" class="form-control" disabled="disabled"
+                                       id="inputEmail8" placeholder="用户所属部门">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                <button type="button" th:onclick="'javascript:baocun(\''+${member.id}+'\');'">保存
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div title="修改密码" style="padding:20px;display:none;">
+                <div class="modal-body" th:each="member:${membera}">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">原密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="inputEmail9" placeholder="原密码">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">新密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="inputEmail10" placeholder="新密码">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">确认新密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="inputEmail1" placeholder="确认新密码">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                <button type="button" th:onclick="'javascript:xiugai(\''+${member.id}+'\');'">保存</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+</div>
+<script>
+    function baocun(id) {
+        alert(id + "保存");
+        phone = $("#inputEmail5").val();
+        email = $("#inputEmail7").val();
+        var user = {};
+        user.id=id;
+        user.phone = phone;
+        user.email = email;
+        console.log(user);
+
+        $.ajax({
+            type: "post",
+            url: "updateUser",
+            async: false,
+            contentType: "application/json;charset=utf-8",
+            data:JSON.stringify(user),
+            success: function () {
+                alert("保存成功");
+                window.location.reload();
+            },
+            error: function () {
+                alert("保存失败");
+                window.location.reload();
+            }
+
+        });
+
+    };
+
+
+    function xiugai(id){
+        password = $("#inputEmail9").val();
+        password1 = $("#inputEmail10").val();
+        password2 = $("#inputEmail1").val();
+        var user1 = {};
+        user1.id=id;
+        user1.password=password;
+        // alert(id);
+        console.log(user1);
+
+        $.ajax({
+            type: "post",
+            url: "updateUserPass",
+            async: false,
+            contentType: "application/json;charset=utf-8",
+            data:JSON.stringify(user1),
+            success: function (message) {
+
+                if (message==true) {
+
+                    var user2 = {};
+                    user2.password=password1;
+                    user2.id=id;
+                    // alert(id);
+                    console.log(user2);
+                    if (password1==password2){
+                        $.ajax({
+                            type: "post",
+                            url: "updateUserPass1",
+                            async: false,
+                            contentType: "application/json;charset=utf-8",
+                            data:JSON.stringify(user2),
+                            success:function (message) {
+                                alert("修改成功");
+                            },
+                            error:function (message) {
+                                alert("修改失败");
+                                window.location.reload();
+                            },
+
+                        });
+                    }else {
+                        alert("两次密码输入不一致，请重新输入");
+                    };
+
+
+                }else {
+                    alert("原密码输入错误，请重新输入");
+                };
+
+            },
+            error: function () {
+                alert("原密码输入错误");
+                window.location.reload();
+            }
+
+        });
+
+    }
+
+    $(function () {
+        $('#tt').tabs({
+            border: false,
+            onSelect: function (title) {
+//                  alert(title)
+            }
+        });
+
+        //获取点击事件的对象
+//			$(".nav li").click(function(){
+//				//获取要显示或隐藏的对象
+//				var divShow = $(".content").children('.list');
+//				//判断当前对象是否被选中，如果没选中的话进入if循环
+//				if (!$(this).hasClass('selected')) {
+//					//获取当前对象的索引
+//					var index = $(this).index();
+//					//当前对象添加选中样式并且其同胞移除选中样式；
+//					$(this).addClass('selected').siblings('li').removeClass('selected');
+//					//索引对应的div块显示
+//					$(divShow[index]).show();
+//					//索引对应的div块的同胞隐藏
+//					$(divShow[index]).siblings('.list').hide();
+//				}
+//			});
+    });
+
+</script>
+</body>
+</html>
